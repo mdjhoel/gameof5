@@ -12,7 +12,7 @@
                   <img src="images/0.svg" title="{{badge.name}}" ng-show="value < 3" class="circle"/>
                   <img src="images/badges/{{key}}.svg" title="{{badge.name}}" ng-show="value >= 3" class="circle"/>
                   <p class="title">{{badge.name}}</p>
-                  <p ng-show="value >= 3" style='color: orange;'>Congratulations!</p>
+                  <p ng-show="value >= 3" style='color: orange;'>You have earned the badge.</p>
                   <p ng-show="value < 3">Almost there. You need 3x to earn the badge.</p>
                   <div class="secondary-content">
                     <p class="chip blue white-text">{{value * badge.value}}</p>
