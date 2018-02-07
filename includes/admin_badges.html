@@ -1,60 +1,39 @@
+<div class="row">
+  <div class="col s12">
+      <div class="card">
+          <div class="card-content">
+            
+            <span class="card-title">Badges</span>
+            <p>Badges you have earned or are working on. You need 3XP (or -3XP) to earn badges.</p> 
+            <br>
 
-<table>
-<tr>
-	<td style='color: #8bc34a; font-size: 2em;'>Badges</td>
-	<td><a ng-click="addbadge()" class="waves-effect waves-light btn right light-green">Add</a></td>
-</tr>
-</table>
+            <ul ng-repeat="(key, value) in user.badges" class="collection with-header" ng-show="badgestotal!=0">
+                <li class="collection-item avatar" ng-repeat="badge in data.badges" ng-show="data.badges[$index].id == key">
+                  <img src="images/0.svg" title="{{badge.name}}" ng-show="value < 3" class="circle"/>
+                  <img src="images/badges/{{key}}.svg" title="{{badge.name}}" ng-show="value >= 3" class="circle"/>
+                  <p class="title">{{badge.name}}</p>
+                  <p ng-show="value >= 3" style='color: orange;'>You have earned the badge.</p>
+                  <p ng-show="value < 3">Almost there. You need 3x to earn the badge.</p>
+                  <div class="secondary-content">
+                    <p class="chip blue white-text">{{value * badge.value}}</p>
+                  </div>
+                </li>
+            </ul>
 
-<div ng-repeat="item in data.badges">
-	<ul class="collection with-header">
-		<li class="collection-item">
-			<form class="col s12">
-				<div class="row">
-					
-					<div class="input-field col s12 m6">
-						<input id="name" type="text" class="validate" min=2 max=10 ng-model="item.name">
-				    	<label class='md-no-float' for="name" data-error="wrong" data-success="right">Name</label>
-					</div>
-					<div class="input-field col s12 m6" ng-init="finishLoading()">
-						<input id="value" type="number" class="validate" min=-10 max=10 ng-model="item.value">
-				    	<label class='md-no-float' for="value">Value</label>
-					</div>
-				</div>
-				<div class="row">
-					<div>
-						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit; showSVG($index)">Badge</a>
-				    	<a class="waves-effect waves-light btn pink" ng-click="removebadge($index)">Delete</a>
-				    </div>
-				    <div ng-show="$scope.showedit">
-
-				    	<br>
-						<label ng-model="item.id">{{item.id}}</label>
-						<div class="scrollmenu">
-						    <a class="image" ng-click="item.id = mybadge.id" ng-repeat="mybadge in badgesvg.badges" id='{{mybadge.id}}{{$parent.$index}}{{$index}}' data-design="{{mybadge.design}}" title="{{mybadge.id}}"></a>
-							
-						</div>
-				
-    					</select>
-				    </div>
-				 </div>
-			</form>
-		</li>
-	</ul>
-	
-</div>
-
-<script>
-
-var imageWidth = 60;
-   
-$(".imageContainer").width($(".image").length*imageWidth);
-
-</script>
-
-
-
-
-
-
-    		
+            <a class="waves-effect waves-light btn light-green" ng-click="showdetails = !showdetails">Badge list</a>
+            
+              <ul class="collection with-header" ng-show="showdetails">
+                <li class="collection-item avatar"  ng-repeat="badge in data.badges">
+                  <img src="images/badges/{{badge.id}}.svg" title="{{badge.name}}" class="circle"/>
+                  <p class="title">{{badge.name}}</p>
+                  <p>Earn badge when it appears 3X in daily comments.</p>
+                  <div href="#!" class="secondary-content">
+                    <p class="chip blue white-text">{{badge.value}}</p>
+                  </div>
+                </li>
+              </ul>
+            
+         </div>
+      </div>
+  </div>
+</div>   		
