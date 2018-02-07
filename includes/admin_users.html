@@ -1,34 +1,26 @@
 <table>
-  <tr>
-    <td style='color: #8bc34a; font-size: 2em;'>Courses</td>
-    <td><a id="addbutton" ng-click="addcourse()" class="waves-effect waves-light btn right light-green">Add</a></td>
-  </tr>
+	<tr>
+		<td style='color: #8bc34a; font-size: 2em;'>Users</td>
+		<td><a ng-click="adduser()" class="waves-effect waves-light btn right light-green">Add</a></td>
+	</tr>
 </table>
-      
-<div ng-repeat="item in alldata.courses">
-  <ul class="collection with-header">
-    <li class="collection-item">
-      <form class="col s12">
-          <div class="row">
-                  <div class="input-field">
-                    <input id="name" type="text" ng-model="item.name">
-                    <label class='md-no-float' for="name">Course name</label>
-                  </div>
-                  <div class="input-field">
-                    <input id="descname" type="text" ng-model="item.descname">
-                    <label class='md-no-float' for="descname">Descriptive name</label>
-                  </div>
-                  <div class="input-field">
-                    <input id="desc" type="text" ng-model="item.desc">
-                    <label class='md-no-float' for="desc">Description</label>
-                  </div>
-                  <div>
-                    <a class="waves-effect waves-light btn light-green" ng-click="navAdmin(item.name)">Edit</a>
-                    <a class="waves-effect waves-light btn pink" ng-click="removecourse($index)">Delete</a>
-                  </div>
-          </div>
-      </form>
-    </li>
-  </ul>
+
+<div ng-repeat="(key, item) in data.users">
+	<ul class="collection with-header">
+		<li class="collection-item">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field">
+						<input id="email" type="email" class="validate" ng-model="item.name">
+				    	<label class='md-no-float' for="email" data-error="wrong" data-success="right">Email</label>
+					</div>
+					<div>
+				    	<a class="waves-effect waves-light btn pink" ng-click="removeuser($index)">Delete</a>
+				    	<a class="waves-effect waves-light btn blue" ng-click="navUser($index)">View</a>
+				    </div> 
+				 </div>
+			</form>
+		</li>
+	</ul>
 </div>
-<br>     		
+<br>
