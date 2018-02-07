@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col s12">
+      <div class="card">
+          <div class="card-content">
+            <span class="card-title">Quizzes</span>
+            <div ng-repeat="quiz in data.quizlist">
+              <ul class="collection with-header">
+                <li class="collection-item avatar">
+                  <img src="images/quiz.svg" ng-show="user.quizzes[$index].xp > 0" class="circle"/>
+                  <img src="images/quiz2.svg" ng-show="user.quizzes[$index].xp == 0" class="circle"/>
+                  <p class="title">{{quiz.name}}</p>
+                  <p>{{user.quizzes[$index].grade}}%</p>
+                  <div class="secondary-content">
+                    <p class="chip blue white-text">{{user.quizzes[$index].xp}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+         </div>
+      </div>
+  </div>
+</div>

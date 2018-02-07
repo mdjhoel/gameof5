@@ -1,0 +1,49 @@
+<table>
+<tr>
+	<td style='color: #8bc34a; font-size: 2em;'>Daily</td>
+	<td><a ng-click="adddaily(item.lesson)" ng-disabled="data.lessons.length == 0" class="waves-effect waves-light btn right light-green">Add</a></td>
+</tr>
+</table>
+
+<div ng-repeat="item in data.dailylist">
+	<ul class="collection with-header">
+		<li class="collection-item">
+				<div class="row">
+
+					<label for="name">Lesson number</label>
+					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson.id as lesson.name for lesson in data.lessons"><option value="">Select</option></select>
+
+					
+				 </div>
+				 <div>
+				    	<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Edit users</a>
+				    	<a class="waves-effect waves-light btn pink" ng-click="removedaily($index)">Delete</a>
+				 </div>
+				 <div ng-show="$scope.showedit">
+				 	<table class="table">
+				 		<thead>
+          					<tr>
+              					<th>Username</th>
+              					<th>Grade</th>
+              					<th>Badge</th>
+              					<th>Comment</th>
+          					</tr>
+        				</thead>
+
+        				<tbody ng-repeat="user in data.users">
+				 			<tr>
+				 				<td>{{user.name}}</td>
+				 				<td>
+				 					<input class="TextBox" type="number" validate="number" min=-99 max=4 ng-model="user.daily[$parent.$index].grade" ng-change="emptyField($parent.$index,$index)"/>
+				 				</td>
+				 				<td>
+				 					<select class="browser-default" ng-model="user.daily[$parent.$index].badge" ng-options="badge.id as badge.name for badge in data.badges"><option value="">Select</option></select>
+				 				</td>
+				 				<td><input class="TextBox" type="text" validate="text" maxlength="140" ng-model="user.daily[$parent.$index].desc"/><td>
+				 			</tr>
+				 		</tbody>
+				 	</table>
+				 </div>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,60 @@
+
+<table>
+<tr>
+	<td style='color: #8bc34a; font-size: 2em;'>Badges</td>
+	<td><a ng-click="addbadge()" class="waves-effect waves-light btn right light-green">Add</a></td>
+</tr>
+</table>
+
+<div ng-repeat="item in data.badges">
+	<ul class="collection with-header">
+		<li class="collection-item">
+			<form class="col s12">
+				<div class="row">
+					
+					<div class="input-field col s12 m6">
+						<input id="name" type="text" class="validate" min=2 max=10 ng-model="item.name">
+				    	<label class='md-no-float' for="name" data-error="wrong" data-success="right">Name</label>
+					</div>
+					<div class="input-field col s12 m6" ng-init="finishLoading()">
+						<input id="value" type="number" class="validate" min=-10 max=10 ng-model="item.value">
+				    	<label class='md-no-float' for="value">Value</label>
+					</div>
+				</div>
+				<div class="row">
+					<div>
+						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit; showSVG($index)">Badge</a>
+				    	<a class="waves-effect waves-light btn pink" ng-click="removebadge($index)">Delete</a>
+				    </div>
+				    <div ng-show="$scope.showedit">
+
+				    	<br>
+						<label ng-model="item.id">{{item.id}}</label>
+						<div class="scrollmenu">
+						    <a class="image" ng-click="item.id = mybadge.id" ng-repeat="mybadge in badgesvg.badges" id='{{mybadge.id}}{{$parent.$index}}{{$index}}' data-design="{{mybadge.design}}" title="{{mybadge.id}}"></a>
+							
+						</div>
+				
+    					</select>
+				    </div>
+				 </div>
+			</form>
+		</li>
+	</ul>
+	
+</div>
+
+<script>
+
+var imageWidth = 60;
+   
+$(".imageContainer").width($(".image").length*imageWidth);
+
+</script>
+
+
+
+
+
+
+    		

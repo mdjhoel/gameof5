@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col s12">
+      <div class="card">
+          <div class="card-content">
+            
+            <span class="card-title">Badges</span>
+            <p>Badges you have earned or are working on. You need 3XP (or -3XP) to earn badges.</p> 
+            <br>
+
+            <ul ng-repeat="(key, value) in user.badges" class="collection with-header" ng-show="badgestotal!=0">
+                <li class="collection-item avatar" ng-repeat="badge in data.badges" ng-show="data.badges[$index].id == key">
+                  <img src="images/0.svg" title="{{badge.name}}" ng-show="value < 3" class="circle"/>
+                  <img src="images/badges/{{key}}.svg" title="{{badge.name}}" ng-show="value >= 3" class="circle"/>
+                  <p class="title">{{badge.name}}</p>
+                  <p ng-show="value >= 3" style='color: orange;'>Congratulations!</p>
+                  <p ng-show="value < 3">Almost there. You need 3x to earn the badge.</p>
+                  <div class="secondary-content">
+                    <p class="chip blue white-text">{{value * badge.value}}</p>
+                  </div>
+                </li>
+            </ul>
+
+            <a class="waves-effect waves-light btn light-green" ng-click="showdetails = !showdetails">Badge list</a>
+            
+              <ul class="collection with-header" ng-show="showdetails">
+                <li class="collection-item avatar"  ng-repeat="badge in data.badges">
+                  <img src="images/badges/{{badge.id}}.svg" title="{{badge.name}}" class="circle"/>
+                  <p class="title">{{badge.name}}</p>
+                  <p>Earn badge when it appears 3X in daily comments.</p>
+                  <div href="#!" class="secondary-content">
+                    <p class="chip blue white-text">{{badge.value}}</p>
+                  </div>
+                </li>
+              </ul>
+            
+         </div>
+      </div>
+  </div>
+</div>

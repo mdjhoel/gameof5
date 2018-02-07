@@ -1,0 +1,52 @@
+
+<table>
+<tr>
+	<td style='color: #8bc34a; font-size: 2em;'>Quizzes</td>
+	<td><a ng-click="addquiz(item.name)" class="waves-effect waves-light btn right light-green">Add</a></td>
+</tr>
+</table>
+
+<div ng-repeat="item in data.quizlist">
+	<ul class="collection with-header">
+		<li class="collection-item">
+				<div class="row">
+					<input  id="name" class="TextBox" type="text" ng-model="item.name"/>
+					<label for="name">Quiz name</label>
+				 </div>
+				 <div>
+				    	<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Edit users</a>
+				    	<a class="waves-effect waves-light btn pink" ng-click="removequiz($index)">Delete</a>
+				 </div>
+				 <div ng-show="$scope.showedit">
+				 	<table class="table">
+				 		<thead>
+          					<tr>
+              					<th>Username</th>
+              					<th>Grade</th>
+              					<th>XP</th>
+          					</tr>
+        				</thead>
+
+        				<tbody ng-repeat="user in data.users">
+				 			<tr>
+				 				<td>{{user.name}}</td>
+				 				<td><input class="TextBox" type="number" validate="number" ng-model="user.quizzes[$parent.$index].grade" ng-change="user.quizzes[$parent.$index].xp = setQuiz(user.quizzes[$parent.$index].grade,$parent.$index)"/><td>
+				 				<td><span style='color: orange;'><b>XP </b></span><span class="chip blue white-text">{{user.quizzes[$parent.$index].xp}}</span></td>
+				 			</tr>
+				 		</tbody>
+				 	</table>
+				 </div>
+
+		</li>
+	</ul>
+</div>
+
+<!--
+<a ng-click="myalert()" class="waves-effect waves-light btn">View json</a>
+
+<div id="jsoncurrent"></div>
+
+-->
+
+
+    		

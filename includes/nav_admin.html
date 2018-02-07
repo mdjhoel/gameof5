@@ -1,0 +1,25 @@
+<a href="#modalcheck" id="save" title="Save edits" data-height="50" class="modal-action modal-trigger btn blue white-text" style="vertical-align: bottom;">Save</a>
+<a href="#!" id="courses" title="Return to courses" class="btn light-green white-text" ng-click="courses()" style="vertical-align: bottom;">Courses</a>        
+<a href="#modalprofile" id="profile" title="Profile" data-height="50" class="modal-action modal-trigger right"><img src="{{photoUrl}}" style="height: 40px;border-radius:50%"></a>
+
+<div class="fixed-action-btn horizontal top click-to-toggle">
+    <a class="btn-floating btn-large red">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="10px" width="50px" height="50px" viewBox="0 0 800 800">
+		<path fill="#FFFFFF" d="M590.7,572.6H209.5c-14.8,0-26.8-12-26.8-26.8c0-14.8,12-26.8,26.8-26.8h381.1c14.8,0,26.8,12,26.8,26.8
+				C617.5,560.7,605.6,572.6,590.7,572.6z"/>
+		<path fill="#FFFFFF" d="M590.7,279.1H209.5c-14.8,0-26.8-12-26.8-26.8s12-26.8,26.8-26.8h381.1c14.8,0,26.8,12,26.8,26.8
+				C617.5,267,605.6,279.1,590.7,279.1z"/>
+		<path fill="#FFFFFF" d="M590.7,422.9H209.5c-14.8,0-26.8-12-26.8-26.8c0-14.8,12-26.8,26.8-26.8h381.1c14.8,0,26.8,12,26.8,26.8
+				C617.5,410.9,605.6,422.9,590.7,422.9z"/>
+	  </svg>
+    </a>
+    <ul>
+      <li><a class="btn-floating red center" title="Lessons" ng-click="nav('includes/admin_lessons.html')">Ls</a></li>
+      <li><a class="btn-floating green center" title="Users" ng-click="nav('includes/admin_users.html')">Us</a></li>
+      <li><a class="btn-floating blue center" ng-click="nav('includes/admin_badges.html')">Bg</a></li>
+      <li><a class="btn-floating orange center" ng-click="nav('includes/admin_levels.html')">Lv</a></li>
+      <li><a class="btn-floating yellow center" ng-click="nav('includes/admin_quiz.html')">Qz</a></li>
+      <li><a class="btn-floating pink center" ng-click="nav('includes/admin_daily.html')">Dy</a></li>
+    </ul>
+  </div>
+

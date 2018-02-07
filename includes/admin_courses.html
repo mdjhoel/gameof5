@@ -1,0 +1,37 @@
+<table>
+  <tr>
+    <td style='color: #8bc34a; font-size: 2em;'>Courses</td>
+    <td><a id="addbutton" ng-click="addcourse()" class="waves-effect waves-light btn right light-green">Add</a></td>
+  </tr>
+  
+</table>
+        <div ng-repeat="item in alldata.courses">
+          <ul class="collection with-header">
+            <li class="collection-item">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field">
+                    <input id="name" type="text" ng-model="item.name">
+                    <label class='md-no-float' for="name">Course name</label>
+                  </div>
+                    <div class="input-field">
+                    <input id="descname" type="text" ng-model="item.descname">
+                      <label class='md-no-float' for="descname">Descriptive name</label>
+                  </div>
+                    <div class="input-field">
+                    <input id="desc" type="text" ng-model="item.desc">
+                      <label class='md-no-float' for="desc">Description</label>
+                  </div>
+                  <div>
+                      <a class="waves-effect waves-light btn light-green" ng-click="navAdmin(item.name)">Edit</a>
+                      <a class="waves-effect waves-light btn pink" ng-click="removecourse($index)">Delete</a>
+                    </div> 
+                 </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+
+        <a ng-click="myalert()" class="waves-effect waves-light btn">View json</a>
+        <div id="jsoncurrent"></div>
+        <br>      

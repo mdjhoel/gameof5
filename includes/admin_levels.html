@@ -1,0 +1,54 @@
+
+<table>
+<tr>
+	<td style='color: #8bc34a; font-size: 2em;'>Levels</td>
+	<td><a ng-click="addlevel()" class="waves-effect waves-light btn right light-green">Add</a></td>
+</tr>
+</table>
+
+<div ng-repeat="item in data.levels">
+	<ul class="collection with-header">
+		<li class="collection-item">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="name" type="text" ng-model="item.name">
+				    	<label class='md-no-float' for="name">Name</label>
+					</div>
+
+					<div>
+						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Details</a>
+				    	<a class="waves-effect waves-light btn pink" ng-click="removelevel($index)">Delete</a>
+				    </div>
+
+					<div ng-show="$scope.showedit">
+						<div class="input-field col s6">
+							<input class="TextBox" id="low" type="number" validate="number" min=0 max=1000 ng-model="item.low" ng-init="finishLoading()"/>
+							<label class='md-no-float' for="low">Low</label>
+						</div>
+						<div class="input-field col s6">
+							<input class="TextBox" id="high" type="number" validate="number" min=0 max=1000 ng-model="item.high"/>
+							<label class='md-no-float' for="high">High</label>
+						</div>
+						<div class="input-field col s12 m6">
+							<input id="priv" type="text" ng-model="item.priv">
+					    	<label class='md-no-float' for="desc">Privilege</label>
+						</div>
+						<div class="input-field col s12 m6">
+							<input id="desc" type="text" ng-model="item.desc">
+					    	<label class='md-no-float' for="desc">Description</label>
+						</div>
+					
+					</div>
+
+				 </div>
+			</form>
+		</li>
+	</ul>
+</div>
+<br>
+
+
+
+
+    		

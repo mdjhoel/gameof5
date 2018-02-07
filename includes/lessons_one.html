@@ -1,0 +1,39 @@
+<h5>Lesson</h5>
+<div class="row" align="center">
+	<div class="col s12">
+    	<div class="card">
+        	<div class="card-image" ng-hide="lesson.img ==''">
+            	<img src="{{lesson.img}}"/>
+              	<span class="card-title">{{lesson.name}}</span>
+            </div>
+            <div class="card-content">
+              	<span class="card-title blue-text" ng-hide="lesson.img !=''">{{lesson.name}}</span>
+              	<p>{{lesson.desc}}</p>
+            </div>
+            <div class="card-action" ng-hide="lesson.keywords.length == 0 &&  lesson.expectations.length == 0">
+              	<div title="keywords" class="chip blue white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
+				<div title="curriculum expectations" class="chip orange white-text" ng-repeat="expectation in lesson.expectations">{{expectation}}</div>
+            </div>
+       	</div>
+	</div>
+</div>
+
+<h5 ng-hide="lesson.segments.length == 0">Lesson Segments</h5>
+<div class="collection" ng-repeat="item in lesson.segments">
+	<a href="" class="collection-item" ng-click="showme = !showme">{{$index}} : {{item.title}}</a>
+		<div ng-show="showme" class="row" align="center">
+          	<div class="card" style='width: 95%; margin-bottom: 0px; margin-top: 20px;'>
+            	<div class="card-image" ng-hide="item.segimg ==''">
+              		<img src="{{item.segimg}}"/>
+              		<span class="card-title">{{item.title}}</span>
+            	</div>
+            	<div class="card-content">
+            		<span class="card-title blue-text" ng-hide="item.segimg !=''">{{item.title}}</span>
+              		<p>{{item.text}}</p>
+            	</div>
+            	<div class="card-action" ng-hide="item.seglink ==''">
+              		<a href="{{item.seglink}}" target="_blank">Link</a>
+            	</div>
+          	</div>
+      	</div>
+</div>

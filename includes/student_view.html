@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col s12 m6">
+      <div class="card">
+          <div class="card-content">
+            <table>
+              <tr>
+                <td><span class="card-title">Level: {{user.level.name}}</span></td>
+                <td class="right"><div class='chip blue white-text'>{{user.pointstotal}}</div></td>
+              </tr>
+              <tr>
+                <td>
+                  {{data.level.desc}}
+                </td>
+              </tr>
+            </table>
+            <div class="card-action" align="center">
+              <a class="waves-effect waves-light btn light-green" ng-disabled="user.pointstotal == 0" ng-click="nav('includes/student_level.html')">Details</a>
+            </div>
+         </div>
+      </div>
+  </div>
+  <div class="col s12 m6">
+    <div class="card white">
+      <div class="card-content">
+        <table>
+          <tr>
+            <td><span class="card-title">Daily XP: {{user.dailytotal}}</span></td>
+            <td class="right"><span class="badge blue white-text" ng-show="user.dailytotal!=0">{{user.daily.length}} comments</span></td>
+          </tr>
+          </table>
+          <table>
+            <tr>
+              <td>
+                Daily observations from the teacher to help you improve
+              </td>
+            </tr>
+          </table>
+          <div class="card-action" align="center">
+            <a class="waves-effect waves-light btn light-green" ng-disabled="user.dailytotal == 0" ng-click="nav('includes/student_daily.html')">Details</a>
+          </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card white">
+      <div class="card-content">
+        <table>
+          <tr>
+            <td><span class="card-title">Badge XP: {{user.badgestotal}}</span></td>
+            <td class="right"><span class="badge blue white-text" ng-show="value >= 3" ng-repeat="(key, value) in data.badges"><div ng-show="$parent.key == badge.id && $parent.value >=3" ng-repeat="badge in alldata.badges">{{badge.name}}</div></span></td>
+          </tr>
+          </table>
+          <table>
+            <tr>
+              <td>
+                Performance recognized / rewarded with badges and XP.
+              </td>
+            </tr>
+          </table>
+          <div class="card-action" align="center">
+            <a class="waves-effect waves-light btn light-green" ng-disabled="user.badgestotal == 0" ng-click="nav('includes/student_badges.html')">Details</a>
+          </div>
+         </div>
+      </div>
+  </div>
+  <div class="col s12 m6">
+    <div class="card white">
+      <div class="card-content">
+        <table>
+          <tr>
+            <td><span class="card-title">Quiz XP: {{user.quiztotal}}</span></td>
+            <td class="right"><span class="badge blue white-text" ng-show="quiztotal!=0">{{user.quizzes.length}} quizzes</span></td>
+          </tr>
+          </table>
+          <table>
+            <tr>
+              <td>
+                Quizzes reward good work habits and diagnose problems.
+              </td>
+            </tr>
+          </table>
+          <div class="card-action" align="center">
+            <a class="waves-effect waves-light btn light-green" ng-disabled="user.quiztotal == 0" ng-click="nav('includes/student_quiz.html')">Details</a>
+          </div>
+          </div>
+      </div>
+  </div>
+</div>
+   
+
+
+
+ 
+

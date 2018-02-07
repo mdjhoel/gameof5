@@ -1,0 +1,36 @@
+
+<table>
+<tr>
+	<td style='color: #8bc34a; font-size: 2em;'>Users</td>
+	<td><a ng-click="adduser()" class="waves-effect waves-light btn right light-green">Add</a></td>
+</tr>
+</table>
+
+<div ng-repeat="(key, item) in data.users">
+	<ul class="collection with-header">
+		<li class="collection-item">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field">
+						<input id="email" type="email" class="validate" ng-model="item.name">
+				    	<label class='md-no-float' for="email" data-error="wrong" data-success="right">Email</label>
+					</div>
+					<div>
+				    	<a class="waves-effect waves-light btn pink" ng-click="removeuser($index)">Delete</a>
+				    	<a class="waves-effect waves-light btn blue" ng-click="navUser($index)">View</a>
+				    </div> 
+				 </div>
+			</form>
+		</li>
+	</ul>
+</div>
+
+<a ng-click="myalert()" class="waves-effect waves-light btn">View json</a>
+
+<div id="jsoncurrent"></div>
+<br>
+
+
+
+
+    		
