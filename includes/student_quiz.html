@@ -8,6 +8,7 @@
                 <li class="collection-item avatar">
                   <img src="images/quiz.svg" ng-show="user.quizzes[$index].xp > 0" class="circle"/>
                   <img src="images/quiz2.svg" ng-show="user.quizzes[$index].xp == 0" class="circle"/>
+                  <img src="images/quiz2.svg" ng-show="user.quizzes[$index].grade == -99" class="circle"/>
                   <p class="title">{{quiz.name}}</p>
                   <p>{{user.quizzes[$index].grade}}%</p>
                   <div class="secondary-content">
