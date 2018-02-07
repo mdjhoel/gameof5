@@ -324,17 +324,6 @@ function setUserTotals() {
     	$rootScope.alldata.courses.splice(index, 1);
   }
 
-  // test to see what is in json
-	$rootScope.myalert = function () {
-		var jsondiv = document.getElementById("jsoncurrent");
-    var temp = "";
-    temp = temp + "<b>This is $rootScope.data</b>"
-    temp = temp + "<br>" + angular.toJson($rootScope.data);
-    temp = temp + "<br><br><b>This is $rootScope.alldata</b>"
-    temp = temp + "<br>" + angular.toJson($rootScope.alldata)
-    jsondiv.innerHTML = temp;
-  }
-
   // Add some new data to the rootScope
   $rootScope.adduser = function () {
     var quizlist = [];
