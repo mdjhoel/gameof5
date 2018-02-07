@@ -1,0 +1,54 @@
+#myrect:hover ~ #needle {
+  transform: rotate(45deg) rotate(-45deg);
+}
+
+.waves-effect waves-light btn {
+  background-color: #2196f3;
+}
+
+
+.input-field input[type=text]:focus + label {
+     color: #e91e63;
+}
+
+/* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #2196f3;
+     box-shadow: 0 1px 0 0 #2196f3;
+   }
+
+  
+
+.collapsible-header.active i {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+
+.collection a.collection-item {
+    color: #000000!important;
+}
+
+.collection a.collection-item:not(.active):hover {
+    background-color: #2196f3!important;
+    color: #ffffff!important;
+}
+
+
+div.scrollmenu {
+    background-color: #ffffff;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 2px;
+    text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+    background-color: #777;
+}
