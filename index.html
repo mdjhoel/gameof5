@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gameof5</title>
+  <link href="css/stylesheet.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/materialize.min.css">
+
+  <!-- load Angular 1.6.5 -->
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <script src="js/angular-sanitize.min.js"></script>
+
+  <script src="js/teacherapp.js"></script>
+  <!-- FAKE <meta name="google-signin-client_id" content="654063655689-o89ulc1ejks5j73i026497ckrob9f9ul.apps.googleusercontent.com">-->
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  
+
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyAxwOktlK7WPu3Y4ZbKTB3qY4XBtbfOht4",
+      authDomain: "mytest-186212.firebaseapp.com",
+      databaseURL: "https://mytest-186212.firebaseio.com",
+      projectId: "mytest-186212",
+      storageBucket: "",
+      messagingSenderId: "654063655689"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<!-- local testing ... -->
+<!-- cd to Documents/gameof5 -->
+<!-- php -S localhost:8000 -->
+
+<body ng-app="teacherpages">
+
+<!-- logo -->
+  <div width='300px' id="g5header" align="center"><img src="images/header.svg"/></div>
+ 
+  <div class="container">
+    <div class="row">
+      
+    <div ng-include="navPath"></div>
+    <!--<div class="btn blue white-text right" ng-hide="loggedIn" ng-click="signin()" style="margin-bottom: 10px;">Sign in</div>-->
+	  
+      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+
+      <!--<div ng-view onload="finishLoading()"></div>-->
+
+  	  <div ng-include="filePath" onload="finishLoading()"></div>
+
+
+      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+
+      <!-- footer -->
+      <div id="g5footer"></div>
+
+  		<!-- end big row -->    
+  	</div>
+  	
+    <!-- container -->
+  </div>
+  
+
+  <!-- #About Modal -->
+  <div id="modalcheck" class="modal">
+      <div class="modal-content">
+        <h4>Save edits</h4>
+        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
+        
+        <p ng-show="data.users != undefined">
+          <input type="checkbox" id="usertotals"/>
+          <label for="usertotals">Update user totals (this may take a minute)</label>
+        </p>
+
+      <label 
+        <div class="modal-footer">
+          <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
+            <a href="#!" class="modal-action modal-close btn-flat ">No</a>
+        </div>
+        
+      </div>
+    </div>
+
+  <div id="modalprofile" class="modal center">
+      <div class="modal-content">
+        <h4>{{name}}</h4>
+        <img src="{{photoUrl}}" style="border-radius:50%;">
+        <p>{{email}}</p>
+        
+        <div class="modal-footer">
+          <a ng-click="signout()" class="modal-action modal-close btn-flat">Sign out</a>
+          <a href="#!" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+      </div>
+  </div>
+
+</body>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<!--<script type="text/javascript" src="js/javascript.js"></script>-->
+
+<script>
+
+  setFooter();
+
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  	$('.modal').modal();
+  });
+
+  // Common footer for pages
+  function setFooter() {
+    var footerDoc = document.getElementById("g5footer");
+    var temphtml = "";
+    temphtml = temphtml + "<footer class='page-footer white'>";
+      
+       temphtml = temphtml + "<div class='row'>";
+         temphtml = temphtml + "<div class='col l6 s12'>";
+           temphtml = temphtml + "<h5 class='blue-text'>gameof5</h5>";
+           temphtml = temphtml + "<p class='black-text text-lighten-4'>gameof5 allows teachers to digitally store, structure, present, and gamify their lessons to increase student engagement. gameof5 is a learning project for the programmer and is free of charge! The application was built using JSON, Javascript, Firebase, AngularJS and Material Design standards.</p>";
+         temphtml = temphtml + "</div>";
+         temphtml = temphtml + "<div class='col l4 offset-l2 s12'>";
+           temphtml = temphtml + "<h5 class='blue-text'>Links</h5>";
+          temphtml = temphtml + "<ul>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://material.io/' target='_blank'>Material Design Guidelines</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='http://www.materializecss.com' target='_blank'>MaterializeCSS</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://design.google/' target='_blank'>Google Design</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://firebase.google.com/' target='_blank'>Firebase</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://angularjs.org/' target='_blank'>AngularJS</a></li>";
+          temphtml = temphtml + "</ul>";
+        temphtml = temphtml + "</div></div>";
+
+    footerDoc.innerHTML = temphtml;
+  }
+
+</script>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</html>
