@@ -123,11 +123,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       });
     }
 
-    // Work around for label input overlap bug
-    $rootScope.finishLoading = function() {
-      // need to wait a millisecond for this to work
-      setTimeout(function(){ Materialize.updateTextFields(); }, 1); 
-    }
+  // Work around for label input overlap bug
+  $rootScope.finishLoading = function() {
+    // need to wait a millisecond for this to work
+    setTimeout(function(){ Materialize.updateTextFields(); }, 1); 
+  }
   
   $rootScope.courses = function() {
 
@@ -263,11 +263,17 @@ function setUserTotals() {
 
       if (daily != undefined) {
         for (j = 0; j<daily.length; j++) {
-          dailytotal = dailytotal + daily[j].grade;
+
+          if (daily[j].grade != -99) {
+            dailytotal = dailytotal + daily[j].grade;
+          }
+          
           if (daily[j].badge != 0) {
+            console.log(daily[j].badge);
             badgelist.push(daily[j].badge);
-            if (daily[j].grade ==4) {
-              badgestotal = badgestotal + 1;
+            // if not a normal day
+            if (daily[j].grade !=3) {
+              badgestotal = badgestotal + daily[j].value;
             }
           }
         }
@@ -276,7 +282,9 @@ function setUserTotals() {
       var quizzes = users[i].quizzes;
       if (quizzes != undefined) {
         for (k = 0; k<quizzes.length; k++) {
-          quiztotal = quiztotal + users[i].quizzes[k].xp;
+          if (users[i].quizzes[k].grade != -99) {
+            quiztotal = quiztotal + users[i].quizzes[k].xp;
+          }
         }
       }
 
@@ -460,7 +468,21 @@ function setUserTotals() {
     return xp;
   }
 
-// Add some new data to the rootScope
+  // When making a daily other than 3, clear the message field
+  $rootScope.emptyField = function (parent,index) {
+    $rootScope.data.users[index].daily[parent].desc = "Enter a message ...";
+    
+    // set value attribute
+    if ($rootScope.data.users[index].daily[parent].grade == 4) {
+      $rootScope.data.users[index].daily[parent].value = 1;
+    } else {
+      $rootScope.data.users[index].daily[parent].value = -1;
+    }
+    
+  }
+
+
+  // Add some new data to the rootScope
   $rootScope.adddaily = function (number) {
     //$rootScope.data.dailylist.push({lesson: number});
     if ($rootScope.data.dailylist == undefined) { $rootScope.data.dailylist = []; }
@@ -468,7 +490,7 @@ function setUserTotals() {
     for (var i = 0; i < $rootScope.data.users.length; i++) {
       //$rootScope.data.users[i].daily.push({grade: 3, desc: "Normal day, nothing to report", badge: 0});
       if ($rootScope.data.users[i].daily == undefined) { $rootScope.data.users[i].daily = []; }
-      $rootScope.data.users[i].daily.unshift({grade: 3, desc: "Normal day, nothing to report", badge: 0});
+      $rootScope.data.users[i].daily.unshift({grade: 3, desc: "Normal day, nothing to report", badge: 0, value:0});
     }
   }
 
