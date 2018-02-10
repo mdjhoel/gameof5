@@ -196,6 +196,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       }
     }
 
+    $rootScope.share = "http://gameof5.com/#!/?teacher=" +  $rootScope.email.split("@")[0] + "&cname=" + cname; 
     $rootScope.filePath = "includes/admin_splash.html";
     $rootScope.navPath = "includes/nav_admin.html"; 
     var expr= "$rootScope.alldata." + cname;
