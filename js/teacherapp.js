@@ -48,8 +48,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           $rootScope.email = user.email;
           $rootScope.photoUrl = user.photoURL;
 
-          var userId = user.email.split("@")[0]; 
-          var dbstring = userId;
+          if (theme == "teacher") {
+          	var userId = user.email.split("@")[0]; 
+          	var dbstring = userId;
+          } 
 
           var database = firebase.database();
           dbref = firebase.database().ref(dbstring);
