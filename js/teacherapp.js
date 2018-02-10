@@ -20,12 +20,26 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     // show the spinner
     $rootScope.filePath = "includes/spinner.html";
 
-    // check to see if user logged in
+        // check to see if user logged in
     firebase.auth().onAuthStateChanged(function(user) {
+	    
+      // parse API 
+      // /#!/?teacher=mhoel&cname=ics4u
+      var theme = "teacher";
+      if ($location.search()["teacher"] && $location.search()["cname"]) {
+        var args = $location.search();
+        dbstring = args["teacher"] + "/" + args["cname"];
+        theme = "student";
+      }
       
       if (user == null) {
           $rootScope.$apply(function () {
-            $rootScope.filePath = "includes/admin_signin.html";
+            if (theme == "teacher") {
+              $rootScope.filePath = "includes/admin_signin.html";
+            } else {
+              $rootScope.filePath = "includes/student_signin.html";
+            }
+            
             $rootScope.navPath = "includes/nav_signin.html";
           });
       } else {
@@ -36,15 +50,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
           var userId = user.email.split("@")[0]; 
           var dbstring = userId;
-
-          // parse API 
-          // /#!/?teacher=mhoel&cname=ics4u
-          var theme = "teacher";
-          if ($location.search()["teacher"] && $location.search()["cname"]) {
-            var args = $location.search();
-            dbstring = args["teacher"] + "/" + args["cname"];
-            theme = "student";
-          }
 
           var database = firebase.database();
           dbref = firebase.database().ref(dbstring);
