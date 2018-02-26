@@ -1,0 +1,21 @@
+<table>
+	<tr>
+		<td style='color: #8bc34a; font-size: 2em;'>List users</td>
+		<td class="right">
+			<a ng-click="sortUser(data,'name')" class="waves-effect waves-light btn blue">Name</a>
+			<a ng-click="sortUser(data,'pointstotal')" class="waves-effect waves-light btn blue">Points</a>
+		</td>
+	</tr>
+</table>
+
+	<ul class="collection with-header">
+	<li ng-repeat="(key, item) in data.users" class="collection-item avatar">
+      <img src="images/tyler-durden.jpg" alt="{{item.name}}" height='50px' class="circle">
+      <span class="title">{{item.name}}</span>
+      <p>Points: {{item.pointstotal}}<br>
+      </p>
+      <a ng-repeat="(name,value) in item.badges" href="#!" class="secondary-content"><img src='images/badges/{{name}}.svg'></a>
+    </li>
+    </ul>
+
+<br>
