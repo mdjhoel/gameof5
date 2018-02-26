@@ -509,6 +509,20 @@ function setUserTotals() {
       $rootScope.data.users[i].daily.splice(index, 1);
     }
   }
+  
+  $rootScope.sortUser = function(data,col) {
+    var someArray = data.users;
+    someArray.sort(generateSortFn(col, true));
+    data.users = someArray;
+  }
+
+  function generateSortFn(prop, reverse) {
+    return function (a, b) {
+        if (a[prop] < b[prop]) return reverse ? 1 : -1;
+        if (a[prop] > b[prop]) return reverse ? -1 : 1;
+        return 0;
+    };
+  }
 
  $rootScope.showSVG = function(index) {
     for (var i = 0; i < $rootScope.badgesvg.badges.length; i++) {
