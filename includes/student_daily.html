@@ -3,14 +3,14 @@
       <div class="card">
           <div class="card-content">
             <span class="card-title">Daily comments</span>
-            <div ng-repeat="(key, value) in user.daily" ng-show="dailytotal!=0">
+            <div ng-repeat="item in user.daily" ng-show="dailytotal!=0">
               <ul class="collection with-header">
-                <li class="collection-item avatar" ng-repeat="lesson in data.lessons" ng-show="data.dailylist[$parent.$index].id == lesson.id">
-                  <img src="images/badges/{{value.badge}}.svg" class="circle"/>
+                <li class="collection-item avatar" ng-repeat="lesson in readonly.lessons">
+                  <img ng-src="images/badges/{{item.badge}}.svg" class="circle"/>
                   <p class="title">{{lesson.name}}</p>
-                  <p>{{value.desc}}</p>
+                  <p>{{item.desc}}</p>
                   <div href="#!" class="secondary-content">
-                    <p class="chip blue white-text">{{value.grade}}</p>
+                    <p class="chip blue white-text">{{item.grade}}</p>
                   </div>
                 </li>
               </ul>
