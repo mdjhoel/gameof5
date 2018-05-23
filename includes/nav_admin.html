@@ -1,6 +1,6 @@
 <a href="#modalcheck" id="save" title="Save edits" data-height="50" class="modal-action modal-trigger btn blue white-text" style="vertical-align: bottom;">Save</a>
 <a href="#!" id="courses" title="Return to courses" class="btn light-green white-text" ng-click="courses()" style="vertical-align: bottom;">Courses</a>        
-<a href="#modalprofile" id="profile" title="Profile" data-height="50" class="modal-action modal-trigger right"><img src="{{photoUrl}}" style="height: 40px;border-radius:50%"></a>
+<a href="#modalprofile" id="profile" title="Profile" data-height="50" class="modal-action modal-trigger right"><img src="{{admin.photoUrl}}" style="height: 40px;border-radius:50%"></a>
 <a href="#modaldownload" id="download" title="Download" data-height="40" class="modal-action modal-trigger right btn-flat white" style="width:45; height:45;"><img src="images/download.svg"></a>
 
 
@@ -17,12 +17,10 @@
     </a>
     <ul>
       <li><a class="btn-floating red center" title="Lessons" ng-click="nav('includes/admin_lessons.html')">Ls</a></li>
-      <li><a class="btn-floating green center" title="Users" ng-click="nav('includes/admin_users.html')">Us</a></li>
       <li><a class="btn-floating blue center" ng-click="nav('includes/admin_badges.html')">Bg</a></li>
       <li><a class="btn-floating orange center" ng-click="nav('includes/admin_levels.html')">Lv</a></li>
-      <li><a class="btn-floating yellow center" ng-click="nav('includes/admin_quiz.html')">Qz</a></li>
-      <li><a class="btn-floating pink center" ng-click="nav('includes/admin_daily.html')">Dy</a></li>
-      <li><a class="btn-floating red center" ng-click="nav('includes/admin_list.html')">Li</a></li>
+      <li><a class="btn-floating yellow center" ng-click="nav('includes/admin_quiz.html')" ng-disabled="users == undefined">Qz</a></li>
+      <li><a class="btn-floating pink center" ng-click="nav('includes/admin_daily.html')" ng-disabled="users == undefined">Dy</a></li>
+      <li><a class="btn-floating red center" ng-click="navList('includes/admin_list.html')" ng-disabled="users == undefined">Li</a></li>
     </ul>
   </div>
-
