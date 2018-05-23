@@ -2,19 +2,26 @@
 	<tr>
 		<td style='color: #8bc34a; font-size: 2em;'>List users</td>
 		<td class="right">
-			<a ng-click="sortUser(data,'name')" class="waves-effect waves-light btn blue">Name</a>
-			<a ng-click="sortUser(data,'pointstotal')" class="waves-effect waves-light btn blue">Points</a>
+			<a ng-click="sortUser(listArray,'email')" class="waves-effect waves-light btn blue">Name</a>
+			<a ng-click="sortUser(listArray,'pointstotal')" class="waves-effect waves-light btn blue">Points</a>
 		</td>
 	</tr>
 </table>
 
 	<ul class="collection with-header">
-	<li ng-repeat="(key, item) in data.users" class="collection-item avatar">
-      <img src="images/tyler-durden.jpg" alt="{{item.name}}" height='50px' class="circle">
-      <span class="title">{{item.name}}</span>
-      <p>Points: {{item.pointstotal}}<br>
-      </p>
-      <a ng-repeat="(name,value) in item.badges" href="#!" class="secondary-content"><img src='images/badges/{{name}}.svg'></a>
+	<li ng-repeat="(key, item) in listArray" class="collection-item avatar">
+      <img ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
+      <span class="title">{{item.name}} ({{item.email}})</span>
+      <p ng-show="item.confirmed==true">Points: {{item.pointstotal}}</p>
+      <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
+      <br>
+      <p>
+          <input type="checkbox" class=" class="filled-in checkbox-pink" id="deleteme{{$index}}" ng-click="$scope.showedit = !$scope.showedit"/>
+          <label for="deleteme{{$index}}"></label>
+          <a class="waves-effect waves-light btn pink" ng-init="$scope.showedit = true" ng-disabled="$scope.showedit" ng-click="removeuser(item.uid,$index)">Delete</a>
+        </p>
+	  
+      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3" href="#!" class="secondary-content"><img src='images/badges/{{name}}.svg'></a>
     </li>
     </ul>
 
