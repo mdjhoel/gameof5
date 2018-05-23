@@ -1,113 +1,126 @@
 
 var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
-
-  app.service('helpers', function($rootScope) {
-    this.fakesignin = function () {
-      mydata = {
-      loggedIn: true,
-      name: "Tyler Durden",
-      email: "mhoel@ucc.on.ca",
-      photoUrl: "images/tyler-durden.jpg",
-      alldata: {'cgd3m':{'name':'cgd3m','lessons':[{'id':1,'show':true,'name':'second class','desc':'','img':'','keywords':[],'expectations':[],'segments':[]},{'id':0,'show':true,'name':'intro to course','desc':'first class','img':'http://1.bp.blogspot.com/_WuTTPaMX-jA/S-GDGrp37cI/AAAAAAAAAA8/esIZKmI5h_A/s1600/Desktop-Computer-D4300-.jpg','keywords':['computer','digital'],'expectations':['m10','m11'],'segments':[{'title':'What will this course be like?','text':'This course will ...','segimg':'http://www.govbids.com/Post/surplusauctions/pics/125200840159PM173dx2000.jpg','seglink':'http://www.microsoft.com'}]},{'id':2,'show':true,'name':'third class','desc':'','img':'','keywords':[],'expectations':[],'segments':[]}],'users':[{'name':'mhoel@ucc.on.ca','quiztotal':'0','dailytotal':'0','badgestotal':'0','pointstotal':'0','quizzes':[],'daily':[],'badges':[],'level':0}],'levels':[],'quizlist':[],'dailylist':[],'badges':[]},'courses':[{'name':'cgd3m','descname':'geo of asia','desc':'great stuff'}],name:'',email:'',photoUrl:''},
-      data: {'cgd3m':{'name':'cgd3m','lessons':[{'id':1,'show':true,'name':'second class','desc':'','img':'','keywords':[],'expectations':[],'segments':[]},{'id':0,'show':true,'name':'intro to course','desc':'first class','img':'http://1.bp.blogspot.com/_WuTTPaMX-jA/S-GDGrp37cI/AAAAAAAAAA8/esIZKmI5h_A/s1600/Desktop-Computer-D4300-.jpg','keywords':['computer','digital'],'expectations':['m10','m11'],'segments':[{'title':'What will this course be like?','text':'This course will ...','segimg':'http://www.govbids.com/Post/surplusauctions/pics/125200840159PM173dx2000.jpg','seglink':'http://www.microsoft.com'}]},{'id':2,'show':true,'name':'third class','desc':'','img':'','keywords':[],'expectations':[],'segments':[]}],'users':[{'name':'mhoel@ucc.on.ca','quiztotal':'0','dailytotal':'0','badgestotal':'0','pointstotal':'0','quizzes':[],'daily':[],'badges':[],'level':0}],'levels':[],'quizlist':[],'dailylist':[],'badges':[]},'courses':[{'name':'cgd3m','descname':'geo of asia','desc':'great stuff'}],name:'',email:'',photoUrl:''}
-      } 
-      return mydata;
-    }
-  });
     
-  app.run(function($rootScope,$location,helpers) {
+  app.run(function($rootScope,$location) {
+
+    // get url so URL can be put back when users click on modals
+    $rootScope.url = $location.url();
     
     // show the spinner
     $rootScope.filePath = "includes/spinner.html";
 
-        // check to see if user logged in
+    // check to see if user logged in
     firebase.auth().onAuthStateChanged(function(user) {
-	    
-      // parse API 
-      // /#!/?teacher=mhoel&cname=ics4u
-      var theme = "teacher";
-      if ($location.search()["teacher"] && $location.search()["cname"]) {
-        var args = $location.search();
-        dbstring = args["teacher"] + "/" + args["cname"];
-        theme = "student";
-      }
+
+      // 1. Parse API - /#!/?teacher=mhoel&cname=ics4u
+      var theme = "teacher"; // default to teacher
+      if ($location.search()["teacher"] && $location.search()["cname"]) { theme = "student"; } // switch to student if API used
       
+      // 2. Detect authenication 
       if (user == null) {
+          // Apply function is required to sync Angular after leaving Angular environment
           $rootScope.$apply(function () {
             if (theme == "teacher") {
               $rootScope.filePath = "includes/admin_signin.html";
             } else {
               $rootScope.filePath = "includes/student_signin.html";
             }
-            
             $rootScope.navPath = "includes/nav_signin.html";
           });
       } else {
-          loggedIn = true;
-          $rootScope.name = user.displayName;
-          $rootScope.email = user.email;
+          
+          // Set photoUrl so it is available across teacher and students
           $rootScope.photoUrl = user.photoURL;
 
-          if (theme == "teacher") {
-          	var userId = user.email.split("@")[0]; 
-          	var dbstring = userId;
-          } 
+          // 3. Determine who is accessing and set interface
+          var userId = user.uid;
 
-          var database = firebase.database();
-          dbref = firebase.database().ref(dbstring);
-          $rootScope.dbref = dbref;
+          // 4. Connect to Firebase
+          $rootScope.database = firebase.database();
 
-          // set up the query and promise
-          var query = dbref.orderByKey();
-          query.once("value")
-            .then(function(snapshot) {
+          // 5. Set database references, retrieve data and set interface for teachers
+          if (theme == "teacher") {  
+          	var dbstring = "teachers/" + userId; // get everything for this teacher
+            $rootScope.refAdmin = $rootScope.database.ref(dbstring + "/admin");
 
+            $rootScope.refAdmin.once("value").then(function(snapshot) {
               if (snapshot.val() != undefined) {
-                $rootScope.alldata = snapshot.val(); 
+                $rootScope.admin = snapshot.val();
+                console.log("Data from Firebase, now stored in $rootScope.admin.");
               } else {
-                $rootScope.alldata = {'courses':[{'name':'','descname':'','desc':''}], 'name':'','email':'','photoUrl':''};
+                $rootScope.admin = {courses:[],"name":"","email":"","photoUrl":"","uid":""};
+                console.log("No data from Firebase, stored in $rootScope.admin. Using default $rootScope.admin.");
               }
 
-              $rootScope.data = $rootScope.alldata;
-            
-              // just in case user leaves without saving
-              var o = angular.copy($rootScope.alldata.courses);
-              $rootScope.o_courses = angular.toJson(o);
+              $rootScope.$apply(function () { // apply syncs Angular and Firebase
 
-              $rootScope.$apply(function () {
+                  // Add admin data
+                  $rootScope.admin.name = user.displayName;
+                  $rootScope.admin.email = user.email;
+                  $rootScope.admin.photoUrl = user.photoURL;
+                  $rootScope.admin.uid = user.uid;
 
-                if (theme == "teacher") {
+                  // Just in case user leaves without saving
+                  var o = angular.copy($rootScope.admin);
+                  $rootScope.o_admin = angular.toJson(o);
+
+                  $rootScope.user = userId;
                   $rootScope.navPath = "includes/nav_courses.html";
                   $rootScope.filePath = "includes/admin_courses.html";
-                  //$route.reload(); // reload page so that data shows up
-                } else {
-                  
-
-                  var users = $rootScope.data.users;
-                  if (users == undefined) {
-                    $rootScope.filePath = "includes/404.html";
-                  } else {
-                    for (i = 0; i<users.length; i++) {
-                      if (users[i].name.trim() == $rootScope.email) {
-                        $rootScope.user = $rootScope.data.users[i];
-                      } 
-                    }
-
-                    if ($rootScope.user == undefined) {
-                      $rootScope.filePath = "includes/404.html";
-                    } else {
-                      $rootScope.navPath = "includes/nav_student.html";
-                      $rootScope.filePath = "includes/student_view.html";
-                    }
-                    
-                    //$route.reload(); // reload page so that data shows up
-                  }
-                }
-
               });
 
-            }); // .then
+            },
+            function(error) {
+                // The Promise was rejected.
+                $rootScope.$apply(function () { $rootScope.error = "Data could not be saved"; $rootScope.filePath = "includes/404.html"; });
+                console.error(error);
+            });
 
+          } else { // student
+
+            // example: localhost:8000/#!/teacher=9KXHxUezF3PDUdZgoG4optm4p6V2&cname=Test123
+            var args = $location.search();
+            var dbstring = "teachers/" + args["teacher"] + "/courses/" + args["cname"];             
+            $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
+            $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
+
+            $rootScope.refUser.once("value").then(function(snapshot) {
+              if (snapshot.val() != undefined) {
+                $rootScope.user = snapshot.val();
+                console.log("Data from Firebase, now stored in $rootScope.user.");
+                $rootScope.$apply(function () {  // prep for user view   
+                  if ($rootScope.user.confirmed == false) {
+                    $rootScope.error = "Not confirmed yet.";
+                    $rootScope.filePath = "includes/404.html";
+                  } else {
+                    $rootScope.navPath = "includes/nav_student.html";
+                    $rootScope.filePath = "includes/student_view.html";                    
+                  }
+                });
+              } else {
+                console.log("No users data retrieved from Firebase. Creating new user");
+                var newuser = {confirmed:false,email:user.email,name: user.displayName,photoUrl:user.photoURL,uid:user.uid};
+                $rootScope.user = newuser;
+                $rootScope.refUser.update(newuser).then(function(){
+                  console.log("Data saved successfully. " + JSON.stringify(newuser));
+                  $rootScope.$apply(function () { $rootScope.error = "New request sent."; $rootScope.filePath = "includes/404.html"; return; });
+                }).catch(function(error) {
+                  console.log("Data could not be saved." + error);
+                  $rootScope.$apply(function () { $rootScope.error = "Data could not be saved"; $rootScope.filePath = "includes/404.html"; return; });
+                });
+              }
+            }); // query Firebase
+
+            $rootScope.refLessons.once("value").then(function(snapshot) {
+              if (snapshot.val() != undefined) {
+                $rootScope.readonly = snapshot.val();
+                console.log("Data from Firebase, now stored in $rootScope.readonly.");
+              } else {
+                console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
+              }
+            }); // query Firebase
+
+          } // student
       } // if user is not null
     }); // if authorization changes
 
@@ -124,11 +137,16 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
     $rootScope.signout = function(){
       firebase.auth().signOut().then(function() {
-        window.location.replace("#/");
-        location.reload();
+        //window.location.replace("#/");
+        $location.url($rootScope.url);
+        //location.reload();
         }).catch(function(error) {
       });
     }
+
+  $rootScope.setUrl = function() {
+    $location.url($rootScope.url);
+  }
 
   // Work around for label input overlap bug
   $rootScope.finishLoading = function() {
@@ -136,10 +154,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     setTimeout(function(){ Materialize.updateTextFields(); }, 1); 
   }
   
+
   $rootScope.courses = function() {
 
     // check edits
-    if (!checkedits($rootScope.o_admin,$rootScope.data)) {
+    if (!checkedits($rootScope.o_readonly,$rootScope.readonly)) {
       askit = confirm("Please save your work.");
       if (askit == false) {
         return;
@@ -148,7 +167,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
     $rootScope.filePath = "includes/admin_courses.html";
     $rootScope.navPath = "includes/nav_courses.html";
-      //$route.reload();
   }
 
   function checkedits(original,current) {
@@ -169,11 +187,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     if ($rootScope.user != undefined) {return;}
     var message = "Please save your work.";
     if ($rootScope.navPath == "includes/nav_courses.html") {
-      if (checkedits($rootScope.o_courses,$rootScope.alldata.courses)) {
+      if (checkedits($rootScope.o_readonly,$rootScope.readonly)) {
         return;
       }
     } else {
-      if (checkedits($rootScope.o_admin,$rootScope.data)) {
+      if (checkedits($rootScope.o_admin,$rootScope.admin)) {
         return;
       }
     }
@@ -193,91 +211,188 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     $rootScope.filePath = path;
   }
 
+  // Create listArray so sorts will work
+  $rootScope.navList = function(path) {
+    $rootScope.listArray = Object.values($rootScope.users);
+    $rootScope.filePath = path;
+  } 
+
+  // Edit a particular course
   $rootScope.navAdmin = function(cname) {
-    
-    // check edits
-    if (!checkedits($rootScope.o_courses,$rootScope.alldata.courses)) {
+
+    // Important variable for include screens
+    $rootScope.cname = cname;
+
+    // Check edits of admin - if changes have been made, send a message
+    if (!checkedits($rootScope.o_admin,$rootScope.admin)) {
       askit = confirm("Please save your work.");
       if (askit == false) {
         return;
       }
     }
 
-    $rootScope.share = "http://gameof5.com/#!/?teacher=" +  $rootScope.email.split("@")[0] + "&cname=" + cname; 
+    $rootScope.readonly = undefined;
+    $rootScope.users = undefined;
+
+    // Connect to Firebase and get specific course data
+    //if ($rootScope.readonly == undefined) {
+      
+      var dbstring = "teachers/" + $rootScope.admin.uid + "/courses/" + cname;
+      $rootScope.refro = $rootScope.database.ref(dbstring + "/readonly" );
+
+      $rootScope.refro.once("value").then(function(snapshot) {
+        if (snapshot.val() != undefined) {
+          $rootScope.readonly = snapshot.val();
+          console.log("Data from Firebase, now stored in $rootScope.readonly.");
+        } else {
+          $rootScope.readonly = {lessons:[],badges:[],levels:[],quizzes:[],daily:[]};
+          console.log("No data from Firebase, default stored in $rootScope.readonly.");
+        }
+
+        $rootScope.$apply(function () { 
+          var o = angular.copy($rootScope.readonly); // set original readonly to check for edits later
+          $rootScope.o_readonly = angular.toJson(o);  
+
+          $rootScope.alldata = "{ admin:" + angular.toJson($rootScope.admin) + ", courses: {" + cname + ":" + angular.toJson($rootScope.readonly) + "}";
+
+        });
+
+      },
+      function(error) {
+        // The Promise was rejected.
+        $rootScope.$apply(function () { $rootScope.error = "Data could not be accessed."; $rootScope.filePath = "includes/404.html"; });
+        console.error(error);
+      });
+    //} // end check for undefined
+
+    // Connect to Firebase and get specific course data
+    //if ($rootScope.users == undefined) {
+      
+      var dbstring = "teachers/" + $rootScope.admin.uid + "/courses/" + cname;
+      $rootScope.refUsers = $rootScope.database.ref(dbstring + "/users" );
+
+      $rootScope.refUsers.once("value").then(function(snapshot) {
+        if (snapshot.val() != undefined) {
+          $rootScope.users = snapshot.val();
+          console.log("Data from Firebase, now stored in $rootScope.users.");
+          $rootScope.$apply(function () { $rootScope.navPath = "includes/nav_admin.html"}); // reload so all tools are visible
+        } else {
+          console.log("No users data from Firebase yet, $rootScope.users remaining undefined.");
+        }
+
+        $rootScope.$apply(function () {  
+          if ($rootScope.users != undefined) {
+            $rootScope.alldata = $rootScope.alldata + ", users:" + angular.toJson($rootScope.users) + "}";
+          } else {
+            $rootScope.alldata = $rootScope.alldata + "}";
+          }
+          //$rootScope.alldata = $rootScope.alldata + "}";
+          $rootScope.share = "http://gameof5.com/#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
+        });
+
+      },
+      function(error) {
+        // The Promise was rejected.
+        $rootScope.$apply(function () { $rootScope.error = "Data could not be accessed"; $rootScope.filePath = "includes/404.html"; });
+        console.error(error);
+      });
+    //} // end check for undefined
+
     $rootScope.filePath = "includes/admin_splash.html";
-    $rootScope.navPath = "includes/nav_admin.html"; 
-    var expr= "$rootScope.alldata." + cname;
-    $rootScope.cname = cname;
-    $rootScope.data = eval(expr);
+    $rootScope.navPath = "includes/nav_admin.html";
 
-    if ($rootScope.data == undefined) {
-      //var mydata = {'name': "",'lessons':[{id:length,show:true,name:"",desc:"",img:"",keywords:[""],expectations:[""],segments:[""]}],'users':[{name: "",quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes:[""],daily:[""], badges: [""], level: 0}],'quizlist':[{grade: 0, xp: 0}],'dailylist':[{grade: 3, desc: "Normal day, nothing to report", badge: 0}],'levels':[{name: "", desc: "", low: 0, high: 0, priv: "", color: "#2196f3", textcolor: "#000"}],'badges':[{name:"",value:1,id:""}]};
-      var mydata = {name: ""};
-      mydata.name = cname;
-      $rootScope.data = mydata;
-    }
+  } // end of navAdin function
 
-    var o = angular.copy($rootScope.data);
-    $rootScope.o_admin = angular.toJson(o);
-    
-  }
-
-  // Use to write out to firebase
+  // SAVE function - use to write out to Firebase
   $rootScope.save = function() {
 
     if (document.getElementById('usertotals').checked) {
-      if ($rootScope.data.users != undefined) {setUserTotals();}
+      if ($rootScope.users != undefined) {setUserTotals();}
     }
-    
-    // update editor info
-    $rootScope.alldata.name = $rootScope.name;
-    $rootScope.alldata.email = $rootScope.email;
-    $rootScope.alldata.photoUrl = $rootScope.photoUrl
-    
-    // get rid of Angular $$ data
-   
-    var alldata = angular.toJson($rootScope.alldata);
-    alldata = JSON.parse(alldata);
-    $rootScope.o_courses = JSON.stringify(alldata.courses);
 
-    if ($rootScope.navPath == "includes/nav_admin.html") {
-      
-      // get rid of Angular $$ data
-      var data = angular.toJson($rootScope.data);
-      $rootScope.o_admin = data; // reset original
-      data = JSON.parse(data);
-      alldata[data.name] = data;
-      
-    } 
+    var admin = angular.toJson($rootScope.admin); // get rid of Angular $$ data
+    admin = JSON.parse(admin);
+    $rootScope.o_admin = JSON.stringify(admin);
 
-    var update = $rootScope.dbref.set(alldata);
-    console.log(update);
-   
+    // If you are editing a specific course ...
+    if ($rootScope.readonly != undefined) {
+
+      var readonly = angular.toJson($rootScope.readonly); // get rid of Angular $$ data
+      readonly = JSON.parse(readonly);
+      $rootScope.o_readonly = readonly; 
+
+      $rootScope.refAdmin.update(admin).then(function(){
+        console.log("Admin data saved successfully.");
+      }).catch(function(error) {
+        console.log("Data could not be saved." + error);
+      });
+
+      if ($rootScope.readonly != undefined) {
+        $rootScope.refro.update(readonly).then(function(){
+          console.log("Readonly data saved successfully.");
+        }).catch(function(error) {
+          console.log("Data could not be saved." + error);
+        });
+      }
+
+       if ($rootScope.users != undefined) {
+
+        var users = angular.toJson($rootScope.users); // get rid of Angular $$ data
+        users = JSON.parse(users);
+
+        $rootScope.refUsers.set(users).then(function(){
+            console.log("User data saved successfully.");
+        }).catch(function(error) {
+            console.log("Data could not be saved." + error);
+        });
+      }
+      
+    } else {
+
+      $rootScope.refAdmin.update(admin).then(function(){
+        console.log("Admin data saved successfully.");
+      }).catch(function(error) {
+        console.log("Data could not be saved." + error);
+      });
+
+    }
+
   }
 
 function setUserTotals() {
     
-    var users = $rootScope.data.users;
+    var users = $rootScope.users;
     var userlist = [];
-  
-    for (i = 0; i<users.length; i++) {
+
+    // changed for update from array to object for Firebase
+    //for (i = 0; i<users.length; i++) {
+    for (key in users) {
+
       var pointstotal = 0;
       var quiztotal = 0;
       var dailytotal = 0;
 
-      var daily = users[i].daily;
+      //var daily = users[i].daily;
+      var user = users[key];
+      var daily = user.daily;
       var badgelist = [];
       var badgestotal = 0;
 
+      // house keeping
+      user.confirmed = true;
+      var d = new Date();
+      user.dateconfirmed = d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear() + " (DDMMYYYY)";   
+
       if (daily != undefined) {
         for (j = 0; j<daily.length; j++) {
+
+          if (daily[j].grade == null) { daily[j].grade = -99; }
 
           if (daily[j].grade != -99) {
             dailytotal = dailytotal + daily[j].grade;
           }
           
           if (daily[j].badge != 0) {
-            console.log(daily[j].badge);
             badgelist.push(daily[j].badge);
             // if not a normal day
             if (daily[j].grade !=3) {
@@ -287,11 +402,15 @@ function setUserTotals() {
         }
       }
       
-      var quizzes = users[i].quizzes;
+      var quizzes = user.quizzes;
+      //var quizzes = users[i].quizzes;
       if (quizzes != undefined) {
         for (k = 0; k<quizzes.length; k++) {
-          if (users[i].quizzes[k].grade != -99) {
-            quiztotal = quiztotal + users[i].quizzes[k].xp;
+
+          if (user.quizzes[k].grade == null) { user.quizzes[k].grade = -99; }
+
+          if (user.quizzes[k].grade != -99) {
+            quiztotal = quiztotal + user.quizzes[k].xp;
           }
         }
       }
@@ -300,48 +419,64 @@ function setUserTotals() {
       badgelist.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
 
       pointstotal = dailytotal + quiztotal + badgestotal;
-      $rootScope.data.users[i].badges = counts;
-      $rootScope.data.users[i].dailytotal = dailytotal;
-      $rootScope.data.users[i].quiztotal = quiztotal;
-      $rootScope.data.users[i].badgestotal = badgestotal;
-      $rootScope.data.users[i].pointstotal = pointstotal;
+      user.badges = counts;
+      user.dailytotal = dailytotal;
+      user.quiztotal = quiztotal;
+      user.badgestotal = badgestotal;
+      user.pointstotal = pointstotal;
 
-      var levels = $rootScope.data.levels;
+      var levels = $rootScope.readonly.levels;
       if (levels != undefined) {
         for (l = 0; l<levels.length; l++) {
           if (pointstotal >= levels[l].low && pointstotal <= levels[l].high) {
-            $rootScope.data.users[i].level = levels[l];
+            user.level = levels[l];
           }
         }
       }
+
+      // Set user updates to $rootScope
+      $rootScope.users[key] = user; 
 
     }
   }
 
   $rootScope.navUser = function(index) {
-    $rootScope.user = $rootScope.data.users[index];
+    var username = Object.keys($rootScope.data.users)[index];
+    $rootScope.user = $rootScope.data.users[username];
     $rootScope.filePath = "includes/student_view.html";
   }
 
   $rootScope.setData = function(index) {
-    $rootScope.lesson = $rootScope.data.lessons[index];
+    $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
+  }
+
+  function removeBadChars(string) {
+    var userId = string.split(".").join("");
+    userId = userId.split("]").join("");
+    var userId = userId.split("]").join("");
+    var userId = userId.split("$").join("");
+    var userId = userId.split("/").join("");
+    var userId = userId.split("#").join("");
+    return userId;
   }
 
 	// Add some new data to the rootScope
 	$rootScope.addcourse = function () {
-    if ($rootScope.alldata.courses.length < 5) {
-      $rootScope.alldata.courses.unshift({name: "", descname: "", desc: ""});
+    if ($rootScope.admin.courses.length < 5) {
+      $rootScope.admin.courses.unshift({name: "", descname: "", desc: ""});
     }    
   }
 
   // Remove some data from the rootScope
   $rootScope.removecourse = function (index) {
-    	$rootScope.alldata.courses.splice(index, 1);
+    	$rootScope.admin.courses.splice(index, 1);
   }
 
   // Add some new data to the rootScope
   $rootScope.adduser = function () {
+
+    /*
     var quizlist = [];
     if ($rootScope.data.quizlist != undefined) {
       // if new user missed a quiz, add -99
@@ -351,84 +486,95 @@ function setUserTotals() {
       }
     } 
     var dailylist = [];
-    if ($rootScope.data.dailylist != undefined) {
+    if ($rootScope.readonly.daily != undefined) {
       // if new user missed a quiz, add -99
-      for (var misseddaily = 0; misseddaily < $rootScope.data.dailylist.length; misseddaily++){
+      for (var misseddaily = 0; misseddaily < $rootScope.readonly.daily.length; misseddaily++){
         //dailylist.push({grade: -99, desc: "not member of class", badge: 0});
         dailylist.unshift({grade:-99, desc: "not a member of class", badge: 0});
       }
     } 
 
-    if ($rootScope.data.users == undefined) { $rootScope.data.users = []; }
-    $rootScope.data.users.unshift({name: "",quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0});
+    if ($rootScope.data.users == undefined) { $rootScope.data.users = {}; }
+    
+    //$rootScope.data.users.unshift({"name":{name: "",quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0}});
+    //$rootScope.data.users[Object.keys($rootScope.data.users).length] = {name: "",quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0};
+    $rootScope.data.users[0] = {commited: false, email: "", photoUrl: "images/tyler-durden.jpg", name: "Tyler Durden", quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0};
+    */
+    $rootScope.admin.users.unshift({commited: false, email: "", cname: $rootScope.cname});
 
   }
 
   // Remove some data from the rootScope
-  $rootScope.removeuser = function (index) {
-      $rootScope.data.users.splice(index, 1);
+  $rootScope.removeuser = function (val,index) {
+
+      //$rootScope.readonly.users.splice(index, 1);
+      $rootScope.listArray.splice(index);
+      delete $rootScope.users[val];
+
   }
 
   // Add some new data to the rootScope
   $rootScope.addbadge = function () {
     //$rootScope.data.badges.push({name: "", value: 1, id: "skull", design: "<svg id='skull' width='60' viewBox='0 0 60 60'><circle cx='30' cy='30' r='25' fill='none' stroke='#000'/><path d='m20.499437,23.518602c-0.333406,1.638453 -1.185024,3.204302 -1.242386,4.893839c0.076286,0.978264 -0.67985,1.503716 -1.715061,1.485199c-1.113358,1.001625 0.137468,2.584599 1.397202,2.988922c1.285648,0.748985 2.880569,-0.087906 4.154179,0.58392c1.691065,1.147327 2.39699,3.181492 1.813585,4.964855c-0.580027,1.472107 2.389299,0.936729 1.272455,-0.240082c-0.862648,-1.150219 1.626089,-0.769894 0.988997,0.322063c-0.120426,0.876614 0.744972,1.160389 0.359856,2.009628c1.003338,0.499283 -0.084158,0.778904 -0.695271,0.873192c-1.431116,0.619175 0.258846,-1.109127 -0.874899,-1.620338c-1.03821,0.19582 -0.334747,1.704716 -0.691069,1.530418c-0.733648,-0.498581 -0.733124,-2.36264 -1.964397,-1.146385c-0.408693,-1.498634 0.336948,-3.059448 -0.237425,-4.549438c0.235262,-1.11272 -1.788971,-1.496559 -1.532955,-0.205956c0.102058,1.969685 -0.587128,3.935493 -0.191578,5.895477c0.544746,1.208897 2.068346,1.753532 3.024626,2.686363c0.785374,0.719334 1.803467,1.488365 3.025867,1.261948c1.38641,-0.052185 2.775354,-0.163307 4.15546,0.027729c1.735989,0.047531 3.06118,-1.143341 4.542625,-1.755081c1.741528,-1.20023 1.467381,-3.343987 1.29372,-5.051601c-0.212902,-1.054268 0.254215,-2.109055 0.167213,-3.153461c-1.255539,-1.333309 -2.285732,1.0103 -1.928062,2.017155c-0.000069,1.266575 0.280182,2.898129 -1.111965,3.723156c-1.148884,-0.02515 -2.242279,0.337025 -3.399979,0.147686c-0.939413,0.484222 -2.461096,0.471695 -2.771172,-0.680862c-0.123755,-1.023563 0.410603,-2.096687 -0.315481,-3.051983c0.63792,0.476871 1.751005,-0.411827 1.130697,0.657288c-0.756653,0.870239 0.640659,2.211239 1.166636,0.926785c0.174501,-0.861889 -0.754833,-2.005726 0.772833,-1.821079c0.311619,0.303974 -1.063908,2.430386 0.816296,1.893044c1.340492,-0.254837 -0.238533,-2.079758 1.576775,-2.086136c0.878529,-0.897644 0.641964,-2.580097 1.985802,-3.261066c1.498306,-0.880081 3.837757,-0.244713 4.907215,-1.735077c0.911518,-0.762688 0.482601,-2.876556 -1.089493,-2.176151c-1.9646,0.166267 -0.405476,-2.309315 -0.460293,-3.236929c0.462959,-0.807917 -0.56208,-2.508589 -0.209122,-2.689034c0.666866,0.88559 0.905743,1.9214310000000001 0.762356,2.956408c-0.012329,0.877668 -0.441238,3.256365 0.964752,1.789959c0.476002,-1.021851 0.337509,-2.17935 0.676586,-3.242521c0.654068,-2.295403 -0.51701,-4.592039 -1.822468,-6.53623c-1.111851,-1.046638 -2.523361,-1.880941 -3.848942,-2.702438c-2.229519,-0.727726 -4.69138,-0.858141 -7.046206,-0.675777c-2.082872,0.313356 -4.285553,0.64369 -5.944889,1.876299c-1.61713,0.826942 -3.165882,1.925274 -3.805229,3.51432c-0.557119,1.280123 -1.53274,2.583752 -1.0893,4.005777c0.424028,1.18541 0.19919,2.416494 0.26782,3.628096c0.722916,1.384739 1.405405,-0.708601 1.337717,-1.400986c0.040026,-1.313065 0.838259,-2.475252 1.426371,-3.640911l0,0zm13.277792,2.816936c1.486576,0.092459 3.368835,0.810926 3.409397,2.308834c0.226109,1.503149 -1.173397,2.960157 -2.966908,2.812796c-1.629017,-0.116158 -2.670845,-1.337378 -2.562706,-2.710413c-0.545343,-0.984459 0.303364,-2.038883 1.442471,-2.265179c0.220833,-0.064438 0.447922,-0.112703 0.677746,-0.146038l0,0zm-10.032045,0.128033c1.724535,-0.266155 3.686625,0.662336 3.692404,2.319038c0.162012,1.601648 -1.797352,1.915449 -3.133841,2.31674c-0.924833,0.518242 -1.885483,0.035679 -2.65399,-0.4865c-0.997023,-0.905693 -0.703949,-2.730867 0.348774,-3.557619c0.510502,-0.327936 1.142487,-0.456823 1.746653,-0.59166zm5.901205,4.225292c0.834871,0.995863 1.83717,2.514593 0.757458,3.644896c-0.958418,0.66711 -1.079287,-0.948917 -2.085306,-0.187824c-0.943687,-0.717354 -0.073269,-2.177052 0.588873,-2.905807c0.218264,-0.209827 0.468004,-0.394569 0.738976,-0.551264z' /></svg>"})
-    if ($rootScope.data.badges == undefined) { $rootScope.data.badges = []; }
-    $rootScope.data.badges.unshift({name:"",value:1,id:""});
+    if ($rootScope.readonly.badges == undefined) { $rootScope.readonly.badges = []; }
+    $rootScope.readonly.badges.unshift({name:"",value:1,id:""});
   }
 
   // Remove some data from the rootScope
   $rootScope.removebadge = function (index) {
-    $rootScope.data.badges.splice(index, 1)
+    $rootScope.readonly.badges.splice(index, 1)
   }
 
   // Add some new data to the rootScope
   $rootScope.addlevel = function () {
     //$rootScope.data.badges.push({name: "", value: 1, id: "skull", design: "<svg id='skull' width='60' viewBox='0 0 60 60'><circle cx='30' cy='30' r='25' fill='none' stroke='#000'/><path d='m20.499437,23.518602c-0.333406,1.638453 -1.185024,3.204302 -1.242386,4.893839c0.076286,0.978264 -0.67985,1.503716 -1.715061,1.485199c-1.113358,1.001625 0.137468,2.584599 1.397202,2.988922c1.285648,0.748985 2.880569,-0.087906 4.154179,0.58392c1.691065,1.147327 2.39699,3.181492 1.813585,4.964855c-0.580027,1.472107 2.389299,0.936729 1.272455,-0.240082c-0.862648,-1.150219 1.626089,-0.769894 0.988997,0.322063c-0.120426,0.876614 0.744972,1.160389 0.359856,2.009628c1.003338,0.499283 -0.084158,0.778904 -0.695271,0.873192c-1.431116,0.619175 0.258846,-1.109127 -0.874899,-1.620338c-1.03821,0.19582 -0.334747,1.704716 -0.691069,1.530418c-0.733648,-0.498581 -0.733124,-2.36264 -1.964397,-1.146385c-0.408693,-1.498634 0.336948,-3.059448 -0.237425,-4.549438c0.235262,-1.11272 -1.788971,-1.496559 -1.532955,-0.205956c0.102058,1.969685 -0.587128,3.935493 -0.191578,5.895477c0.544746,1.208897 2.068346,1.753532 3.024626,2.686363c0.785374,0.719334 1.803467,1.488365 3.025867,1.261948c1.38641,-0.052185 2.775354,-0.163307 4.15546,0.027729c1.735989,0.047531 3.06118,-1.143341 4.542625,-1.755081c1.741528,-1.20023 1.467381,-3.343987 1.29372,-5.051601c-0.212902,-1.054268 0.254215,-2.109055 0.167213,-3.153461c-1.255539,-1.333309 -2.285732,1.0103 -1.928062,2.017155c-0.000069,1.266575 0.280182,2.898129 -1.111965,3.723156c-1.148884,-0.02515 -2.242279,0.337025 -3.399979,0.147686c-0.939413,0.484222 -2.461096,0.471695 -2.771172,-0.680862c-0.123755,-1.023563 0.410603,-2.096687 -0.315481,-3.051983c0.63792,0.476871 1.751005,-0.411827 1.130697,0.657288c-0.756653,0.870239 0.640659,2.211239 1.166636,0.926785c0.174501,-0.861889 -0.754833,-2.005726 0.772833,-1.821079c0.311619,0.303974 -1.063908,2.430386 0.816296,1.893044c1.340492,-0.254837 -0.238533,-2.079758 1.576775,-2.086136c0.878529,-0.897644 0.641964,-2.580097 1.985802,-3.261066c1.498306,-0.880081 3.837757,-0.244713 4.907215,-1.735077c0.911518,-0.762688 0.482601,-2.876556 -1.089493,-2.176151c-1.9646,0.166267 -0.405476,-2.309315 -0.460293,-3.236929c0.462959,-0.807917 -0.56208,-2.508589 -0.209122,-2.689034c0.666866,0.88559 0.905743,1.9214310000000001 0.762356,2.956408c-0.012329,0.877668 -0.441238,3.256365 0.964752,1.789959c0.476002,-1.021851 0.337509,-2.17935 0.676586,-3.242521c0.654068,-2.295403 -0.51701,-4.592039 -1.822468,-6.53623c-1.111851,-1.046638 -2.523361,-1.880941 -3.848942,-2.702438c-2.229519,-0.727726 -4.69138,-0.858141 -7.046206,-0.675777c-2.082872,0.313356 -4.285553,0.64369 -5.944889,1.876299c-1.61713,0.826942 -3.165882,1.925274 -3.805229,3.51432c-0.557119,1.280123 -1.53274,2.583752 -1.0893,4.005777c0.424028,1.18541 0.19919,2.416494 0.26782,3.628096c0.722916,1.384739 1.405405,-0.708601 1.337717,-1.400986c0.040026,-1.313065 0.838259,-2.475252 1.426371,-3.640911l0,0zm13.277792,2.816936c1.486576,0.092459 3.368835,0.810926 3.409397,2.308834c0.226109,1.503149 -1.173397,2.960157 -2.966908,2.812796c-1.629017,-0.116158 -2.670845,-1.337378 -2.562706,-2.710413c-0.545343,-0.984459 0.303364,-2.038883 1.442471,-2.265179c0.220833,-0.064438 0.447922,-0.112703 0.677746,-0.146038l0,0zm-10.032045,0.128033c1.724535,-0.266155 3.686625,0.662336 3.692404,2.319038c0.162012,1.601648 -1.797352,1.915449 -3.133841,2.31674c-0.924833,0.518242 -1.885483,0.035679 -2.65399,-0.4865c-0.997023,-0.905693 -0.703949,-2.730867 0.348774,-3.557619c0.510502,-0.327936 1.142487,-0.456823 1.746653,-0.59166zm5.901205,4.225292c0.834871,0.995863 1.83717,2.514593 0.757458,3.644896c-0.958418,0.66711 -1.079287,-0.948917 -2.085306,-0.187824c-0.943687,-0.717354 -0.073269,-2.177052 0.588873,-2.905807c0.218264,-0.209827 0.468004,-0.394569 0.738976,-0.551264z' /></svg>"})
-    if ($rootScope.data.levels == undefined) { $rootScope.data.levels = []; }
-    $rootScope.data.levels.unshift({name: "", desc: "", low: 0, high: 0, priv: "", color: "#2196f3", textcolor: "#000"})
+    if ($rootScope.readonly.levels == undefined) { $rootScope.readonly.levels = []; }
+    $rootScope.readonly.levels.unshift({name: "", desc: "", low: 0, high: 0, priv: "", color: "#2196f3", textcolor: "#000"})
   }
 
   // Remove some data from the rootScope
   $rootScope.removelevel = function (index) {
-    $rootScope.data.levels.splice(index, 1)
+    $rootScope.readonly.levels.splice(index, 1)
   }
 
 // Add some new data to the rootScope
   $rootScope.addlesson = function () {
-    if ($rootScope.data.lessons == undefined) { $rootScope.data.lessons = []; }
-    $rootScope.data.lessons.unshift({id:$rootScope.data.lessons.length,show:true,name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
+
+    if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
+    $rootScope.readonly.lessons.unshift({id:$rootScope.readonly.lessons.length,show:true,name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
+  
   }
 
   // Add some new data to the rootScope
   $rootScope.uplesson = function (index) {
-    var curlesson = $rootScope.data.lessons[index];
-    var uplesson = $rootScope.data.lessons[index -1];
-    $rootScope.data.lessons[index - 1] = curlesson;
-    $rootScope.data.lessons[index] = uplesson;
+    var curlesson = $rootScope.readonly.lessons[index];
+    var uplesson = $rootScope.readonly.lessons[index -1];
+    $rootScope.readonly.lessons[index - 1] = curlesson;
+    $rootScope.readonly.lessons[index] = uplesson;
   }
 
   // Add some new data to the rootScope
   $rootScope.downlesson = function (index) {
-    var curlesson = $rootScope.data.lessons[index];
-    var uplesson = $rootScope.data.lessons[index + 1];
-    $rootScope.data.lessons[index + 1] = curlesson;
-    $rootScope.data.lessons[index] = uplesson
+    var curlesson = $rootScope.readonly.lessons[index];
+    var uplesson = $rootScope.readonly.lessons[index + 1];
+    $rootScope.readonly.lessons[index + 1] = curlesson;
+    $rootScope.readonly.lessons[index] = uplesson
   }
 
   // Add some new data to the rootScope
   $rootScope.addsegment = function (parent) {
-    if ($rootScope.data.lessons[parent].segments == undefined) { $rootScope.data.lessons[parent].segments = []; }
-    $rootScope.data.lessons[parent].segments.unshift({title:"",text:"",segimg:"",seglink:""});
+    if ($rootScope.readonly.lessons[parent].segments == undefined) { $rootScope.readonly.lessons[parent].segments = []; }
+    $rootScope.readonly.lessons[parent].segments.unshift({title:"",text:"",segimg:"",seglink:""});
   }
 
   // Remove some data from the rootScope
   $rootScope.removelesson = function (index) {
-    $rootScope.data.lessons.splice(index, 1)
+    $rootScope.readonly.lessons.splice(index, 1)
   }
 
   // Remove some data from the rootScope
   $rootScope.removesegment = function (parent,index) {
-    $rootScope.data.lessons[parent].segments.splice(index, 1)
+    $rootScope.readonly.lessons[parent].segments.splice(index, 1)
   }
 
 
@@ -436,27 +582,37 @@ function setUserTotals() {
 
     var divbadge = document.getElementById("badgeselect");
     divbadge.innerHTML = "";
-    $rootScope.data.badges[index].design = design;
+    $rootScope.readonly.badges[index].design = design;
 
  }
 
 // Add some new data to the rootScope
   $rootScope.addquiz = function (item) {
-    //$rootScope.data.quizlist.push({name: item});;
-    if ($rootScope.data.quizlist == undefined) { $rootScope.data.quizlist = []; }
-    $rootScope.data.quizlist.unshift({name: item});
-    for (var i = 0; i < $rootScope.data.users.length; i++) {
-      //$rootScope.data.users[i].quizzes.push({grade: 0});
-      if ($rootScope.data.users[i].quizzes == undefined) {$rootScope.data.users[i].quizzes = [];}
-      $rootScope.data.users[i].quizzes.unshift({grade: 0, xp: 0});
+
+    if ($rootScope.readonly.quizzes == undefined) { 
+      $rootScope.readonly.quizzes = []; 
     }
+
+    //$rootScope.readonly.quizzes[item] = {}
+    $rootScope.readonly.quizzes.unshift({name:""});
+
+    //for (var i = 0; i < $rootScope.data.users.length; i++) {
+    for (key in $rootScope.users) {
+      var user = $rootScope.users[key];
+      if (user.quizzes == undefined) {user.quizzes = [];}
+      user.quizzes.unshift({name: "", grade: 0, xp: 0});
+      $rootScope.users[key] = user;
+    }
+
   }
 
   // Remove some data from the rootScope
   $rootScope.removequiz = function (index) {
-    $rootScope.data.quizlist.splice(index, 1)
-    for (var i = 0; i < $rootScope.data.users.length; i++) {
-      $rootScope.data.users[i].quizzes.splice(index, 1);
+    $rootScope.readonly.quizzes.splice(index, 1)
+    for (key in $rootScope.users) {
+      var user = $rootScope.users[key];
+      user.quizzes.splice(index, 1);
+      $rootScope.users[key] = user;
     }
   }
 
@@ -477,43 +633,54 @@ function setUserTotals() {
   }
 
   // When making a daily other than 3, clear the message field
-  $rootScope.emptyField = function (parent,index) {
-    $rootScope.data.users[index].daily[parent].desc = "Enter a message ...";
+  $rootScope.emptyField = function (user,parent,index) {
+        
+    var username = Object.keys($rootScope.users)[index];
+    user.daily[parent].desc = "Enter a message ...";
     
     // set value attribute
-    if ($rootScope.data.users[index].daily[parent].grade == 4) {
-      $rootScope.data.users[index].daily[parent].value = 1;
+    if (user.daily[parent].grade == 4) {
+      user.daily[parent].value = 1;
+    } else if (user.daily[parent].grade == 3) {
+      user.daily[parent].value = 0;
     } else {
-      $rootScope.data.users[index].daily[parent].value = -1;
-    }
-    
+      user.daily[parent].value = -1;
+    }    
+
+    // set user updates back to $rootScope
+    $rootScope.users[username] = user;
+
   }
 
-
   // Add some new data to the rootScope
-  $rootScope.adddaily = function (number) {
-    //$rootScope.data.dailylist.push({lesson: number});
-    if ($rootScope.data.dailylist == undefined) { $rootScope.data.dailylist = []; }
-    $rootScope.data.dailylist.unshift({lesson: number});
-    for (var i = 0; i < $rootScope.data.users.length; i++) {
-      //$rootScope.data.users[i].daily.push({grade: 3, desc: "Normal day, nothing to report", badge: 0});
-      if ($rootScope.data.users[i].daily == undefined) { $rootScope.data.users[i].daily = []; }
-      $rootScope.data.users[i].daily.unshift({grade: 3, desc: "Normal day, nothing to report", badge: 0, value:0});
+  $rootScope.adddaily = function () {
+
+    if ($rootScope.readonly.daily == undefined) { $rootScope.readonly.daily = []; }
+    $rootScope.readonly.daily.unshift({"lesson": $rootScope.readonly.daily.length});
+
+    for (key in $rootScope.users) {
+      
+      var user = $rootScope.users[key];
+      if (user.daily == undefined) { user.daily = []; }
+      user.daily.unshift({grade: 3, desc: "Normal day, nothing to report", badge: 0, value:0});
+
+      $rootScope.users[key] = user;
     }
   }
 
   // Remove some data from the rootScope
   $rootScope.removedaily = function (index) {
-    $rootScope.data.dailylist.splice(index, 1)
+    $rootScope.readonly.daily.splice(index, 1)
     for (var i = 0; i < $rootScope.data.users.length; i++) {
-      $rootScope.data.users[i].daily.splice(index, 1);
+    //for (key in $rootScope.users) {
+      $rootScope.users[i].daily.splice(index, 1);
     }
   }
   
   $rootScope.sortUser = function(data,col) {
-    var someArray = data.users;
+    var someArray = $rootScope.listArray;
     someArray.sort(generateSortFn(col, true));
-    data.users = someArray;
+    $rootScope.listArray = someArray;
   }
 
   function generateSortFn(prop, reverse) {
@@ -594,7 +761,5 @@ function setUserTotals() {
       "design": "<svg id='folder' width='60' viewBox='0 0 60 60'><circle id='svg_1' stroke='#000' stroke-width='3' fill='none' r='25' cy='30' cx='30'/><path id='svg_21' d='m43.739925,24.606461c-0.004272,-2.624723 -1.804714,-4.75139 -4.026783,-4.75461l0,-0.001495l-12.342117,0c-0.508554,-1.92807 -2.025066,-3.33798 -3.831656,-3.341602l-2.895077,0c-2.223265,0.002354 -4.024403,2.130518 -4.028673,4.755159l0,16.8661c0.004271,2.622494 1.805408,4.749249 4.028673,4.753742l19.069677,0c2.220535,-0.004494 4.022861,-2.131248 4.026649,-4.753742l0,-13.523552l-0.000694,0zm-23.095633,-5.721434l2.895077,0c1.053307,-0.00458 1.930222,0.991776 1.996733,2.230175l0.058359,1.11364l14.119509,0c1.100895,0.002758 2.010796,1.077503 2.013115,2.377619l0,0.588711c-0.595436,-0.410023 -1.276802,-0.662155 -2.013943,-0.663506l-19.069563,0c-0.737146,0.00135 -1.419773,0.254349 -2.014017,0.664785l0,-3.933834c0.003098,-1.300632 0.913471,-2.374926 2.01473,-2.37759zm19.06885,21.62118l-19.06885,0c-1.100546,-0.002209 -2.010883,-1.079285 -2.01473,-2.37748l0,-8.841957l0.001133,0c0.001965,-1.301929 0.912338,-2.376154 2.013597,-2.378885l19.069677,0c1.100895,0.002731 2.005001,1.071108 2.013943,2.367067l0,8.852852c-0.003841,1.301445 -0.914234,2.376194 -2.014771,2.378403z' fill-opacity='null' stroke-opacity='null' stroke-width='1.5' stroke='null' fill='#000000'/></svg>"
     }
   ]};
-
-  
 
   });  // end app.run
