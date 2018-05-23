@@ -1,17 +1,17 @@
 <table>
 <tr>
 	<td style='color: #8bc34a; font-size: 2em;'>Daily</td>
-	<td><a ng-click="adddaily(item.lesson)" ng-disabled="data.lessons.length == 0" class="waves-effect waves-light btn right light-green">Add</a></td>
+	<td><a ng-click="adddaily()" ng-disabled="readonly.lessons.length == 0" class="waves-effect waves-light btn right light-green">Add</a></td>
 </tr>
 </table>
 
-<div ng-repeat="item in data.dailylist">
+<div ng-repeat="item in readonly.daily">
 	<ul class="collection with-header">
 		<li class="collection-item">
 				<div class="row">
 
 					<label for="name">Lesson number</label>
-					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson.id as lesson.name for lesson in data.lessons"><option value="">Select</option></select>
+					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson.id as lesson.name for lesson in readonly.lessons"><option value="">Select</option></select>
 
 					
 				 </div>
@@ -30,14 +30,14 @@
           					</tr>
         				</thead>
 
-        				<tbody ng-repeat="user in data.users">
+        				<tbody ng-repeat="user in users">
 				 			<tr>
-				 				<td>{{user.name}}</td>
+				 				<td>{{user.email}}</td>
 				 				<td>
-				 					<input class="TextBox" type="number" validate="number" min=-99 max=4 ng-model="user.daily[$parent.$index].grade" ng-change="emptyField($parent.$index,$index)"/>
+				 					<input class="TextBox" type="number" validate="number" min=-99 max=4 ng-model="user.daily[$parent.$index].grade" ng-change="emptyField(user,$parent.$index,$index)"/>
 				 				</td>
 				 				<td>
-				 					<select class="browser-default" ng-model="user.daily[$parent.$index].badge" ng-options="badge.id as badge.name for badge in data.badges"><option value="">Select</option></select>
+				 					<select class="browser-default" ng-model="user.daily[$parent.$index].badge" ng-options="badge.id as badge.name for badge in readonly.badges"><option value="">Select</option></select>
 				 				</td>
 				 				<td><input class="TextBox" type="text" validate="text" maxlength="140" ng-model="user.daily[$parent.$index].desc"/><td>
 				 			</tr>
