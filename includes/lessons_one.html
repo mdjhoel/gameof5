@@ -3,7 +3,7 @@
 	<div class="col s12">
     	<div class="card">
         	<div class="card-image" ng-hide="lesson.img ==''">
-            	<img src="{{lesson.img}}"/>
+            	<img ng-src="{{lesson.img}}"/>
               	<span class="card-title">{{lesson.name}}</span>
             </div>
             <div class="card-content">
@@ -24,7 +24,7 @@
 		<div ng-show="showme" class="row" align="center">
           	<div class="card" style='width: 95%; margin-bottom: 0px; margin-top: 20px;'>
             	<div class="card-image" ng-hide="item.segimg ==''">
-              		<img src="{{item.segimg}}"/>
+              		<img ng-src="{{item.segimg}}"/>
               		<span class="card-title">{{item.title}}</span>
             	</div>
             	<div class="card-content">
