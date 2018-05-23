@@ -70,15 +70,15 @@
         <h4>Save edits</h4>
         <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
         
-        <p ng-show="data.users != undefined">
+        <p ng-show="users != undefined">
           <input type="checkbox" id="usertotals"/>
-          <label for="usertotals">Update user totals (this may take a minute)</label>
+          <label for="usertotals">Update and confirm users (this may take a minute)</label>
         </p>
 
       <label 
         <div class="modal-footer">
           <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
-            <a href="#!" class="modal-action modal-close btn-flat ">No</a>
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat ">No</a>
         </div>
         
       </div>
@@ -87,12 +87,12 @@
   <div id="modalprofile" class="modal center">
       <div class="modal-content">
         <h4>{{name}}</h4>
-        <img src="{{photoUrl}}" style="border-radius:50%;">
+        <img ng-src="{{photoUrl}}" width="200px" style="border-radius:50%;">
         <p>{{email}}</p>
         
         <div class="modal-footer">
           <a ng-click="signout()" class="modal-action modal-close btn-flat">Sign out</a>
-          <a href="#!" class="modal-action modal-close btn-flat">Dismiss</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
         </div>
       </div>
   </div>
@@ -106,7 +106,7 @@
         <p>{{alldata}}</p>
         
         <div class="modal-fixed-footer">
-          <a href="#!" class="modal-action modal-close btn-flat">Dismiss</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
         </div>
       </div>
   </div>
