@@ -450,10 +450,14 @@ function setUserTotals() {
     $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
   }
-
+  $rootScope.checkCname = function(cname,index) {
+  	var first = cname.split(" ")[0];
+  	var cname = removeBadChars(first);
+  	$rootScope.admin.courses[index].name = cname;
+  }
   function removeBadChars(string) {
     var userId = string.split(".").join("");
-    userId = userId.split("]").join("");
+    userId = userId.split("[").join("");
     var userId = userId.split("]").join("");
     var userId = userId.split("$").join("");
     var userId = userId.split("/").join("");
