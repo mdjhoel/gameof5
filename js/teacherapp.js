@@ -305,7 +305,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
   // SAVE function - use to write out to Firebase
   $rootScope.save = function() {
-
+  	// remove modal from url
+  	$location.url($rootScope.url);
     if (document.getElementById('usertotals').checked) {
       if ($rootScope.users != undefined) {setUserTotals();}
     }
