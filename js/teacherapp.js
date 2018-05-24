@@ -465,8 +465,11 @@ function setUserTotals() {
     return userId;
   }
 
-	// Add some new data to the rootScope
-	$rootScope.addcourse = function () {
+  // Add some new data to the rootScope
+  $rootScope.addcourse = function () {
+  	if (typeof $rootScope.admin.courses == undefined) {
+    	$rootScope.admin.courses = [];
+    }
     if ($rootScope.admin.courses.length < 5) {
       $rootScope.admin.courses.unshift({name: "", descname: "", desc: ""});
     }    
