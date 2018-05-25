@@ -12,7 +12,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     // check to see if user logged in
     firebase.auth().onAuthStateChanged(function(user) {
 
-      // 1. Parse API - /#!/?teacher=mhoel&cname=ics4u
+      // 1. Parse API - /#!/?teacher=98765897v&cname=ics4u
       var theme = "teacher"; // default to teacher
       if ($location.search()["teacher"] && $location.search()["cname"]) { theme = "student"; } // switch to student if API used
       
@@ -94,10 +94,23 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                     $rootScope.filePath = "includes/404.html";
                   } else {
                     $rootScope.navPath = "includes/nav_student.html";
-                    $rootScope.filePath = "includes/student_view.html";                    
-                  }
-                });
+                    $rootScope.filePath = "includes/student_view.html";  
+
+ 					$rootScope.refLessons.once("value").then(function(snapshot) {
+              			if (snapshot.val() != undefined) {
+                			$rootScope.readonly = snapshot.val();
+                			console.log("Data from Firebase, now stored in $rootScope.readonly.");
+              			} else {
+                			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
+              			}
+            		}); // query Firebase for lessons
+
+                  } // if user is found
+                }); // sync angular
+
+
               } else {
+                
                 console.log("No users data retrieved from Firebase. Creating new user");
                 var newuser = {confirmed:false,email:user.email,name: user.displayName,photoUrl:user.photoURL,uid:user.uid};
                 $rootScope.user = newuser;
@@ -111,14 +124,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
               }
             }); // query Firebase
 
-            $rootScope.refLessons.once("value").then(function(snapshot) {
-              if (snapshot.val() != undefined) {
-                $rootScope.readonly = snapshot.val();
-                console.log("Data from Firebase, now stored in $rootScope.readonly.");
-              } else {
-                console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
-              }
-            }); // query Firebase
 
           } // student
       } // if user is not null
@@ -253,7 +258,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           var o = angular.copy($rootScope.readonly); // set original readonly to check for edits later
           $rootScope.o_readonly = angular.toJson(o);  
 
-          $rootScope.alldata = "{ admin:" + angular.toJson($rootScope.admin) + ", courses: {" + cname + ":" + angular.toJson($rootScope.readonly) + "}";
+          $rootScope.alldata = "{ 'admin':" + angular.toJson($rootScope.admin) + ", 'courses': {'" + cname + "':{ 'readonly':" + angular.toJson($rootScope.readonly);
 
         });
 
@@ -282,9 +287,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
         $rootScope.$apply(function () {  
           if ($rootScope.users != undefined) {
-            $rootScope.alldata = $rootScope.alldata + ", users:" + angular.toJson($rootScope.users) + "}";
+            $rootScope.alldata = $rootScope.alldata + ", 'users':" + angular.toJson($rootScope.users) + "}}}";
           } else {
-            $rootScope.alldata = $rootScope.alldata + "}";
+            $rootScope.alldata = $rootScope.alldata + "}}}";
           }
           //$rootScope.alldata = $rootScope.alldata + "}";
           $rootScope.share = "http://gameof5.com/#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
@@ -336,10 +341,14 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         });
       }
 
-       if ($rootScope.users != undefined) {
+       if ($rootScope.users != undefined || $rootScope.saveusers) {
 
-        var users = angular.toJson($rootScope.users); // get rid of Angular $$ data
-        users = JSON.parse(users);
+       	if ($rootScope.saveusers) { // if all users are deleted, remove all records from database
+       		var users = {};
+       	} else {
+       		var users = angular.toJson($rootScope.users); // get rid of Angular $$ data
+        	users = JSON.parse(users);
+       	}
 
         $rootScope.refUsers.set(users).then(function(){
             console.log("User data saved successfully.");
@@ -402,7 +411,7 @@ function setUserTotals() {
           }
         }
       }
-      
+
       var quizzes = user.quizzes;
       //var quizzes = users[i].quizzes;
       if (quizzes != undefined) {
@@ -519,6 +528,13 @@ function setUserTotals() {
       $rootScope.listArray.splice(index);
       delete $rootScope.users[val];
 
+      // when user deletes all users, set users to empty object so that saving removes from Firebase
+      if (Object.keys($rootScope.users).length == 0) {
+      	$rootScope.users = undefined;
+ 		$rootScope.saveusers = true;
+      	$rootScope.readonly.daily = {};
+      }
+    
   }
 
   // Add some new data to the rootScope
@@ -604,8 +620,9 @@ function setUserTotals() {
     //$rootScope.readonly.quizzes[item] = {}
     $rootScope.readonly.quizzes.unshift({name:""});
 
-    //for (var i = 0; i < $rootScope.data.users.length; i++) {
+    //for (var i = 0; i < $rootScope.users.length; i++) {
     for (key in $rootScope.users) {
+      //var user = $rootScope.users[key];
       var user = $rootScope.users[key];
       if (user.quizzes == undefined) {user.quizzes = [];}
       user.quizzes.unshift({name: "", grade: 0, xp: 0});
