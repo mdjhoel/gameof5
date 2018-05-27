@@ -459,7 +459,10 @@ function setUserTotals() {
   $rootScope.setData = function(index) {
     $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
+    $rootScope.forwardsegments = $rootScope.lesson.segments;
+    $rootScope.forwardsegments.reverse();
   }
+
   $rootScope.checkCname = function(cname,index) {
   	var first = cname.split(" ")[0];
   	var cname = removeBadChars(first);
