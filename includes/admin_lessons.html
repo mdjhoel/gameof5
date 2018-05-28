@@ -3,6 +3,7 @@
 	<td style='color: #8bc34a; font-size: 2em;'>Lessons</td>
 	<td class="right">
 		<a ng-click="addlesson(item.name)" class="waves-effect waves-light btn light-green">Add</a>
+		
 	</td>
 </tr>
 </table>
@@ -12,8 +13,8 @@
 		<li class="collection-item">
 				 <div class="row">
 				 	<div class="input-field col s12">
-						<input id="name" type="text" class="validate" min=2 max=10 ng-model="item.name">
-				    	<label class='md-no-float' for="name" data-error="wrong" data-success="right">Name</label>
+						<input id="name" type="text" maxlength="30" ng-model="item.name">
+				    	<label class='md-no-float' for="name" data-error="wrong" data-success="right">Name (30 chars)</label>
 					</div>
 
 				 </div>
@@ -31,8 +32,8 @@
 						<li class="collection-item">
 				 			<div class="row">
 				 				<div class="input-field col s12">
-									<input id="desc" type="text" class="validate" min=2 max=140 ng-model="item.desc">
-				    				<label class='md-no-float' for="name" data-error="wrong" data-success="right">Description</label>
+									<input id="desc" type="text" maxlength="140" ng-model="item.desc">
+				    				<label class='md-no-float' for="name" data-error="wrong" data-success="right">Description (140 chars)</label>
 								</div>
 							 	<div class="input-field col s12">
 									<input id="img" type="text" ng-model="item.img">
@@ -61,12 +62,12 @@
 				 		<ul class="collection with-header">
 							<li class="collection-item">
 								<div class="input-field col s12">
-									<input id="title" type="text" class="validate" min=2 max=10 ng-model="segment.title">
-				    				<label class='md-no-float' for="title" data-error="wrong" data-success="right">Title</label>
+									<input id="title" type="text" maxlength="30" ng-model="segment.title">
+				    				<label class='md-no-float' for="title" data-error="wrong" data-success="right">Title (30 chars)</label>
 								</div>
 								<div class="input-field col s12">
-									<input id="text" type="text" ng-model="segment.text">
-				    				<label class='md-no-float' for="name" data-error="wrong" data-success="right">Text</label>
+									<input id="text" type="text" maxlength="140" ng-model="segment.text">
+				    				<label class='md-no-float' for="name" data-error="wrong" data-success="right">Text (140 chars)</label>
 								</div>
 							 	<div class="input-field col s12">
 									<input id="segimg" type="text" ng-model="segment.segimg">
@@ -83,7 +84,6 @@
 						</ul>
 					</div>
 				 </div>
-
 		</li>
 	</ul>
 </div>
