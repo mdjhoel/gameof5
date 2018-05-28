@@ -5,10 +5,23 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
     // get url so URL can be put back when users click on modals
     $rootScope.url = $location.url();
-    
+
     // show the spinner
     $rootScope.filePath = "includes/spinner.html";
 
+/*
+    var data = { 'admin':{"courses":[{"desc":"","descname":"","name":"Test123"}],"email":"mdjhoel@gmail.com","name":"Mark Hoel","photoUrl":"https://lh5.googleusercontent.com/-TrcFPjwS9Ww/AAAAAAAAAAI/AAAAAAAAAE4/DBXT4vG7GrU/photo.jpg","uid":"9KXHxUezF3PDUdZgoG4optm4p6V2"}, 'courses': {'Test123':{ 'readonly':{"badges":[{"id":"bubble","name":"participation","value":1}],"daily":[{"id":0,"lesson":0}],"lessons":[{"desc":"This is an introduction to the course. In this lesson you will find out ...","expectations":["c1","c2"],"id":0,"img":"images/banner.jpg","keywords":["intro"],"name":"Introduction","segments":[{"segimg":"","seglink":"","text":"The most important thing. How will I be evaluated? Report cards? Tests, assignment ratios?","title":"Evaluation?"},{"segimg":"","seglink":"http://www.cnn.com","text":"What behavioral and other expectations are there?","title":"Expectations?"},{"segimg":"","seglink":"","text":"This course is a test of the gameof5 software. We shall see how it does.","title":"This course?"},{"segimg":"images/tyler-durden.jpg","seglink":"http://www.cbc.ca","text":"cool young amazing teacher","title":"Who am i?"}],"show":true}],"levels":[{"color":"#2196f3","desc":"","high":20,"low":0,"name":"newbie","priv":"choc","textcolor":"#000"}],"quizzes":[{"name":"basics"}]}, 'users':{"9KXHxUezF3PDUdZgoG4optm4p6V2":{"badges":{"bubble":1},"badgestotal":1,"confirmed":true,"daily":[{"badge":"bubble","desc":"Enter a message ...","grade":4,"value":1}],"dailytotal":4,"dateconfirmed":"25/4/2018 (DDMMYYYY)","email":"mdjhoel@gmail.com","level":{"color":"#2196f3","desc":"","high":20,"low":0,"name":"newbie","priv":"choc","textcolor":"#000"},"name":"Mark Hoel","photoUrl":"https://lh5.googleusercontent.com/-TrcFPjwS9Ww/AAAAAAAAAAI/AAAAAAAAAE4/DBXT4vG7GrU/photo.jpg","pointstotal":9,"quiztotal":4,"quizzes":[{"grade":99,"name":"basics","xp":4}],"uid":"9KXHxUezF3PDUdZgoG4optm4p6V2"}}}}};
+    
+    $rootScope.photoUrl = data.admin.photoUrl;
+    $rootScope.cname = "Test123";
+    $rootScope.lesson = data.courses[$rootScope.cname].readonly.lessons[0];
+
+$rootScope.filePath = "includes/lessons_one.html";
+$rootScope.navPath = "includes/nav_admin.html";
+
+return;
+
+*/
     // check to see if user logged in
     firebase.auth().onAuthStateChanged(function(user) {
 
@@ -96,7 +109,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                     $rootScope.navPath = "includes/nav_student.html";
                     $rootScope.filePath = "includes/student_view.html";  
 
- 					$rootScope.refLessons.once("value").then(function(snapshot) {
+ 					        $rootScope.refLessons.once("value").then(function(snapshot) {
               			if (snapshot.val() != undefined) {
                 			$rootScope.readonly = snapshot.val();
                 			console.log("Data from Firebase, now stored in $rootScope.readonly.");
@@ -123,7 +136,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                 });
               }
             }); // query Firebase
-
 
           } // student
       } // if user is not null
@@ -418,7 +430,7 @@ function setUserTotals() {
         for (k = 0; k<quizzes.length; k++) {
 
           if (user.quizzes[k].grade == null) { user.quizzes[k].grade = -99; }
-
+          console.log(user.quizzes[k]);
           if (user.quizzes[k].grade != -99) {
             quiztotal = quiztotal + user.quizzes[k].xp;
           }
@@ -450,6 +462,120 @@ function setUserTotals() {
     }
   }
 
+  $rootScope.makePDF = function(lesson) {
+
+    var doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'px',
+      format: [8.5,11]
+    })
+
+    // Create gameof5 logo
+    doc.setLineWidth(.05);
+    doc.setDrawColor(33,150,243);  
+    doc.setFillColor(139, 195, 74);  
+    doc.circle(4.75, 1, .5,'FD');
+    doc.setFillColor(255, 255, 255);  
+    doc.circle(4.18, 1.05, .275,'F');
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(1.175);
+    doc.text("5",4.5,1.3);
+    doc.setFontSize(1);
+    doc.setTextColor(255, 152, 0);
+    doc.text("e",4.025,1.25);
+    doc.setTextColor(233, 30, 99);
+    doc.text("m",3.47,1.25);
+    doc.setTextColor(255, 235, 59);
+    doc.text("a",3.095,1.25);
+    doc.setTextColor(33, 150, 243);
+    doc.text("g",2.75,1.25);
+
+    // HR
+    doc.setDrawColor(33, 150, 243);
+    doc.line(1,1.75,7.5,1.75);
+
+    // Set locations on page
+    var x = 1;
+    var y = 2.2;
+
+    // Title
+    doc.setFontSize(.45);
+    doc.setTextColor(0,0,0);
+    doc.text(lesson.name, x, y);
+
+    // Box
+    y = y + .25
+    doc.setDrawColor(0,0,0);
+    doc.setLineWidth(.025);
+    doc.roundedRect(1, y, 6.5, 8, .1,.1, 'D');
+
+    // Lessons description
+    x = x + .5
+    doc.setFontSize(.25);
+    y = y + .5;
+    doc.setFontStyle("bold");
+    doc.text("Lesson Description:",x,y);
+    doc.setFontStyle("normal");
+    lines = doc.splitTextToSize(lesson.desc, 5.5)
+    y = y + .25;
+    doc.setFontSize(.2);
+    doc.setFontStyle("italic");
+    doc.text(lines, x, y);
+    doc.setFontStyle("normal");
+    y = y + .7;
+
+    // Lesson progression
+    if (lesson.segments.length != undefined) {
+      doc.setFontSize(.25);
+      doc.setFontStyle("bold");
+      doc.text("Lesson Progression:",x,y);
+      doc.setFontStyle("normal");
+      y = y + .35;
+      x = x + .1
+      var segs = lesson.segments.slice().reverse(); // start at the top
+      for (i = 0; i<lesson.segments.length; i++) {
+        doc.setFontSize(.25);
+        doc.text(segs[i].title, x, y);
+        y = y + .2;
+        doc.setFontSize(.2);
+        doc.setFontStyle("italic");
+        lines = doc.splitTextToSize(segs[i].text, 5)
+        doc.text(lines, x, y);
+        //y = y + .2;
+        //doc.setFontStyle("italic");
+        //doc.text(lesson.segments[i].seglink, x, y);
+        doc.setFontStyle("normal");
+        y = y + .5;
+      }
+    }
+
+    // Keywords
+    y = y + .15
+    x = x - .1;
+    doc.setFontSize(.25);
+    doc.setFontStyle("bold");
+    doc.text("Keywords:", x, y);
+    y = y + .25
+    doc.setFontSize(.2);
+    doc.setFontStyle("italic");
+    var keywords = doc.splitTextToSize(lesson.keywords.join(','), 5);
+    doc.text(keywords, x, y);
+    doc.setFontStyle("normal");
+    
+    // Curriculum expectations
+    doc.setFontSize(.25);
+    doc.setFontStyle("bold");
+    y = y + .25;
+    doc.text("Curriculum expectations:", x, y);
+    y = y + .25;
+    doc.setFontStyle("italic");
+    doc.setFontSize(.2);
+    var expects = doc.splitTextToSize(lesson.expectations.join(','), 5);
+    doc.text(expects, x, y);
+    doc.save(lesson.name + ".pdf");
+
+  } // end makePDF
+
   $rootScope.navUser = function(index) {
     var username = Object.keys($rootScope.data.users)[index];
     $rootScope.user = $rootScope.data.users[username];
@@ -459,8 +585,6 @@ function setUserTotals() {
   $rootScope.setData = function(index) {
     $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
-    $rootScope.forwardsegments = $rootScope.lesson.segments;
-    $rootScope.forwardsegments.reverse();
   }
 
   $rootScope.checkCname = function(cname,index) {
@@ -590,8 +714,11 @@ function setUserTotals() {
 
   // Add some new data to the rootScope
   $rootScope.addsegment = function (parent) {
+
     if ($rootScope.readonly.lessons[parent].segments == undefined) { $rootScope.readonly.lessons[parent].segments = []; }
-    $rootScope.readonly.lessons[parent].segments.unshift({title:"",text:"",segimg:"",seglink:""});
+    if ($rootScope.readonly.lessons[parent].segments.length <5) { // only allowed 5! gameof5!
+      $rootScope.readonly.lessons[parent].segments.unshift({title:"",text:"",segimg:"",seglink:""});
+    }
   }
 
   // Remove some data from the rootScope
