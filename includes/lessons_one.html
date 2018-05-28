@@ -10,7 +10,7 @@
 
 
           <div class="collection">
-            <div ng-repeat="item in forwardsegments" class="row" style="margin-bottom: 0px; margin-top: 0px;">
+            <div ng-repeat="item in lesson.segments.slice().reverse()" class="row" style="margin-bottom: 0px; margin-top: 0px;">
             <a href="" class="collection-item" ng-click="showme = !showme">{{item.title}}</a>
               <div ng-show="showme" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-image" ng-hide="item.segimg ==''">
