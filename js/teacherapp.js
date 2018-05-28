@@ -430,7 +430,6 @@ function setUserTotals() {
         for (k = 0; k<quizzes.length; k++) {
 
           if (user.quizzes[k].grade == null) { user.quizzes[k].grade = -99; }
-          console.log(user.quizzes[k]);
           if (user.quizzes[k].grade != -99) {
             quiztotal = quiztotal + user.quizzes[k].xp;
           }
@@ -826,8 +825,7 @@ function setUserTotals() {
   // Remove some data from the rootScope
   $rootScope.removedaily = function (index) {
     $rootScope.readonly.daily.splice(index, 1)
-    for (var i = 0; i < $rootScope.data.users.length; i++) {
-    //for (key in $rootScope.users) {
+    for (var i = 0; i < $rootScope.users.length; i++) {
       $rootScope.users[i].daily.splice(index, 1);
     }
   }
