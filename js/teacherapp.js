@@ -565,7 +565,7 @@ function setUserTotals() {
     // Curriculum expectations
     doc.setFontSize(.25);
     doc.setFontStyle("bold");
-    y = y + .25;
+    y = y + .5;
     doc.text("Curriculum expectations:", x, y);
     y = y + .25;
     doc.setFontStyle("italic");
