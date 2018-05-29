@@ -1,6 +1,24 @@
+<style>
+  a .svg-class:hover ellipse {
+    stroke: #000;
+    fill: #000;
+  }
+</style>
+
 <a href="#modalcheck" id="save" title="Save edits" data-height="50" class="modal-action modal-trigger btn blue white-text" style="vertical-align: bottom;">Save</a>
-<a href="#!" id="courses" title="Return to courses" class="btn light-green white-text" ng-click="courses()" style="vertical-align: bottom;">Courses</a>        
-<a href="#modaldownload" id="download" title="Download" class="modal-action modal-trigger btn blue white-text" style="vertical-align: bottom;">Download</a>
+<a href="#!" id="courses" title="Return to courses" class="btn light-green white-text" ng-click="courses()" style="vertical-align: bottom;">Courses</a>
+
+
+<a href="#modaldownload" id="download" title="Share" class="modal-action modal-trigger" style="padding-left: 5px !important; vertical-align: bottom;">
+<svg class="svg-class" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+  <line y2="15" x2="5" y1="5" x1="25" stroke-width="1.5" stroke="#999999"/>
+  <line y2="15" x2="5" y1="25" x1="25" stroke-width="1.5" stroke="#999999"/>
+  <ellipse ry="2" rx="2" cy="15" cx="5" stroke-width="2.5" stroke="#999999" fill="#999999"/>
+  <ellipse ry="2" rx="2" cy="5" cx="25" stroke-width="2.5" stroke="#999999" fill="#999999"/>
+  <ellipse ry="2" rx="2" cy="25" cx="25" stroke-width="2.5" stroke="#999999" fill="#999999"/>
+</svg>
+</a>
+
 <a href="#modalprofile" id="profile" title="Profile" data-height="50" class="modal-action modal-trigger right"><img src="{{photoUrl}}" style="height: 40px;border-radius:50%"></a>
 
 <div class="fixed-action-btn vertical top click-to-toggle">
