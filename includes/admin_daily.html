@@ -11,9 +11,8 @@
 				<div class="row">
 
 					<label for="name">Lesson number</label>
-					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson.id as lesson.name for lesson in readonly.lessons"><option value="">Select</option></select>
+					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson as lesson.name for lesson in readonly.lessons track by lesson.id"><option value="">Select</option></select>
 
-					
 				 </div>
 				 <div>
 				    	<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Edit users</a>
