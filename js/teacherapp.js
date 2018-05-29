@@ -657,7 +657,7 @@ function setUserTotals() {
       // when user deletes all users, set users to empty object so that saving removes from Firebase
       if (Object.keys($rootScope.users).length == 0) {
       	$rootScope.users = undefined;
- 		$rootScope.saveusers = true;
+ 		   $rootScope.saveusers = true;
       	$rootScope.readonly.daily = {};
       }
     
@@ -810,7 +810,7 @@ function setUserTotals() {
   $rootScope.adddaily = function () {
 
     if ($rootScope.readonly.daily == undefined) { $rootScope.readonly.daily = []; }
-    $rootScope.readonly.daily.unshift({"lesson": $rootScope.readonly.daily.length});
+    $rootScope.readonly.daily.unshift({});
 
     for (key in $rootScope.users) {
       
@@ -824,9 +824,9 @@ function setUserTotals() {
 
   // Remove some data from the rootScope
   $rootScope.removedaily = function (index) {
-    $rootScope.readonly.daily.splice(index, 1)
-    for (var i = 0; i < $rootScope.users.length; i++) {
-      $rootScope.users[i].daily.splice(index, 1);
+    $rootScope.readonly.daily.splice(index, 1);
+    for (key in $rootScope.users) {
+      $rootScope.users[key].daily.splice(index, 1);
     }
   }
   
