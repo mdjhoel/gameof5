@@ -524,7 +524,7 @@ function setUserTotals() {
     y = y + .7;
 
     // Lesson progression
-    if (lesson.segments.length != undefined) {
+    if (lesson.segments != undefined) {
       doc.setFontSize(.25);
       doc.setFontStyle("bold");
       doc.text("Lesson Progression:",x,y);
@@ -540,37 +540,39 @@ function setUserTotals() {
         doc.setFontStyle("italic");
         lines = doc.splitTextToSize(segs[i].text, 5)
         doc.text(lines, x, y);
-        //y = y + .2;
-        //doc.setFontStyle("italic");
-        //doc.text(lesson.segments[i].seglink, x, y);
         doc.setFontStyle("normal");
         y = y + .5;
       }
+      x = x - .1; // unindent
     }
 
     // Keywords
-    y = y + .15
-    x = x - .1;
-    doc.setFontSize(.25);
-    doc.setFontStyle("bold");
-    doc.text("Keywords:", x, y);
-    y = y + .25
-    doc.setFontSize(.2);
-    doc.setFontStyle("italic");
-    var keywords = doc.splitTextToSize(lesson.keywords.join(','), 5);
-    doc.text(keywords, x, y);
-    doc.setFontStyle("normal");
-    
+    if (lesson.keywords != undefined) {
+      y = y + .15
+      doc.setFontSize(.25);
+      doc.setFontStyle("bold");
+      doc.text("Keywords:", x, y);
+      y = y + .25
+      doc.setFontSize(.2);
+      doc.setFontStyle("italic");
+      var keywords = doc.splitTextToSize(lesson.keywords.join(','), 5);
+      doc.text(keywords, x, y);
+      doc.setFontStyle("normal");
+      y = y + .5;
+    }
+
     // Curriculum expectations
-    doc.setFontSize(.25);
-    doc.setFontStyle("bold");
-    y = y + .5;
-    doc.text("Curriculum expectations:", x, y);
-    y = y + .25;
-    doc.setFontStyle("italic");
-    doc.setFontSize(.2);
-    var expects = doc.splitTextToSize(lesson.expectations.join(','), 5);
-    doc.text(expects, x, y);
+    if (lesson.expectations != undefined) {
+      doc.setFontSize(.25);
+      doc.setFontStyle("bold");
+      doc.text("Curriculum expectations:", x, y);
+      y = y + .25;
+      doc.setFontStyle("italic");
+      doc.setFontSize(.2);
+      var expects = doc.splitTextToSize(lesson.expectations.join(','), 5);
+      doc.text(expects, x, y);
+    }
+
     doc.save(lesson.name + ".pdf");
 
   } // end makePDF
