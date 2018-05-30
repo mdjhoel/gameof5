@@ -80,6 +80,11 @@ return;
                   $rootScope.user = userId;
                   $rootScope.navPath = "includes/nav_courses.html";
                   $rootScope.filePath = "includes/admin_courses.html";
+
+                  var msg = "Welcome " + user.displayName + ".";
+                  Materialize.toast(msg, 2000, 'black');
+                  setTimeout(function(){ Materialize.toast("Edit or add a new course.", 3000, 'black'); }, 3000); 
+
               });
 
             },
