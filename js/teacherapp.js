@@ -222,6 +222,10 @@ return;
     return message;
   
   };
+  
+  $rootScope.helpToast = function(msg,time,color) {
+    Materialize.toast(msg, time, color);
+  }
 
   // Pick which ng-include to show
   $rootScope.nav = function(path) {
@@ -237,9 +241,6 @@ return;
   // Edit a particular course
   $rootScope.navAdmin = function(cname) {
 
-    // Important variable for include screens
-    $rootScope.cname = cname;
-
     // Check edits of admin - if changes have been made, send a message
     if (!checkedits($rootScope.o_admin,$rootScope.admin)) {
       askit = confirm("Please save your work.");
@@ -247,6 +248,12 @@ return;
         return;
       }
     }
+
+    // Important variable for include screens
+    $rootScope.cname = cname;
+
+    var msg = "To access tools. Click the red button."
+    Materialize.toast(msg, 5000, 'black');
 
     $rootScope.readonly = undefined;
     $rootScope.users = undefined;
