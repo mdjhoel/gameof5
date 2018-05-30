@@ -1,5 +1,10 @@
-#myrect:hover ~ #needle {
-  transform: rotate(45deg) rotate(-45deg);
+.svg-class:hover ellipse {
+    stroke: #000;
+    stroke-width: 2;
+}
+  .svg-class:hover text {
+    stroke: #000;
+    fill: #000;
 }
 
 .waves-effect waves-light btn {
