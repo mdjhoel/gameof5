@@ -33,6 +33,7 @@
 <!-- local testing ... -->
 <!-- cd to Documents/gameof5 -->
 <!-- php -S localhost:8000 -->
+<!-- python -m SimpleHTTPServer -->
 
 <body ng-app="teacherpages">
 
@@ -125,6 +126,7 @@
   $(document).ready(function(){
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
   	$('.modal').modal();
+	$('.tooltipped').tooltip({delay: 50});
   });
 
   // Common footer for pages
