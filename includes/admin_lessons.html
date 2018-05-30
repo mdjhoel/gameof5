@@ -1,6 +1,13 @@
 <table>
 <tr>
-	<td style='color: #8bc34a; font-size: 2em;'>Lessons</td>
+	<td style='color: #8bc34a; font-size: 2em;'>Lessons
+	  <a href="" ng-click="helpToast('Edit or Add lessons and lesson segments.<br>Update lesson order and view completed lesson',5000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+      </a>
+	</td>
 	<td class="right">
 		<a ng-click="addlesson(item.name)" class="waves-effect waves-light btn light-green">Add</a>
 		
@@ -27,7 +34,15 @@
 				    <a ng-click="setData($index)" class="waves-effect waves-light btn blue">View</a>
 				 </div>
 				 <div ng-show="$scope.showdetails">
-				 	<h5>Details</h5>
+				 	<br>
+				 	<h5>Details
+				 		<a href="" ng-click="helpToast('Smaller images load faster for your users.<br>Images should be full direct URL',5000,'black')">
+        					<svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          						<ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          						<text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        					</svg>
+      					</a>
+				 	</h5>
 				 	<ul class="collection with-header">
 						<li class="collection-item">
 				 			<div class="row">
@@ -54,7 +69,14 @@
 				 <div ng-show="$scope.showsegments">
 					<table>
 					<tr>
-						<td><h5>Segments</h5></td>
+						<td><h5>Segments
+							<a href="" ng-click="helpToast('Segment images should be small (icon sized).<br>Links should be full direct URL to outside resource.',5000,'black')">
+        						<svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          							<ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          							<text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        						</svg>
+      						</a>
+						</h5></td>
 						<td><a ng-click="addsegment($index)" class="waves-effect waves-light btn right light-green">Add</a></td>
 					</tr>
 					</table>				 
