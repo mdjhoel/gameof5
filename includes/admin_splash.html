@@ -1,4 +1,5 @@
- <svg
+<div class="col s12 m6">
+<svg
    xmlns="http://www.w3.org/2000/svg"
    id="mysvg"
    width="100%"
@@ -72,13 +73,6 @@
      rx="5.2962871"
      ry="6.4888859"
      style="fill:#ffffaa;stroke-width:1.5" />
-  <ellipse
-     cx="31.695168"
-     cy="28.739273"
-     id="svg_12"
-     rx="4.4135723"
-     ry="3.4985549"
-     style="fill:#ffffff;stroke:#000000;stroke-width:0.45228916" />
   <path
      stroke="null"
      stroke-opacity="null"
@@ -102,36 +96,11 @@
      stroke-opacity="null"
      ry="0"
      style="fill:none;stroke:#000000;stroke-width:1.5" />
-  <ellipse
-     cx="44.935886"
-     cy="38.820221"
-     id="svg_20"
-     rx="5.2962871"
-     ry="2.780951"
-     style="fill:#000000;stroke-width:1.5" />
-  <ellipse
-     fill-opacity="null"
-     cx="31.639997"
-     cy="28.913082"
-     id="svg_21"
-     rx="2.261956"
-     ry="2.3753958"
-     style="fill:#2196f3;stroke-width:1.5" />
-  <ellipse
-     cx="58.286942"
-     cy="28.391655"
-     id="svg_22"
-     rx="4.4135723"
-     ry="3.4985549"
-     style="fill:#ffffff;stroke:#000000;stroke-width:0.5" />
-  <ellipse
-     fill-opacity="null"
-     cx="58.231773"
-     cy="28.565464"
-     id="svg_23"
-     rx="2.261956"
-     ry="2.3753958"
-     style="fill:#2196f3;stroke-width:1.5" />
+  <ellipse cx="45" cy="39" id="nose" rx="5" ry="2.8" style="fill:#000000;stroke-width:1.5" />
+  <ellipse cx="32" cy="29" id="lefteye" rx="4.4" ry="3.5" style="fill:#ffffff;stroke:#000000;stroke-width:0.45228916" />
+  <ellipse cx="32" cy="29" id="leftpupil" rx="2.25" ry="2.5" style="fill:#2196f3;stroke-width:1.5" />
+  <ellipse cx="58" cy="29" id="righteye" rx="4.4" ry="3.5" style="fill:#ffffff;stroke:#000000;stroke-width:0.5" />
+  <ellipse cx="58" cy="29" id="rightpupil" rx="2.25" ry="2.5" style="fill:#2196f3;stroke-width:1.5" />
   <ellipse
      ry="0.84375"
      id="svg_27"
@@ -150,29 +119,74 @@
      stroke-opacity="null"
      rx="0"
      style="fill:#ffffff;stroke:#2196f3;stroke-width:1.5" />
-  <text
-     id="text3363"
-     y="28.045454"
-     x="100"
-     style="font-style:normal;font-weight:normal;font-size:10px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     xml:space="preserve"><tspan
-       y="28.045454"
-       x="100"
-       id="tspan3365">Editing now.</tspan><tspan
-       id="tspan3369"
-       y="40.545456"
-       x="100">Save your work!</tspan><tspan
-       id="tspan3373"
-       y="53.045456"
-       x="100" /><tspan
-       id="tspan3375"
-       y="65.545456"
-       x="100" /></text>
-  <path
-     id="path3377"
-     d="m 30.246852,58.867783 28.467272,-0.24789 -14.877249,1.358722 z"
-     style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
 
-  <text id="cname" x="100" y="60" style="font-style:bold;font-weight:bold;font-size:11px;fill:#8bc34a;">{{data.name}}</text>
+ <path id="mouth" d="m 30.246852,58.867783 28.467272,-0.24789 -14.877249,1.358722 z"
+style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+
+      <animate id="lpupshrink" xlink:href="#leftpupil"
+    begin="3;lpupshrink.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="2.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="winkleft" xlink:href="#lefteye"
+    begin="3;winkleft.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="3.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="rpupshrink" xlink:href="#rightpupil"
+    begin="3;rpupshrink.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="2.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="winkright" xlink:href="#righteye"
+    begin="3;winkright.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="3.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="nosemove" xlink:href="#nose"
+    begin="5;nosemove.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="2.8"
+        to="2.3"
+    dur=".25s"
+    />
+
+    <animate id="mouthmove" xlink:href="#mouth"
+    begin="5;mouthmove.end+5"
+    attributeName="d"
+    attributeType="XML"
+    from="m 30,59 28,-0.25 -15,1.36 z"
+        to="m 30,59 28,-0.25 -15,2 z"
+    dur=".25s"
+    />
 
 </svg>
+</div>
+<div class="col s12 m6">
+<p style="font-size: 3em; color: #8bc34a; margin-bottom: 0px; padding-bottom: 0px !important;">{{cname}}</p>
+<p style="font-size: 2em; padding-bottom: 0px;">Editing now.
+<a href="" ng-click="helpToast('To access tools. Click the red button.',5000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+      </a>
+<br>Save your work often!</p>
+</div>
