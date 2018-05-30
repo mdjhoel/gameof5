@@ -1,6 +1,14 @@
 <table>
   <tr>
-    <td style='color: #8bc34a; font-size: 2em;'>Courses</td>
+    <td style='color: #8bc34a; font-size: 2em;'>
+      Courses
+      <a href="" ng-click="helpToast('Course names have no spaces,<br>20 chars or less, and no special chars (#/[].$)',5000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+      </a>
+    </td>
     <td><a id="addbutton" ng-click="addcourse()" class="waves-effect waves-light btn right light-green">Add</a></td>
   </tr>
 </table>
@@ -11,8 +19,9 @@
       <form class="col s12">
           <div class="row">
                   <div class="input-field">
-                    <input id="name" type="text" ng-model="item.name" ng-change="checkCname(item.name,$index)">
-                    <label class='md-no-float' for="name">Course name (no spaces,#/[].$)</label>
+                    <input id="name" type="text" maxlength="20" ng-model="item.name" ng-change="checkCname(item.name,$index)">
+                               <label class='md-no-float' for="name">Course name
+                               </label>
                   </div>
                   <div class="input-field">
                     <input id="descname" type="text" ng-model="item.descname">
