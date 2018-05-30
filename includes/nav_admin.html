@@ -1,5 +1,5 @@
 <style>
-  a .svg-class:hover ellipse {
+  a .svg-share:hover ellipse {
     stroke: #000;
     fill: #000;
   }
@@ -10,7 +10,7 @@
 
 
 <a href="#modaldownload" id="download" title="Share" class="modal-action modal-trigger" style="padding-left: 5px !important; vertical-align: bottom;">
-<svg class="svg-class" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+<svg class="svg-share" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
   <line y2="15" x2="5" y1="5" x1="25" stroke-width="1.5" stroke="#999999"/>
   <line y2="15" x2="5" y1="25" x1="25" stroke-width="1.5" stroke="#999999"/>
   <ellipse ry="2" rx="2" cy="15" cx="5" stroke-width="2.5" stroke="#999999" fill="#999999"/>
@@ -33,11 +33,11 @@
 	  </svg>
     </a>
     <ul>
-      <li><a class="btn-floating red center" title="Lessons" ng-click="nav('includes/admin_lessons.html')">Ls</a></li>
-      <li><a class="btn-floating blue center" ng-click="nav('includes/admin_badges.html')">Bg</a></li>
-      <li><a class="btn-floating orange center" ng-click="nav('includes/admin_levels.html')">Lv</a></li>
-      <li><a class="btn-floating yellow center" ng-click="nav('includes/admin_quiz.html')" ng-disabled="users == undefined">Qz</a></li>
-      <li><a class="btn-floating pink center" ng-click="nav('includes/admin_daily.html')" ng-disabled="users == undefined">Dy</a></li>
-      <li><a class="btn-floating red center" ng-click="navList('includes/admin_list.html')" ng-disabled="users == undefined">Li</a></li>
+      <li><a class="btn-floating red center" title="Lessons" ng-click="nav('includes/admin_lessons.html')">L</a></li>
+      <li><a class="btn-floating blue center" ng-click="nav('includes/admin_badges.html')">B</a></li>
+      <li><a class="btn-floating orange center" ng-click="nav('includes/admin_levels.html')">L</a></li>
+      <li><a class="btn-floating yellow center" ng-click="nav('includes/admin_quiz.html')" ng-disabled="users == undefined">Q</a></li>
+      <li><a class="btn-floating pink center" ng-click="nav('includes/admin_daily.html')" ng-disabled="users == undefined">D</a></li>
+      <li><a class="btn-floating red center" ng-click="navList('includes/admin_list.html')" ng-disabled="users == undefined">U</a></li>
     </ul>
   </div>
