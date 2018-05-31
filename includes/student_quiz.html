@@ -3,9 +3,8 @@
       <div class="card">
           <div class="card-content">
             <span class="card-title">Quizzes</span>
-            <div ng-repeat="quiz in user.quizzes">
               <ul class="collection with-header">
-                <li class="collection-item avatar">
+                <li class="collection-item avatar" ng-repeat="quiz in user.quizzes">
                   <img src="images/quiz.svg" ng-show="quiz.xp > 0" class="circle"/>
                   <img src="images/quiz2.svg" ng-show="quiz.xp == 0" class="circle"/>
                   <img src="images/quiz2.svg" ng-show="quiz.grade == -99" class="circle"/>
@@ -16,7 +15,6 @@
                   </div>
                 </li>
               </ul>
-            </div>
          </div>
       </div>
   </div>
