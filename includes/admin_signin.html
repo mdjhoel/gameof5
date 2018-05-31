@@ -1,3 +1,4 @@
+<div class="col s12 m6">
  <svg
    xmlns:svg='http://www.w3.org/2000/svg'
    viewBox='0 0 200 80'
@@ -71,13 +72,12 @@
      cx='77.817001'
      stroke-opacity='null'
      stroke='null' />
-  <ellipse
-     style='fill:#ffffff;stroke:#000000;stroke-width:0.45228916'
-     ry='4.6349187'
-     rx='4.4135723'
-     id='svg_12'
-     cy='28.739273'
-     cx='31.695168' />
+  4.5<ellipse style='fill:#ffffff;stroke:#000000;stroke-width:0.45228916' ry='4.5' rx='4.5' id='lefteye' cy='29' cx='32' />
+  <ellipse style='fill:#2196f3;stroke-width:1.5' ry='2.5' rx='2.5' id='leftpupil' cy='29' cx='32'/>
+  <ellipse style='fill:#ffffff;stroke:#000000;stroke-width:0.45228916' ry='4.5' rx='4.5' id='righteye' cy='29' cx='58' />
+  <ellipse style='fill:#2196f3;stroke-width:1.5' ry='2.5' rx='2.5' id='rightpupil' cy='29' cx='58'/>
+  <ellipse style='fill:#000000;stroke-width:1.5' ry='2.8' rx='5.3' id='nose' cy='40' cx='45' />
+  <path id='mouth' d='M 30,54 C 33,70 56,71 60,55 46,48 40,52 30,54 Z' style='fill:#ffffff;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;' />
   <path
      style='fill:#2196f3;stroke-width:1.5'
      id='svg_14'
@@ -102,40 +102,6 @@
      id='svg_18'
      rx='2' />
   <ellipse
-     style='fill:#000000;stroke-width:1.5'
-     ry='2.780951'
-     rx='5.2962871'
-     id='svg_20'
-     cy='38.820221'
-     cx='44.935886' />
-  <ellipse
-     style='fill:#2196f3;stroke-width:1.5'
-     ry='2.3753958'
-     rx='2.261956'
-     id='svg_21'
-     cy='28.913082'
-     cx='31.639997'
-     fill-opacity='null' />
-  <ellipse
-     style='fill:#ffffff;stroke:#000000;stroke-width:0.45228916'
-     ry='4.6349187'
-     rx='4.4135723'
-     id='svg_22'
-     cy='28.391655'
-     cx='58.286942' />
-  <ellipse
-     style='fill:#2196f3;stroke-width:1.5'
-     ry='2.3753958'
-     rx='2.261956'
-     id='svg_23'
-     cy='28.565464'
-     cx='58.231773'
-     fill-opacity='null' />
-  <path
-     id='svg_26'
-     d='M 29.614835,54.305583 C 33.32511,70.559696 56.6985,71.077674 60.148599,54.661083 46.064014,48.145506 40.982962,51.85342 29.614835,54.305583 Z'
-     style='fill:#ffffff;stroke:#000000;stroke-width:0.54377079;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1' />
-  <ellipse
      style='fill:#ffffff;stroke:#2196f3;stroke-width:1.5'
      rx='0'
      stroke-opacity='null'
@@ -153,56 +119,70 @@
      cy='39.96875'
      id='svg_29'
      ry='2.15625' />
-  <text
-     id='text4188'
-     y='27.616039'
-     x='97.046173'
-     style='font-style:normal;font-weight:normal;font-size:17.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1'
-     xml:space='preserve'><tspan
-       style='font-size:10px'
-       y='27.616039'
-       x='97.046173'
-       id='tspan4190'>Engage Students.</tspan><tspan
-       id='tspan4192'
-       style='font-size:10px'
-       y='40.116039'
-       x='97.046173'>Organize Yourself.</tspan><tspan
-       id='tspan4196'
-       style='font-size:10px'
-       y='52.616039'
-       x='97.046173' /><tspan
-       id='tspan4198'
-       style='font-size:10px'
-       y='65.116043'
-       x='97.046173' /></text>
-  <text
-     transform='scale(0.84900959,1.177843)'
-     id='text5724'
-     y='48.670246'
-     x='113.90561'
-     style='font-weight:bold;font-size:10px; text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#8bc34a;fill-opacity:1;stroke:#8bc34a;stroke-width:0.10899086;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0'
-     xml:space='preserve'><tspan
-       style='font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.10899086'
-       y='48.670246'
-       x='113.90561'
-       id='tspan5726'>Structure &amp; Gamify</tspan></text>
+
+      <animate id="lpupshrink" xlink:href="#leftpupil"
+    begin="3;lpupshrink.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="2.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="winkleft" xlink:href="#lefteye"
+    begin="3;winkleft.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="4.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="rpupshrink" xlink:href="#rightpupil"
+    begin="3;rpupshrink.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="2.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="winkright" xlink:href="#righteye"
+    begin="3;winkright.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="4.5"
+        to="1"
+    dur=".1s"
+    />
+
+    <animate id="nosemove" xlink:href="#nose"
+    begin="5;nosemove.end+5"
+    attributeName="ry"
+    attributeType="XML"
+    from="2.8"
+        to="2"
+    dur="1.5s"
+    />
+
+    <animate id="mouthmove" xlink:href="#mouth"
+    begin="5;mouthmove.end+5"
+    attributeName="d"
+    attributeType="XML"
+    from="M 30,54 C 33,70 56,71 60,55 46,48 40,52 30,54 Z"
+        to="m 30,59 28,-0.5 -15,1.5 z"
+    dur="1.5s"
+    />
+
+
 </svg>
-    
-<!--<div align="center" class="g-signin2" id='signin' data-width="260" data-height="60" data-longtitle="true" data-theme="dark" data-onfailure="onFailure" data-onsuccess="onSignIn"></div>  -->
-
-<!-- <a align="center" class="btn blue" ng-click="fakesignin()">click me</a>-->
-
-
-
-
-           
-
-
-    
-
-
-
-
-  		
-      
-    
+</div>
+<div class="col s12 m6">
+<p style="font-size: 2em; padding-bottom: 0px;">Engage Students.<br>Organize Yourself.<br>Gamify.
+<a href="" ng-click="helpToast('Sign in with your Google Account.',3000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+      </a></p>
+</div>
