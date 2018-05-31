@@ -9,7 +9,7 @@
               </tr>
               <tr>
                 <td>
-                  {{data.level.desc}}
+                  {{user.level.desc}}
                 </td>
               </tr>
             </table>
@@ -24,8 +24,8 @@
       <div class="card-content">
         <table>
           <tr>
-            <td><span class="card-title">Daily XP: {{user.dailytotal}}</span></td>
-            <td class="right"><span class="badge blue white-text" ng-show="user.dailytotal!=0">{{user.daily.length}} comments</span></td>
+            <td><span class="card-title">Daily XP</span></td>
+            <td class="right"><span class="chip orange white-text" ng-show="user.dailytotal!=0">{{user.dailytotal}}</span></td>
           </tr>
           </table>
           <table>
@@ -49,8 +49,8 @@
       <div class="card-content">
         <table>
           <tr>
-            <td><span class="card-title">Badge XP: {{user.badgestotal}}</span></td>
-            <td class="right"><span class="badge blue white-text" ng-show="value >= 3" ng-repeat="(key, value) in data.badges"><div ng-show="$parent.key == badge.id && $parent.value >=3" ng-repeat="badge in alldata.badges">{{badge.name}}</div></span></td>
+            <td><span class="card-title">Badge XP</span></td>
+            <td class="right"><span class="chip orange white-text" ng-show="Object.keys(user.badges).length!=0">{{user.badgestotal}}</span></td>
           </tr>
           </table>
           <table>
@@ -71,8 +71,8 @@
       <div class="card-content">
         <table>
           <tr>
-            <td><span class="card-title">Quiz XP: {{user.quiztotal}}</span></td>
-            <td class="right"><span class="badge blue white-text" ng-show="user.quiztotal!=0">{{user.quizzes.length}} quizzes</span></td>
+            <td><span class="card-title">Quiz XP</span></td>
+            <td class="right"><span class="chip orange white-text" ng-show="user.quiztotal!=0">{{user.quiztotal}}</span></td>
           </tr>
           </table>
           <table>
