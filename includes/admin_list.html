@@ -1,6 +1,13 @@
 <table>
 	<tr>
-		<td style='color: #8bc34a; font-size: 2em;'>List users</td>
+		<td style='color: #8bc34a; font-size: 2em;'>List users
+    			<a href="" ng-click="helpToast('View and rank registered students.<br>Confirm new students and calculate totals when saving.',5000,'black')">
+        			<svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          			<ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          			<text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        			</svg>
+      			</a>
+		</td>
 		<td class="right">
 			<a ng-click="sortUser(listArray,'email')" class="waves-effect waves-light btn blue">Name</a>
 			<a ng-click="sortUser(listArray,'pointstotal')" class="waves-effect waves-light btn blue">Points</a>
