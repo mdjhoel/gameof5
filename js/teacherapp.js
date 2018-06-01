@@ -128,18 +128,25 @@ return;
 
 
               } else {
-                
-                console.log("No users data retrieved from Firebase. Creating new user");
-                var newuser = {confirmed:false,email:user.email,name: user.displayName,photoUrl:user.photoURL,uid:user.uid};
-                $rootScope.user = newuser;
-                $rootScope.refUser.update(newuser).then(function(){
-                  console.log("Data saved successfully. " + JSON.stringify(newuser));
-                  $rootScope.$apply(function () { $rootScope.error = "New request sent."; $rootScope.filePath = "includes/404.html"; return; });
-                }).catch(function(error) {
-                  console.log("Data could not be saved." + error);
-                  $rootScope.$apply(function () { $rootScope.error = "Data could not be saved"; $rootScope.filePath = "includes/404.html"; return; });
-                });
-              }
+                // see if API data can be used to find data
+                var testref = $rootScope.database.ref("teachers/" + args["teacher"] + "/courses/" + args["cname"]);
+                testref.once("value").then(function(snapshot) {
+                	if (snapshot.val() == null) { // nope, something is wrong
+                		$rootScope.$apply(function () { $rootScope.error = "Invalid API data."; $rootScope.filePath = "includes/404.html"; return; });
+                    } else { // yep, you have a match with this API teacher and cname
+                   		console.log("No user data matching API retrieved from Firebase. Creating new user");
+                		var newuser = {confirmed:false,email:user.email,name: user.displayName,photoUrl:user.photoURL,uid:user.uid};
+                		$rootScope.user = newuser;
+                		$rootScope.refUser.update(newuser).then(function(){
+                  			console.log("New user data saved successfully.");
+                  			$rootScope.$apply(function () { $rootScope.error = "New request sent."; $rootScope.filePath = "includes/404.html"; return; });
+                		}).catch(function(error) {
+                  			console.log("New user data could not be saved." + error);
+                  			$rootScope.$apply(function () { $rootScope.error = "Data could not be saved"; $rootScope.filePath = "includes/404.html"; return; });
+                		}); // end update
+                    } // end check API
+                }); // end testref
+              } // else student not found
             }); // query Firebase
 
           } // student
