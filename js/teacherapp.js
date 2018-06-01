@@ -323,9 +323,8 @@ return;
             $rootScope.alldata = $rootScope.alldata + "}}}";
           }
           //$rootScope.alldata = $rootScope.alldata + "}";
-          $rootScope.share = "http://gameof5.com/#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
+          $rootScope.share = "https://gameof5.com/#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
         });
-
       },
       function(error) {
         // The Promise was rejected.
