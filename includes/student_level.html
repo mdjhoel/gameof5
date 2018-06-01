@@ -1,20 +1,30 @@
+<style>
+  td {
+    padding: 0px;
+  }
+</style>
 
-<div class="card">
-  <div class="card-content">
-    <table>
-      <tr>
-        <td><span class="card-title">{{user.level.name}}</span></td>
-        <td class="right"><div class='chip blue white-text'>{{user.pointstotal}}</div></td>
-      </tr>
-      <tr>
-        <td><p>Description: </p>{{user.level.desc}}</td>
-      </tr>
-      <tr>
-        <td><p class="left">Privilage: </p><span class="badge orange white-text left">{{user.level.priv}}</span></td>
-      </tr>
-    </table>
-    <div class="chip blue white-text" ng-repeat="level in readonly.levels" style='margin: 5px; border-width: 2px;'> 
-      <img ng-show="user.pointstotal < level.high && user.pointstotal > level.low" src="images/tyler-durden.jpg"/>{{level.name}} - {{level.low}}
+<div class="row">
+<div class="col s12 m6">
+  <div class="card">
+    <div class="card-image">
+      <img ng-src="{{photoUrl}}">
     </div>
   </div>
+</div>
+<div class="col s12 m6">
+    <div class="card">
+      <ul class="collection with-header">
+        <li class="collection-header blue white-text"><table><td><span class="card-title">Level {{user.level.number}}</span></td><td><span class="chip white blue-text right">{{user.pointstotal}}</span></td></table><p class="white-text"><i>{{user.level.desc}}</i></p></li>
+        <li class="collection-item"><table><td>Name</td><td><span class="right">{{user.level.name}}</span></td></table></li>
+        <li class="collection-item"><table><td>Privilage</td><td><span class="right">{{user.level.priv}}</span></td></table></li>
+        <li class="collection-item"><table><td>Daily</td><td><span class="chip orange white-text right">{{user.dailytotal}}</span></td></table></li>
+        <li class="collection-item"><table><td>Quizzes</td><td><span class="chip orange white-text right">{{user.quiztotal}}</span></td></table></li>
+        <li class="collection-item"><table><td>Badges</td><td><span class="chip orange white-text right">{{user.badgestotal}}</span></td></table></li>
+        <li class="collection-item"><div class="chip blue white-text" ng-repeat="level in readonly.levels" style='margin: 5px; border-width: 2px;'> 
+          <img ng-show="user.pointstotal < level.high && user.pointstotal > level.low" src="images/g5circle.svg"/>{{level.name}} - {{level.low}}
+        </div></li>
+      </ul>
+
+    </div>
 </div>
