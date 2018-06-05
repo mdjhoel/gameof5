@@ -34,9 +34,11 @@ return;
           // Apply function is required to sync Angular after leaving Angular environment
           $rootScope.$apply(function () {
             if (theme == "teacher") {
+              $rootScope.signinText = "Engage Students. Organize Yourself. Gamify.";
               $rootScope.filePath = "includes/admin_signin.html";
             } else {
-              $rootScope.filePath = "includes/student_signin.html";
+              $rootScope.signinText = "Sign in to Google to access your course. Earn as you learn.";
+              $rootScope.filePath = "includes/admin_signin.html";
             }
             $rootScope.navPath = "includes/nav_signin.html";
           });
