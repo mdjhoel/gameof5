@@ -29,21 +29,23 @@
 				</div>
 				<div class="row">
 					<div>
-						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit; showSVG($index)">Badge</a>
+						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Badge</a>
 				    	<a class="waves-effect waves-light btn pink" ng-click="removebadge($index)">Delete</a>
 				    </div>
 				    <div ng-show="$scope.showedit">
-
 				    	<br>
-						<label ng-model="item.id">{{item.id}}</label>
 						<div class="scrollmenu">
-						    <a class="image" ng-click="item.id = mybadge.id" ng-repeat="mybadge in badgesvg.badges" id='{{mybadge.id}}{{$parent.$index}}{{$index}}' data-design="{{mybadge.design}}" title="{{mybadge.id}}"></a>
-							
+
+							<a class="image" ng-click="item.id = mybadge" ng-repeat="mybadge in admin.badgelist" id='{{key}}{{$index}}' title="{{mybadge}}" >
+							<img src="images/badges/{{mybadge}}.svg" ng-style="{'opacity':item.id == mybadge ? '1' : '0.5' }"/>
+							</a>
+
 						</div>
+							
+
+					</div>
 				
-    					</select>
-				    </div>
-				 </div>
+    			</div>
 			</form>
 		</li>
 	</ul>
@@ -55,5 +57,6 @@
 var imageWidth = 60;
    
 $(".imageContainer").width($(".image").length*imageWidth);
+
 
 </script>
