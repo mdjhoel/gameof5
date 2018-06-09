@@ -183,6 +183,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       }
     }
 
+    // return to course menu, users and readonly should be undefined
+    $rootScope.users = undefined;
+    $rootScope.readonly = undefined;
+
     $rootScope.filePath = "includes/admin_courses.html";
     $rootScope.navPath = "includes/nav_courses.html";
   }
@@ -371,7 +375,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
       var readonly = angular.toJson($rootScope.readonly); // get rid of Angular $$ data
       readonly = JSON.parse(readonly);
-      $rootScope.o_readonly = readonly; 
+      $rootScope.o_readonly = JSON.stringify(readonly);
 
       $rootScope.refAdmin.update(admin).then(function(){
         console.log("Admin data saved successfully.");
