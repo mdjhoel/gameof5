@@ -1,15 +1,15 @@
 <table>
   <tr>
     <td style='color: #8bc34a; font-size: 2em;'>
-      Courses
-      <a href="" ng-click="helpToast('Course names have no spaces,<br>20 chars or less, and no special chars (#/[].$)',5000,'black')">
+      Registered Courses
+      <a href="" ng-click="helpToast('Register or edit a course. Limit of 5.<br>Caution: data retrieved on name.<br>Changing will register new course.',5000,'black')">
         <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
           <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
           <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
         </svg>
       </a>
     </td>
-    <td><a id="addbutton" ng-click="addcourse()" class="waves-effect waves-light btn right light-green">Add</a></td>
+    <td><a id="addbutton" ng-click="addcourse()" class="waves-effect waves-light btn right light-green">Register</a></td>
   </tr>
 </table>
       
@@ -17,24 +17,23 @@
   <ul class="collection with-header">
     <li class="collection-item">
       <form class="col s12">
-          <div class="row">
-                  <div class="input-field">
-                    <input id="name" type="text" maxlength="20" ng-model="item.name" ng-change="checkCname(item.name,$index)">
-                               <label class='md-no-float' for="name">Course name
-                               </label>
-                  </div>
-                  <div class="input-field">
-                    <input id="descname" type="text" ng-model="item.descname">
-                    <label class='md-no-float' for="descname">Descriptive name</label>
-                  </div>
-                  <div class="input-field">
-                    <input id="desc" type="text" ng-model="item.desc">
-                    <label class='md-no-float' for="desc">Description</label>
-                  </div>
-                  <div>
-                    <a class="waves-effect waves-light btn light-green" ng-click="navAdmin(item.name)">Edit</a>
-                    <a class="waves-effect waves-light btn pink" ng-click="removecourse($index)">Delete</a>
-                  </div>
+      	<div class="row">
+        	<div class="input-field">
+            	<input id="name" type="text" maxlength="20" ng-model="item.name" ng-change="checkCname(item.name,$index)">
+                <label class='md-no-float' for="name">Course name (no spaces or special chars #/[].$)</label>
+            </div>
+            <div class="input-field">
+                <input id="descname" type="text" ng-model="item.descname">
+                <label class='md-no-float' for="descname">Descriptive name</label>
+            </div>
+            <div class="input-field">
+                <input id="desc" type="text" ng-model="item.desc">
+                <label class='md-no-float' for="desc">Description</label>
+            </div>
+            <div>
+               	<a class="waves-effect waves-light btn light-green" ng-click="navAdmin(item.name)">Edit</a>
+                <a class="waves-effect waves-light btn pink" ng-click="removecourse($index)">Remove</a>
+            </div>
           </div>
       </form>
     </li>
