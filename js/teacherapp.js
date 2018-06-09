@@ -32,6 +32,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           
           // Set photoUrl so it is available across teacher and students
           $rootScope.photoUrl = user.photoURL;
+          $rootScope.email = user.email;
+          $rootScope.name = user.displayName;
 
           // 3. Determine who is accessing and set interface
           var userId = user.uid;
