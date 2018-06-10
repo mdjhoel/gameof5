@@ -661,51 +661,16 @@ function setUserTotals() {
     	$rootScope.admin.courses.splice(index, 1);
   }
 
-  // Add some new data to the rootScope
-  $rootScope.adduser = function () {
-
-    /*
-    var quizlist = [];
-    if ($rootScope.data.quizlist != undefined) {
-      // if new user missed a quiz, add -99
-      for (var missedquiz = 0; missedquiz < $rootScope.data.quizlist.length; missedquiz++){
-        //quizlist.push({grade:-99});
-        quizlist.unshift({grade:-99});
-      }
-    } 
-    var dailylist = [];
-    if ($rootScope.readonly.daily != undefined) {
-      // if new user missed a quiz, add -99
-      for (var misseddaily = 0; misseddaily < $rootScope.readonly.daily.length; misseddaily++){
-        //dailylist.push({grade: -99, desc: "not member of class", badge: 0});
-        dailylist.unshift({grade:-99, desc: "not a member of class", badge: 0});
-      }
-    } 
-
-    if ($rootScope.data.users == undefined) { $rootScope.data.users = {}; }
-    
-    //$rootScope.data.users.unshift({"name":{name: "",quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0}});
-    //$rootScope.data.users[Object.keys($rootScope.data.users).length] = {name: "",quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0};
-    $rootScope.data.users[0] = {commited: false, email: "", photoUrl: "images/tyler-durden.jpg", name: "Tyler Durden", quiztotal: "0",dailytotal: "0",badgestotal: "0",pointstotal: "0",quizzes: quizlist,daily: dailylist, badges: [""], level: 0};
-    */
-    $rootScope.admin.users.unshift({commited: false, email: "", cname: $rootScope.cname});
-
-  }
-
   // Remove some data from the rootScope
   $rootScope.removeuser = function (val,index) {
-
-      //$rootScope.readonly.users.splice(index, 1);
-      $rootScope.listArray.splice(index);
+      $rootScope.listArray.splice(index,1);
       delete $rootScope.users[val];
-
       // when user deletes all users, set users to empty object so that saving removes from Firebase
       if (Object.keys($rootScope.users).length == 0) {
       	$rootScope.users = undefined;
  		   $rootScope.saveusers = true;
       	$rootScope.readonly.daily = {};
       }
-    
   }
 
   // Add some new data to the rootScope
