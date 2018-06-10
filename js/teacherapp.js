@@ -74,7 +74,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
                   var msg = "Welcome " + user.displayName + ".";
                   Materialize.toast(msg, 2000, 'black');
-                  setTimeout(function(){ Materialize.toast("Edit or add a new course.", 2000, 'black'); }, 2000); 
+                  //setTimeout(function(){ Materialize.toast("Edit or add a new course.", 2000, 'black'); }, 2000); 
 
               });
 
