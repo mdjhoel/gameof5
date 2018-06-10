@@ -281,7 +281,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           } else {
              $rootScope.readonly = {lessons:[],badges:[],levels:[],quizzes:[],daily:[]};
           }
-`         console.log("No data from Firebase, default stored in $rootScope.readonly.");
+          console.log("No data from Firebase, default stored in $rootScope.readonly.");
         }
 
         $rootScope.$apply(function () { 
