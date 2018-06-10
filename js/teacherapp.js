@@ -100,7 +100,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                 $rootScope.$apply(function () {  // prep for user view   
                   if ($rootScope.user.confirmed == false) {
                     $rootScope.error = "Not confirmed yet.";
-                    $rootScope.filePath = "includes/404.html";
+                    $rootScope.filePath = "includes/patience.html";
                   } else {
                     $rootScope.navPath = "includes/nav_student.html";
                     $rootScope.filePath = "includes/student_view.html";  
@@ -130,7 +130,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                 		$rootScope.user = newuser;
                 		$rootScope.refUser.update(newuser).then(function(){
                   			console.log("New user data saved successfully.");
-                  			$rootScope.$apply(function () { $rootScope.error = "New request sent."; $rootScope.filePath = "includes/404.html"; return; });
+                  			$rootScope.$apply(function () { $rootScope.error = "New request sent."; $rootScope.filePath = "includes/patience.html"; return; });
                 		}).catch(function(error) {
                   			console.log("New user data could not be saved." + error);
                   			$rootScope.$apply(function () { $rootScope.error = "Data could not be saved"; $rootScope.filePath = "includes/404.html"; return; });
