@@ -1,0 +1,26 @@
+<svg width="500" height="150" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="#ffffff" id="canvas_background" height="152" width="502" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <ellipse ry="32" rx="32" id="svg_1" cy="81" cx="49.5" stroke-width="2" stroke="#2196f3" fill="#8bc34a"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_3" y="103.5" x="29.5" stroke-width="0" stroke="#2196f3" fill="#ffffff">B</text>
+  <ellipse ry="32" rx="32" id="svg_4" cy="81" cx="130.5" stroke-width="2" stroke="#2196f3" fill="#ff9800"/>
+  <ellipse ry="32" rx="32" id="svg_6" cy="81" cx="213.5" stroke-width="2" stroke="#2196f3" fill="#ff0000"/>
+  <ellipse ry="32" rx="32" id="svg_7" cy="80" cx="296.5" stroke-width="2" stroke="#2196f3" fill="#8bc34a"/>
+  <ellipse ry="32" rx="32" id="svg_8" cy="81" cx="377.5" stroke-width="2" stroke="#2196f3" fill="#e91e63"/>
+  <ellipse ry="32" rx="32" id="svg_9" cy="81" cx="455.5" stroke-width="2" stroke="#2196f3" fill="#ffeb3b"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_10" y="75.5" x="62.5" stroke-width="0" stroke="#2196f3" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_11" y="98.5" x="112.5" stroke-width="0" stroke="#2196f3" fill="#ffffff">a</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_12" y="98.5" x="196.5" stroke-width="0" stroke="#2196f3" fill="#ffffff">s</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_13" y="99.5" x="288.5" stroke-width="0" stroke="#2196f3" fill="#ffffff">i</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_14" y="97.5" x="359.5" stroke-width="0" stroke="#2196f3" fill="#ffffff">c</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="64" id="svg_15" y="98.5" x="439.5" stroke-width="0" stroke="#2196f3" fill="#ffffff">s</text>
+ </g>
+</svg>
