@@ -40,7 +40,7 @@
 				 			<tr>
 				 				<td>{{user.email}}</td>
 				 				<td>
-				 					<input class="TextBox" type="number" validate="number" min=-99 max=4 ng-model="user.daily[$parent.$index].grade" ng-change="emptyField(user,$parent.$index,$index)"/>
+				 					<input class="TextBox" type="number" validate="number" min=0 max=4 ng-model="user.daily[$parent.$index].grade" ng-change="emptyField(user,$parent.$index,$index)"/>
 				 				</td>
 				 				<td>
 				 					<select class="browser-default" ng-model="user.daily[$parent.$index].badge" ng-options="badge.id as badge.name for badge in readonly.badges"><option value="">Select</option></select>
