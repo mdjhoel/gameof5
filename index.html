@@ -41,31 +41,20 @@
   <div width='300px' id="g5header" align="center"><img src="images/header.svg"/></div>
  
   <div class="container">
-    <div class="row">
-      
-    	<div ng-include="navPath"></div>
-    	<!--<div class="btn blue white-text right" ng-hide="loggedIn" ng-click="signin()" style="margin-bottom: 10px;">Sign in</div>-->
+    <div class="row">  
+      <div ng-include="navPath"></div>
     </div>
-	<div class="row">
+    <div class="row">
       <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-
-      <!--<div ng-view onload="finishLoading()"></div>-->
-
   	  <div ng-include="filePath" onload="finishLoading()"></div>
-
-
       <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-
       <!-- footer -->
       <div id="g5footer"></div>
-
-  		<!-- end big row -->    
-  	</div>
-  	
+    <!-- end big row -->    
+    </div>
     <!-- container -->
   </div>
   
-
   <!-- #About Modal -->
   <div id="modalcheck" class="modal">
       <div class="modal-content">
