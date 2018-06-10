@@ -40,18 +40,23 @@
 <!-- logo -->
   <div width='300px' id="g5header" align="center"><img src="images/header.svg"/></div>
  
-  <div class="container">
-    <div class="row">  
-      <div ng-include="navPath"></div>
+   <div class="container">
+    <div class="row">
+    	<div ng-include="navPath"></div>
+    </div>
+	  <div class="row">
+      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+    </div>
+    <div class="row">
+  	  <div ng-include="filePath" onload="finishLoading()"></div>
     </div>
     <div class="row">
       <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-  	  <div ng-include="filePath" onload="finishLoading()"></div>
-      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
       <!-- footer -->
       <div id="g5footer"></div>
-    <!-- end big row -->    
-    </div>
+  		<!-- end row -->    
+  	</div>
+  	
     <!-- container -->
   </div>
   
