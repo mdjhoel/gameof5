@@ -421,34 +421,39 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
   }
 
-function setUserTotals() {
+  function setUserTotals() {
     
     var users = $rootScope.users;
     var userlist = [];
 
-    // changed for update from array to object for Firebase
-    //for (i = 0; i<users.length; i++) {
     for (key in users) {
 
       var pointstotal = 0;
       var quiztotal = 0;
       var dailytotal = 0;
-
-      //var daily = users[i].daily;
       var user = users[key];
       var daily = user.daily;
+      var quizzes = user.quizzes;
       var badgelist = [];
       var badgestotal = 0;
 
-      // house keeping
       user.confirmed = true;
       var d = new Date();
-      user.dateconfirmed = d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear() + " (DDMMYYYY)";   
+      user.dateconfirmed = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();   
 
       if (daily != undefined) {
+
+        if (daily.length == undefined) { // if user added later, process
+          var newdaily = []; 
+          for (dailykey in daily) {
+            newdaily.unshift(daily[dailykey]); 
+          }
+          daily = newdaily;
+        } 
+
         for (j = 0; j<daily.length; j++) {
 
-          if (daily[j].grade == null) { daily[j].grade = -99; }
+          if (daily[j].grade == undefined) { daily[j].grade = -99; }
 
           if (daily[j].grade != -99) {
             dailytotal = dailytotal + daily[j].grade;
@@ -464,12 +469,19 @@ function setUserTotals() {
         }
       }
 
-      var quizzes = user.quizzes;
-      //var quizzes = users[i].quizzes;
       if (quizzes != undefined) {
+
+        if (quizzes.length == undefined) { // if user added later, process
+          var newquiz = []; 
+          for (quizkey in quizzes) {
+            newquiz.unshift(quizzes[quizkey]); 
+          }
+          quizzes = newquiz;
+        }
+
         for (k = 0; k<quizzes.length; k++) {
 
-          if (user.quizzes[k].grade == null) { user.quizzes[k].grade = -99; }
+          if (user.quizzes[k].grade == undefined) { user.quizzes[k].grade = -99; }
           if (user.quizzes[k].grade != -99) {
             quiztotal = quiztotal + user.quizzes[k].xp;
           }
@@ -488,10 +500,11 @@ function setUserTotals() {
 
       var levels = $rootScope.readonly.levels;
       if (levels != undefined) {
-        for (l = 0; l<levels.length; l++) {
+        for (l = levels.length -1; l>=0; l--) {
           if (pointstotal >= levels[l].low && pointstotal <= levels[l].high) {
             user.level = levels[l];
             user.level.number = l;
+            break; // get out once level is found
           }
         }
       } else {
