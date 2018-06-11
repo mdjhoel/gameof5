@@ -201,6 +201,11 @@
 
     footerDoc.innerHTML = temphtml;
   }
+  // disable back button, so users do not leave one page app and get confused
+  history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 
 </script>
 
