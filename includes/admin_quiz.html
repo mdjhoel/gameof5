@@ -36,7 +36,7 @@
         				<tbody ng-repeat="user in users">
 				 			<tr>
 				 				<td>{{user.email}}</td>
-				 				<td><input class="TextBox" type="number" validate="number" ng-model="user.quizzes[$parent.$index].grade" ng-change="user.quizzes[$parent.$index].name = $parent.item.name; user.quizzes[$parent.$index].xp = setQuiz(user.quizzes[$parent.$index].grade,$parent.$index)"/><td>
+				 				<td><input class="TextBox" type="number" validate="number" min=0 max=100 ng-model="user.quizzes[$parent.$index].grade" ng-change="user.quizzes[$parent.$index].name = $parent.item.name; user.quizzes[$parent.$index].xp = setQuiz(user.quizzes[$parent.$index].grade,$parent.$index)"/><td>
 				 				<td><span style='color: orange;'><b>XP </b></span><span class="chip blue white-text">{{user.quizzes[$parent.$index].xp}}</span></td>
 				 			</tr>
 				 		</tbody>
