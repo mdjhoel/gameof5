@@ -4,8 +4,7 @@
       <div class="card-content">
         <span class="card-title">Daily comments</span>
           <ul class="collection with-header">
-            <!-- <li class="collection-item avatar" ng-repeat="item in user.daily" ng-show="dailytotal!=0"> -->
-            <li class="collection-item avatar" ng-repeat="daily in readonly.daily">
+            <li class="collection-item avatar" ng-repeat="daily in readonly.daily" ng-show="user.daily[$index] != undefined">
               <img ng-src="images/badges/{{user.daily[$index].badge}}.svg" class="circle"/>
               <p class="title">{{daily.id.name}}</p>
               <p>{{user.daily[$index].desc}}</p>
