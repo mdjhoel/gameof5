@@ -814,6 +814,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         
     var username = Object.keys($rootScope.users)[index];
     user.daily[parent].desc = "Enter a message ...";
+
+    // check for badge in case a user is added later, if so, set badge to 0
+    if (user.daily[parent].badge == undefined) { user.daily[parent].badge = 0; }
     
     // set value attribute
     if (user.daily[parent].grade == 4) {
