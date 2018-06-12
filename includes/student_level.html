@@ -22,7 +22,7 @@
         <li class="collection-item"><table><td>Quizzes</td><td><span class="chip orange white-text right">{{user.quiztotal}}</span></td></table></li>
         <li class="collection-item"><table><td>Badges</td><td><span class="chip orange white-text right">{{user.badgestotal}}</span></td></table></li>
         <li class="collection-item"><div class="chip blue white-text" ng-repeat="level in readonly.levels" style='margin: 5px; border-width: 2px;'> 
-          <img ng-show="user.pointstotal < level.high && user.pointstotal > level.low" src="images/g5circle.svg"/>{{level.name}} - {{level.low}}
+          <img ng-show="user.pointstotal <= level.high && user.pointstotal => level.low" src="images/g5circle.svg"/>{{level.name}} - {{level.low}}
         </div></li>
       </ul>
 
