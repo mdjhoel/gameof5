@@ -19,7 +19,8 @@
 	<li class="collection-item avatar">
       <img ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
       <span class="title">{{item.name}} ({{item.email}})</span>
-      <p ng-show="item.confirmed==true">Points: {{item.pointstotal}}</p>
+      <p>Level: {{item.level.name}}</p>
+      <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}}</p>
       <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
       <br>
       <p>
