@@ -1,0 +1,18 @@
+[
+  {
+    "number": "0",
+    "name": "Register a course",
+    "date": "June 12, 2018",
+    "author": "g5",
+    "theme": "",
+    "description": "",
+    "keywords": "register,course",
+    "segments": [
+      {
+        "img": "registernew.png",
+        "caption": "You may register up to 5 courses. Click ",
+        "paragraph": ""
+      }
+    ]
+  }
+]
