@@ -1,0 +1,73 @@
+
+/* xs < 768 */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 2em;
+    }
+    
+    #rightside {
+      clear: both;
+    }
+    
+}
+
+/* sm */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1.75em;
+    }
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+    body {
+        font-size: 1.75em;
+    }
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 2em;
+    }
+}
+
+#rightside {
+  padding-top: 10px;
+}
+
+
+
+footer {
+    padding-top: 30;
+}
+
+.navbar-fixed-top {
+  background-color: black;
+}
+
+.navbar-fixed-top .navbar-brand {
+  height: 90;
+}
+
+.navbar-right {
+  padding-top: 25;
+}
+
+#mylink {
+  font-size: 25;
+  font-family: Courier;
+  font-style: bold;
+  color: white;
+}
+
+#keyword {
+  float: left;
+  padding-bottom: 15px;
+  padding-right: 5px;
+}
+
+#basic-url {
+  width: 100%;
+  height: 50px;
+}
