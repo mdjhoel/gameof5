@@ -1,7 +1,7 @@
 function loadJSON(callback) {   
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'localhost:8000/blog/data/blog.json', true);
+    xobj.open('GET', 'https://raw.githubusercontent.com/mdjhoel/gameof5/master/blog/data/blog.json', true);
     xobj.onreadystatechange = function () {
           if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
