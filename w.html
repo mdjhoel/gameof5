@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gameof5</title>
+  <link href="css/stylesheet.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/materialize.min.css">
+
+  <!-- load Angular 1.6.5 -->
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <script src="js/angular-sanitize.min.js"></script>
+  <script src="js/jspdf135.js"></script>
+
+  <script src="js/teacherapp.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+  
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBVtxn_jTK6QSvvUrGLWRnuTO1Y1YAOWEA",
+      authDomain: "gameof5-4e8a1.firebaseapp.com",
+      databaseURL: "https://gameof5-4e8a1.firebaseio.com/",
+      projectId: "gameof5-4e8a1",
+      storageBucket: "",
+      messagingSenderId: ""
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<!-- local testing ... -->
+<!-- cd to Documents/gameof5 -->
+<!-- php -S localhost:8000 -->
+<!-- python -m SimpleHTTPServer -->
+
+<body ng-app="teacherpages">
+
+<!-- logo -->
+  <div id="g5header" align="center"><img width="200px" src="images/header.svg"/></div>
+ 
+   <div class="container">
+    <div class="row">
+    	<div ng-include="navPath"></div>
+    </div>
+	  <div class="row">
+      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+    </div>
+    <div class="row">
+  	  <div ng-include="filePath" onload="finishLoading()"></div>
+    </div>
+    <div class="row">
+      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+      <!-- footer -->
+      <div id="g5footer"></div>
+  		<!-- end row -->    
+  	</div>
+  	
+    <!-- container -->
+  </div>
+  
+  <!-- #About Modal -->
+  <div id="modalcheck" class="modal">
+      <div class="modal-content">
+        <h4>Save edits</h4>
+        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
+        
+        <p ng-show="users != undefined">
+          <input type="checkbox" id="usertotals"/>
+          <label for="usertotals">Update and confirm users (this may take a minute)</label>
+        </p>
+
+      <label 
+        <div class="modal-footer">
+          <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat ">No</a>
+        </div>
+        
+      </div>
+    </div>
+
+  <div id="modalprofile" class="modal center">
+      <div class="modal-content">
+        <h4>{{name}}</h4>
+        <img ng-src="{{photoUrl}}" width="200px" style="border-radius:50%;">
+        <p>{{email}}</p>
+        
+        <div class="modal-footer">
+          <a ng-click="signout()" class="modal-action modal-close btn-flat">Sign out</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+	
+  <style>
+    .svg-share:hover ellipse {
+      stroke: #000;
+      fill: #000;
+    }
+  </style>
+
+  <div id="modaldownload" class="modal modal-fixed-footer">
+      <div class="modal-content">
+        <h4>Share <span style="color: #8bc34a;">{{cname}}</span>
+          <a href="" ng-click="helpToast('Invite your users using this URL.',5000,'black')">
+              <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+                <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+              </svg>
+          </a>
+        </h4>
+        <table>
+          <tr>
+            <td >
+              <svg class="svg-share" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+                <line y2="15" x2="5" y1="5" x1="25" stroke-width="1.5" stroke="#999999"/>
+                <line y2="15" x2="5" y1="25" x1="25" stroke-width="1.5" stroke="#999999"/>
+                <ellipse ry="2" rx="2" cy="15" cx="5" stroke-width="2.5" stroke="#999999" fill="#999999"/>
+                <ellipse ry="2" rx="2" cy="5" cx="25" stroke-width="2.5" stroke="#999999" fill="#999999"/>
+                <ellipse ry="2" rx="2" cy="25" cx="25" stroke-width="2.5" stroke="#999999" fill="#999999"/>
+              </svg>
+            </td>
+            <td>{{share}}</td>
+          </tr>
+        </table>     	
+      	<h4>Backup your data
+            <a href="" ng-click="helpToast('Copy and paste in a JSON validator for pretty views of your data.',5000,'black')">
+              <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+                <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+              </svg>
+           </a>
+        </h4>
+
+        <div class="collection">
+            <a href="" class="collection-item" ng-click="showme = !showme">Admin</a>
+              <div ng-show="showme" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
+                <div class="card-content">
+                  <p>{{admin}}</p>
+                </div>
+              </div>
+              <a href="" class="collection-item" ng-click="showme1 = !showme1">Readonly</a>
+              <div ng-show="showme1" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
+                <div class="card-content">
+                  <p>{{readonly}}</p>
+                </div>
+              </div>
+              <a ng-show="users != undefined" href="" class="collection-item" ng-click="showme2 = !showme2">Users</a>
+              <div ng-show="showme2" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
+                <div class="card-content">
+                  <p>{{users}}</p>
+                </div>
+              </div>
+          </div>
+          <p>* view and prettify your data using a <a href='https://jsoneditoronline.org/' target='_blank'>JSON editor</a></p>
+        </div>
+
+        <div class="modal-footer">
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+
+</body>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<!--<script type="text/javascript" src="js/javascript.js"></script>-->
+
+<script>
+
+  setFooter();
+
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  	$('.modal').modal();
+	$('.tooltipped').tooltip({delay: 50});
+  });
+
+  // Common footer for pages
+  function setFooter() {
+    var footerDoc = document.getElementById("g5footer");
+    var temphtml = "";
+    temphtml = temphtml + "<footer class='page-footer white'>";
+      
+       temphtml = temphtml + "<div class='row'>";
+         temphtml = temphtml + "<div class='col l6 s12'>";
+           temphtml = temphtml + "<h5 class='blue-text'>gameof5</h5>";
+           temphtml = temphtml + "<p class='black-text text-lighten-4'>gameof5 allows teachers to digitally store, structure, present, and gamify their lessons to increase student engagement. gameof5 is a learning project for the programmer and is free of charge! The application was built using JSON, Javascript, Firebase, AngularJS and Material Design standards.</p>";
+         temphtml = temphtml + "</div>";
+         temphtml = temphtml + "<div class='col l4 offset-l2 s12'>";
+           temphtml = temphtml + "<h5 class='blue-text'>Links</h5>";
+          temphtml = temphtml + "<ul>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://material.io/' target='_blank'>Material Design Guidelines</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='http://www.materializecss.com' target='_blank'>MaterializeCSS</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://design.google/' target='_blank'>Google Design</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://firebase.google.com/' target='_blank'>Firebase</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://angularjs.org/' target='_blank'>AngularJS</a></li>";
+	    temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://github.com' target='_blank'>Github</a></li>";
+          temphtml = temphtml + "</ul>";
+        temphtml = temphtml + "</div></div>";
+
+    footerDoc.innerHTML = temphtml;
+  }
+
+  // disable back button, so users do not leave one page app and get confused
+  history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+
+</script>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</html>
