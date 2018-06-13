@@ -327,7 +327,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             $rootScope.alldata = $rootScope.alldata + "}}}";
           }
           //$rootScope.alldata = $rootScope.alldata + "}";
-          $rootScope.share = "https://gameof5.com/#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
+          $rootScope.share = "https://gameof5.com/w.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
         });
       },
       function(error) {
