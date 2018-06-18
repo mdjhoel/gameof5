@@ -1,7 +1,33 @@
 [
   {
     "number": "0",
-    "name": "Register a course",
+    "name": "What is the Example course?",
+    "date": "June 12, 2018",
+    "author": "g5",
+    "theme": "",
+    "description": "",
+    "keywords": "example,course",
+    "segments": [
+      {
+        "img": "register.png",
+        "caption": "Example course is provided to show you how to get started.",
+        "paragraph": ""
+      },
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "Take a tour through the Example course to see how you can organize your lessons, badges, user levels, quizzes, and daily comments. Gameof5 will show you an Example course until you remove it and save your data to the cloud server.."
+      },
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "It is recommended that you remove Example once you have viewed it and start a new course from scratch."
+      }
+    ]
+  },
+   {
+    "number": "1",
+    "name": "How can I register a course?",
     "date": "June 12, 2018",
     "author": "g5",
     "theme": "",
@@ -10,7 +36,48 @@
     "segments": [
       {
         "img": "registernew.png",
-        "caption": "You may register up to 5 courses. Click ",
+        "caption": "Click the Register button to register a new course.",
+        "paragraph": ""
+      },
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "You may register up to five courses using gameof5. Each course is connected to its corresponding data (i.e., lessons, badges) by the unique name you give it. Click the Save button to write your course data to the server."
+      },
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "Removed courses are not deleted from the server, and may be re-registered using the original unique name (e.g., Example)."
+      }
+    ]
+  },
+  {
+    "number": "2",
+    "name": "How can I create a lesson?",
+    "date": "June 12, 2018",
+    "author": "g5",
+    "theme": "",
+    "description": "",
+    "keywords": "lesson,lesson details,lesson segments",
+    "segments": [
+      {
+        "img": "lesson.png",
+        "caption": "Click the Add button to create a new lesson.",
+        "paragraph": "You may add as many lessons as you like. You can also add lesson detail and segments to organize the lesson progression. Lessons can be moved up and down in the course order (first lesson on the bottom) and deleted."
+      },
+      {
+        "img": "lessondetails.png",
+        "caption": "Click the Details button to access and update the lesson information.",
+        "paragraph": "Ensure you provide full URL path name to your image (not required). SVG vector images load faster and can be shared free on http://svgur.com. jpg and png format images can also be used and served from a variety of cloud servers (e.g., Google Drive, postimage.org). Keywords and expectations need to be separated with commas as they are each stored separately when saved."
+      },
+      {
+        "img": "lessonsegments.png",
+        "caption": "Click the Segments button to add progression segments to the lesson.",
+        "paragraph": "Segments are the parts of the lesson. Add up to 5 (good teaching practice says less is more!) segments to organize your lesson. Ensure that you use full URL path names for images and links."
+      },
+      {
+        "img": "lessonview.png",
+        "caption": "Completed lessons look like this to your users. They can also be printed as PDF files.",
         "paragraph": ""
       }
     ]
