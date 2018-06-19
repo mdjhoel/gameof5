@@ -36,8 +36,7 @@ function loadJSON(callback) {
     		if (actual_JSON[n].segments[i].img != "") { 
     			slab.push("<a href=data/images/" + actual_JSON[n].segments[i].img + " target='_blank'>");
     			slab.push("<img src=data/images/" + actual_JSON[n].segments[i].img + " width='100%'></a>"); 
-    			slab.push("<figcaption><i>" + actual_JSON[n].segments[i].caption + "</i></figcaption>");
-    			slab.push("</figure>");
+    			slab.push("<i>" + actual_JSON[n].segments[i].caption + "</i>);
     			slab.push("<hr>");
     		}
     		if (actual_JSON[n].segments[i].paragraph != "") { 
