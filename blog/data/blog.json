@@ -2,21 +2,21 @@
   {
     "number": "0",
     "name": "What is the Example course?",
-    "date": "June 12, 2018",
+    "date": "June 19, 2018",
     "author": "g5",
     "theme": "",
     "description": "",
     "keywords": "example,course",
     "segments": [
       {
+        "img": "",
+        "caption": "",
+        "paragraph": "Take a tour through the Example course by clicking the Edit button. The Example course is provided to show you how you can organize your lessons, badges, user levels, quizzes, and daily comments. Gameof5 will show you the Example course until you remove it and save your data to the cloud server."
+      },
+      {
         "img": "register.png",
         "caption": "Example course is provided to show you how to get started.",
         "paragraph": ""
-      },
-      {
-        "img": "",
-        "caption": "",
-        "paragraph": "Take a tour through the Example course to see how you can organize your lessons, badges, user levels, quizzes, and daily comments. Gameof5 will show you an Example course until you remove it and save your data to the cloud server.."
       },
       {
         "img": "",
@@ -27,22 +27,22 @@
   },
    {
     "number": "1",
-    "name": "How can I register a course?",
-    "date": "June 12, 2018",
+    "name": "How many courses can I register?",
+    "date": "June 19, 2018",
     "author": "g5",
     "theme": "",
     "description": "",
     "keywords": "register,course",
     "segments": [
       {
+        "img": "",
+        "caption": "",
+        "paragraph": "You may register up to five courses at a time. Each course is connected to its saved data on the cloud server (i.e., lessons, badges) by the unique name you give it. Click the Save button to write your course data to the server."
+      },
+      {
         "img": "registernew.png",
         "caption": "Click the Register button to register a new course.",
         "paragraph": ""
-      },
-      {
-        "img": "",
-        "caption": "",
-        "paragraph": "You may register up to five courses using gameof5. Each course is connected to its corresponding data (i.e., lessons, badges) by the unique name you give it. Click the Save button to write your course data to the server."
       },
       {
         "img": "",
@@ -54,30 +54,82 @@
   {
     "number": "2",
     "name": "How can I create a lesson?",
-    "date": "June 12, 2018",
+    "date": "June 19, 2018",
     "author": "g5",
     "theme": "",
     "description": "",
     "keywords": "lesson,lesson details,lesson segments",
     "segments": [
       {
-        "img": "lesson.png",
-        "caption": "Click the Add button to create a new lesson.",
-        "paragraph": "You may add as many lessons as you like. You can also add lesson detail and segments to organize the lesson progression. Lessons can be moved up and down in the course order (first lesson on the bottom) and deleted."
-      },
-      {
-        "img": "lessondetails.png",
-        "caption": "Click the Details button to access and update the lesson information.",
-        "paragraph": "Ensure you provide full URL path name to your image (not required). SVG vector images load faster and can be shared free on http://svgur.com. jpg and png format images can also be used and served from a variety of cloud servers (e.g., Google Drive, postimage.org). Keywords and expectations need to be separated with commas as they are each stored separately when saved."
-      },
-      {
-        "img": "lessonsegments.png",
-        "caption": "Click the Segments button to add progression segments to the lesson.",
-        "paragraph": "Segments are the parts of the lesson. Add up to 5 (good teaching practice says less is more!) segments to organize your lesson. Ensure that you use full URL path names for images and links."
+        "img": "",
+        "caption": "",
+        "paragraph": "You may add as many lessons as you like. After you Add a lesson, use the tools to provide detail and segments to organize the lesson progression. Lessons can be moved up and down in the course order (first lesson is presented on the bottom, most recent at the top) and deleted."
       },
       {
         "img": "lessonview.png",
-        "caption": "Completed lessons look like this to your users. They can also be printed as PDF files.",
+        "caption": "ompleted lessons look like this to your users. They can be printed as PDF files.",
+        "paragraph": ""
+      },
+      {
+        "img": "lessondetails.png",
+        "caption": "",
+        "paragraph": "When providing details, ensure you provide full URL path names (http://www.google.com) to your image or link. SVG vector graphics load faster than images (.jpg or .png) and can be shared for free on http://svgur.com. Keywords and expectations need to be separated with commas as they are each stored separately when saved."
+      },
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "Segments are the parts of the lesson. Add up to 5 (good teaching practice says less is more!) segments to organize your lesson."
+      }
+    ]
+  },
+  {
+    "number": "3",
+    "name": "How can I share my classes with students?",
+    "date": "June 19, 2018",
+    "author": "g5",
+    "theme": "",
+    "description": "",
+    "keywords": "course,enrol,share,student",
+    "segments": [
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "Students can enrol in your class by visiting a <b>share</b> link that you provide to them. <h5>Enrolment process in a nutshell ...</h5><ul><li>Email students the share link</li><li>Students visit and bookmark share link</li><li>Refresh your gameof5 and View Users to confirm enrolments</li><li>Save course with Update checkbox checked to confirm users</li></ul>"
+      },      
+      {
+        "img": "share.png",
+        "caption": "Click the share icon to access the <i>share</i> link for your current course.",
+        "paragraph": ""
+      },
+      {
+        "img": "request.png",
+        "caption": "Student message when they first enrol.",
+        "paragraph": ""
+      }
+    ]
+  },
+  {
+    "number": "4",
+    "name": "What does the student view look like?",
+    "date": "June 19, 2018",
+    "author": "g5",
+    "theme": "",
+    "description": "",
+    "keywords": "share,student",
+    "segments": [
+      {
+        "img": "",
+        "caption": "",
+        "paragraph": "After students have enrolled and you have confirmed them by saving, they can access their profile and data using the <b>share</b> link."
+      },
+      {
+        "img": "student.png",
+        "caption": "Confirmed students will see their profile, points, badges etc. as well as access course lessons.",
+        "paragraph": ""
+      },
+      {
+        "img": "studentdaily.png",
+        "caption": "Profile sections provide access to the data you have entered",
         "paragraph": ""
       }
     ]
