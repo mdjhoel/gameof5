@@ -7,55 +7,39 @@
 		<link href='website.css' rel='stylesheet'>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	</head>
-
 	<body>
-
-	<div align="center">
-	<svg width='200' viewBox='0 0 150 100' xmlns='http://www.w3.org/2000/svg'>
-  <circle cx='115' cy='40' r='30' stroke='#2196f3' stroke-width='5' fill='#8bc34a'/>
-  <circle cx='87' cy='40' r='15' stroke='none' stroke-width='none' fill='#fff'/>
-  <text x='0' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#2196f3'>g</text>
-  <text x='22' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#ffeb3b'>a</text>
-  <text x='42' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#e91e63'>m</text>
-  <text x='75' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#ff9800'>e</text>
-  <text x='103' y='57' font-size='50' font-family='Helvetica' font-weight='bold' stroke='none' fill='white'>5</text>
-</svg></div>
-	
-	<div class="container">
-
-	<hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-
-		<div class="col-sm-12">
-
-			<div class="row">
- 
+		<div align="center">
+			<svg width='200' viewBox='0 0 150 100' xmlns='http://www.w3.org/2000/svg'>
+			  <circle cx='115' cy='40' r='30' stroke='#2196f3' stroke-width='5' fill='#8bc34a'/>
+			  <circle cx='87' cy='40' r='15' stroke='none' stroke-width='none' fill='#fff'/>
+			  <text x='0' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#2196f3'>g</text>
+			  <text x='22' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#ffeb3b'>a</text>
+			  <text x='42' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#e91e63'>m</text>
+			  <text x='75' y='50' font-size='40' font-family='Helvetica' font-weight='bold' stroke='none' fill='#ff9800'>e</text>
+			  <text x='103' y='57' font-size='50' font-family='Helvetica' font-weight='bold' stroke='none' fill='white'>5</text>
+			</svg>
+		</div>
+		<div class="container">
+			<hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+			<div class="col-sm-12">
+				<div class="row">
+					<h3 style="margin-top: 0px;">G5 Blog ...</h3>
+					
+					<!-- Access JSON data -->
 					<div ng-app="instantsearch" ng-controller="instantSearchCtrl">
-
-						<li class="list-unstyled" ng-repeat="i in items">
-							<a class="list-group-item list-group-item-action" target="_blank" href="builder.html?page={{ i.number}}">{{i.name}}</a>
-						</li>
-
+						<a class="list-group-item list-group-item-action" href="builder.html?page={{ i.number}}" ng-repeat="i in items">{{i.name}}</a>	
 					</div>
 
-			</div> <!-- row -->
-
-		<div class="row">
-			<hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-		</div>
-
-	<footer><div>
- 		<p>Copyright &copy; gameof5 2018</p>
-	</div></footer>
-
-		</div>
-
-
-  	</div>
-
-  	
-	
+				</div> <!-- row -->
+				<div class="row"> 
+					<hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+				</div>
+				<div>
+ 					<p>Copyright &copy; gameof5 2018</p>
+				</div>
+			</div>
+  		</div>
 	</body>
-	
 	
 	<script src="site.js"></script>
 	
