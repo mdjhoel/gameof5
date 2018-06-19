@@ -10,7 +10,8 @@ app.config(function ($httpProvider) {
  
 app.controller('instantSearchCtrl',function($scope,$http){
 	$http.get('https://raw.githubusercontent.com/mdjhoel/gameof5/master/blog/data/blog.json').success(function(data, status, headers, config) {
-		$scope.items = data.reverse();
+		//$scope.items = data.reverse();
+		$scope.items = data;
 
     console.log($scope.items);
 
