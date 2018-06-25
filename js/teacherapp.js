@@ -640,6 +640,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   }
 
   $rootScope.setData = function(index) {
+    if (!$rootScope.readonly.lessons[index].show) {return; }
     $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
   }
