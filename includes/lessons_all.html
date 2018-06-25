@@ -1,15 +1,19 @@
 <div class="collection black-text">
-	<a ng-repeat="item in readonly.lessons" href="" id='data{{$index}}' class="collection-item" ng-click="setData($index)">
+	<a ng-repeat="item in readonly.lessons" href="" id='data{{$index}}' ng-disable="!item.show" class="collection-item" ng-click="setData($index)">
        <table style="padding: 0px !important; margin: 0px !important;">
         <tr align="left">
             <td width="60px" style="padding: 0px !important; vertical-align:top;">
-                <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-show="item.show">
                     <circle id="0" stroke-width="3" stroke="#2196f3" fill="#8bc34a" r="25" cy="29.9375" cx="30"/>
                     <text x="25" y="37" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
                 </svg>
+                <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-show="!item.show">
+                    <circle id="0" stroke-width="3" stroke="#000000" fill="#b0b3b7" r="25" cy="29.9375" cx="30"/>
+                    <text x="25" y="37" fill="black" font-size="20">{{readonly.lessons.length - $index}}</text>
+                </svg>
             </td>
             <td style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
-                 <p><b>{{item.name}}</b><br>
+                 <p ng-style="!item.show && {opacity: .5};"><b>{{item.name}}</b><br>
                 <font size="2"><i>{{item.desc}}</i></font></p>
             </td>
         </tr>
