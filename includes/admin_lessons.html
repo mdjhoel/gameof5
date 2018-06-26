@@ -18,6 +18,7 @@
 <div ng-repeat="item in readonly.lessons">
 	<ul class="collection with-header">
 		<li class="collection-item">
+			<div class="row">
 			<div class="input-field col s6">
 				<input id="name" type="text" maxlength="30" ng-model="item.name">
 				<label class='md-no-float' for="name" data-error="wrong" data-success="right">Name (30 chars)</label>
