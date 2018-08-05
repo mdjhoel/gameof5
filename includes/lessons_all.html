@@ -5,7 +5,8 @@
             <td width="60px" style="padding: 0px !important; vertical-align:top;">
                 <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-style="!item.show && {opacity: .5};">
                     <circle id="0" stroke-width="3" stroke="#2196f3" fill="#8bc34a" r="25" cy="29.9375" cx="30"/>
-                    <text x="25" y="37" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                    <text ng-if="(readonly.lessons.length - $index) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                    <text ng-if="(readonly.lessons.length - $index) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
                 </svg>
             </td>
             <td style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
