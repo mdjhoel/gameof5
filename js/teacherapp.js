@@ -644,6 +644,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
   }
+           
+  $rootScope.revLessons = function() {
+    $rootScope.readonly.lessons.reverse();
+  }
 
   $rootScope.checkCname = function(cname,index) {
   	var first = cname.split(" ")[0];
