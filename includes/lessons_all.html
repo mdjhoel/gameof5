@@ -1,3 +1,19 @@
+<table>
+<tr>
+    <td style='color: #8bc34a; font-size: 2em;'>Lessons
+      <a href="" ng-click="helpToast('Click Reverse button to switch the order of the lessons.',5000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+      </a>
+    </td>
+    <td class="right">
+        <a ng-click="revLessons()" class="waves-effect waves-light btn light-green">Reverse</a>
+    </td>
+</tr>
+</table>
+
 <div class="collection black-text">
 	<a ng-repeat="item in readonly.lessons" href="" id='data{{$index}}' ng-disable="!item.show" class="collection-item" ng-click="setData($index)">
        <table style="padding: 0px !important; margin: 0px !important;">
@@ -5,8 +21,10 @@
             <td width="60px" style="padding: 0px !important; vertical-align:top;">
                 <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-style="!item.show && {opacity: .5};">
                     <circle id="0" stroke-width="3" stroke="#2196f3" fill="#8bc34a" r="25" cy="29.9375" cx="30"/>
-                    <text ng-if="(readonly.lessons.length - $index) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
-                    <text ng-if="(readonly.lessons.length - $index) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                    <!-- <text ng-if="(readonly.lessons.length - $index) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                    <text ng-if="(readonly.lessons.length - $index) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>-->
+                    <text ng-if="(readonly.lessons[$index].id) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons[$index].id}}</text>
+                    <text ng-if="(readonly.lessons[$index].id) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons[$index].id}}</text>
                 </svg>
             </td>
             <td style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
