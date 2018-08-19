@@ -716,12 +716,14 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     $rootScope.readonly.levels.splice(index, 1)
   }
 
-// Add some new data to the rootScope
-  $rootScope.addlesson = function () {
-
+  // Add some new data to the rootScope
+  $rootScope.addlesson = function (loc) {
     if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
-    $rootScope.readonly.lessons.unshift({id:$rootScope.readonly.lessons.length,show:true,name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
-  
+    if (loc == 0) {
+       $rootScope.readonly.lessons.unshift({id:$rootScope.readonly.lessons.length,show:true,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
+    } else {
+       $rootScope.readonly.lessons.push({id:$rootScope.readonly.lessons.length,show:true,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
+    }
   }
 
   // Add some new data to the rootScope
