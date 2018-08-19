@@ -645,9 +645,15 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     $rootScope.lesson = $rootScope.readonly.lessons[index];
     $rootScope.filePath = "includes/lessons_one.html";
   }
-           
-  $rootScope.revLessons = function() {
+  
+  // reverse student lessons     
+  $rootScope.revLessons = function(totalnum) {
     $rootScope.readonly.lessons.reverse();
+    if ($rootScope.rev || ($rootScope.rev == undefined)) { 
+    	$rootScope.rev = false;
+    } else {
+    	$rootScope.rev = true;
+    }
   }
 
   $rootScope.checkCname = function(cname,index) {
