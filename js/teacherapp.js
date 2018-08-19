@@ -92,6 +92,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             var dbstring = "teachers/" + args["teacher"] + "/courses/" + args["cname"];             
             $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
             $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
+            $rootScope.rev = true; // added for Reverse button on lessons
 
             $rootScope.refUser.once("value").then(function(snapshot) {
               if (snapshot.val() != undefined) {
