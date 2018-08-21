@@ -140,14 +140,26 @@
                   <p>{{admin}}</p>
                 </div>
               </div>
-              <a href="" class="collection-item" ng-click="showme1 = !showme1">Readonly</a>
+              <a href="" class="collection-item" ng-click="showme1 = !showme1">Lessons</a>
               <div ng-show="showme1" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
-                  <p>{{readonly}}</p>
+                  <p>{{readonly.lessons}}</p>
                 </div>
               </div>
-              <a ng-show="users != undefined" href="" class="collection-item" ng-click="showme2 = !showme2">Users</a>
+              <a href="" class="collection-item" ng-click="showme2 = !showme2">Levels</a>
               <div ng-show="showme2" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
+                <div class="card-content">
+                  <p>{{readonly.levels}}</p>
+                </div>
+              </div>
+              <a href="" class="collection-item" ng-click="showme3 = !showme3">Badges</a>
+              <div ng-show="showme3" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
+                <div class="card-content">
+                  <p>{{readonly.badges}}</p>
+                </div>
+              </div>
+              <a ng-show="users != undefined" href="" class="collection-item" ng-click="showme4 = !showme4">Users</a>
+              <div ng-show="showme4" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
                   <p>{{users}}</p>
                 </div>
