@@ -1,23 +1,30 @@
 <table>
 	<tr>
 		<td style='color: #8bc34a; font-size: 2em;'>Users</td>
-		<td><a ng-click="adduser()" class="waves-effect waves-light btn right light-green">Add</a></td>
+		<td class="right">
+			<select id="secnum" class="browser-default" ng-model="dummy" ng-options="user as user.section for user in listArray | unique: 'section'">
+				<option value="">SECTION</option>
+			</select>
+		</td>
 	</tr>
 </table>
 
-<div ng-repeat="(key, item) in data.users">
+<div ng-repeat="(key, item) in users" ng-show="item.section==dummy.section">
 	<ul class="collection with-header">
 		<li class="collection-item">
 			<form class="col s12">
 				<div class="row">
-					<div class="input-field">
-						<input id="email" type="email" class="validate" ng-model="item.name">
-				    	<label class='md-no-float' for="email" data-error="wrong" data-success="right">Email</label>
+					<div><h5>{{item.name}}</h5></div>
+					<div class="input-field col s12 m6">
+				  		 <label class='md-no-float' for="section" data-error="wrong" data-success="right">Section number</label>
+				  	     <input id="section" type="number" oninput="javascript: if (this.value.length > 3) this.value = this.value.slice(0, this.maxLength);" ng-model="item.section">
 					</div>
-					<div>
-				    	<a class="waves-effect waves-light btn pink" ng-click="removeuser($index)">Delete</a>
-				    	<a class="waves-effect waves-light btn blue" ng-click="navUser($index)">View</a>
-				    </div> 
+					
+					<div class="col s12 m6">
+				         <input type="checkbox" class="filled-in checkbox-pink" id="deleteme{{$index}}" ng-click="$scope.showedit = !$scope.showedit"/>
+				         <label for="deleteme{{$index}}"></label>
+				         <a class="waves-effect waves-light btn pink" ng-init="$scope.showedit = true" ng-disabled="$scope.showedit" ng-click="removeuser(item.uid,$index)">Delete</a>
+				    </div>
 				 </div>
 			</form>
 		</li>
