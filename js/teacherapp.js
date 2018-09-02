@@ -751,12 +751,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
   // Add some new data to the rootScope
   $rootScope.addlesson = function (loc) {
-    if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
-    if (loc == 0) {
-       $rootScope.readonly.lessons.unshift({id:$rootScope.readonly.lessons.length,show:true,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
-    } else {
-       $rootScope.readonly.lessons.push({id:$rootScope.readonly.lessons.length,show:true,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]});
-    }
+     
+   if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
+			
+	// GOOD ENOUGH SOLUTION, finds right place to put new record, ADDS item to top of list, filter stops working for ng-repeat though!
+	for (var i = 0; i<$rootScope.readonly.lessons.length;i++) {
+		if ($rootScope.readonly.lessons[i].id == index) {
+			index = i;
+			break;
+		}
+	}
+	console.log("index#: " + index);
+	console.log($rootScope.readonly.lessons);
+	var newrecord = {id:$rootScope.readonly.lessons.length,show:true,unit:unit,name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]}
+	$rootScope.readonly.lessons.splice(index,0,newrecord)
+	console.log($rootScope.readonly.lessons);
   }
 
   // Add some new data to the rootScope
