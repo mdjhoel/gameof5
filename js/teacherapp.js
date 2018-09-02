@@ -750,7 +750,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   }
 
   // Add some new data to the rootScope
-  $rootScope.addlesson = function (loc) {
+  $rootScope.addlesson = function (loc,index,unit) {
      
    if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
 			
