@@ -9,14 +9,11 @@
       </a>
 	</td>
 	<td class="right">
-		<a ng-click="addlesson(0)" class="waves-effect waves-light btn light-green">Add Top</a>
-	</td>
-	<td class="right">
-		<a ng-click="addlesson(1)" class="waves-effect waves-light btn light-green">Add</a>
+		<a ng-click="addlesson(1,dummy.id,dummy.unit)" class="waves-effect waves-light btn light-green" ng-disabled="dummy==undefined">Add</a>
 	</td>
 	<td class="right">
 		<!--<label for="unit">Unit</label>-->
-		<select id="name" class="browser-default" ng-model="dummy" ng-options="lesson as lesson.unit + '-' + lesson.name for lesson in readonly.lessons"><option value="">SELECT</option></select>
+		<select id="name" class="browser-default" ng-model="dummy" ng-options="lesson as lesson.unit for lesson in readonly.lessons | unique: 'unit'"><option value="">UNIT</option></select>
 	</td>
 </tr>
 </table>
