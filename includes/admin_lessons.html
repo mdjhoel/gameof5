@@ -9,7 +9,7 @@
       </a>
 	</td>
 	<td class="right">
-		<a ng-click="addlesson(1,dummy.id,dummy.unit)" class="waves-effect waves-light btn light-green" ng-disabled="dummy==undefined">Add</a>
+		<a ng-click="addlesson(1,dummy.id,dummy.unit)" class="waves-effect waves-light btn light-green" ng-disabled="dummy==undefined && readonly.lessons.length > 0">Add</a>
 	</td>
 	<td class="right">
 		<!--<label for="unit">Unit</label>-->
