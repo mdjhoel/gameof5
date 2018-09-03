@@ -1,5 +1,19 @@
 var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
    
+  app.service('service', function($http){
+    this.getData = function(url) {
+      return $http({
+        method: 'GET',
+        url: url,
+        // cache will ensure calling ajax only once
+        cache: true
+      }).then(function (data) {
+        // this will ensure that we get clear data in our service response
+        return data.data;
+      });
+    };
+  });
+
   app.filter('unique', function() {
     // we will return a function which will take in a collection
     // and a keyname
@@ -27,8 +41,27 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
    };
   });
 
-  app.run(function($rootScope,$location) {
+  app.run(function($rootScope,$location,service) {
 
+    if ($location.search()["json"]) { 		
+        var args = $location.search();
+	var myurl = args["json"]	
+	$rootScope.readonly = {};
+	$rootScope.filePath = "includes/spinner.html";
+	    
+	service.getData("json/" + myurl).then(function(mydata) {
+		$rootScope.readonly.lessons = mydata;
+		console.log($rootScope.readonly.lessons);
+	}).catch(function (err) {
+		console.log("something bad happened " + err);
+	});
+		
+	$rootScope.rev = true;
+	$rootScope.filePath = "includes/lessons_all.html";
+	$rootScope.navPath = "includes/nav_student2.html";
+	    
+    } else {
+	  
     // get url so URL can be put back when users click on modals
     $rootScope.url = $location.url();
 
@@ -171,7 +204,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           } // student
       } // if user is not null
     }); // if authorization changes
-
+    
+    } // JSON 
 
   // ---------------------------------------------//
   // FUNCTIONS
@@ -674,7 +708,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   }
   
   // reverse student lessons     
-  $rootScope.revLessons = function(totalnum) {
+  $rootScope.revLessons = function() {
     $rootScope.readonly.lessons.reverse();
     if ($rootScope.rev || ($rootScope.rev == undefined)) { 
     	$rootScope.rev = false;
