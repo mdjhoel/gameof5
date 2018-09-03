@@ -761,6 +761,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 			break;
 		}
 	}
+	index = index + 1;  // work around - places new record in second position, moving new one to top will cause unit selection to reset
 	console.log("index#: " + index);
 	console.log($rootScope.readonly.lessons);
 	var newrecord = {id:$rootScope.readonly.lessons.length,show:true,unit:unit,name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]}
