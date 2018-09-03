@@ -1,0 +1,928 @@
+[
+  {
+    "desc": "",
+    "id": 40,
+    "img": "",
+    "name": "ASSESSMENT - Filming",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 39,
+    "img": "",
+    "name": "Evaluation",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 38,
+    "img": "",
+    "name": "Creating the solution",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 37,
+    "img": "",
+    "name": "MILESTONE 2",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 36,
+    "img": "",
+    "name": "Developing ideas",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 35,
+    "img": "",
+    "name": "MILESTONE 1",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 34,
+    "img": "",
+    "name": "Inquiry & analysis",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 42,
+    "img": "",
+    "name": "Premier pro boot camp",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "",
+    "id": 41,
+    "img": "",
+    "name": "Cameras 101",
+    "show": false,
+    "unit": "FLM"
+  },
+  {
+    "desc": "Test your knowledge of film terminology and practical analysis.",
+    "id": 14,
+    "img": "",
+    "name": "DIAGNOSTIC",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "",
+        "title": "Wallace & Gromit Quiz"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1HqATDty9g9R7X-mWq0qPIYDbH5lksqDFMADnUKakO2A/edit?usp=sharing",
+        "text": "Are you paying attention and keeping good notes? Titles, dates, neatness and completion?",
+        "title": "Notebook check"
+      }
+    ],
+    "show": true,
+    "unit": "FLM"
+  },
+  {
+    "desc": "Learn more about films and terminology",
+    "id": 13,
+    "img": "",
+    "name": "Film terminology",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1R_rozfgzaidS1otAV3wlS9SVEABO0w0HzPbsgGcUwyI/edit?usp=sharing",
+        "text": "Far from exhaustive, but this exercise will help you learn some of the terms of the film world",
+        "title": "DO - Xword"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1pAVu8y4VlQbqoomPR4U98IhnWW7f77wDj-Z0ZnHEzlw/edit?usp=sharing",
+        "text": "",
+        "title": "READ - Terms"
+      }
+    ],
+    "show": true,
+    "unit": "FLM"
+  },
+  {
+    "desc": "In this lesson you will learn to analyse film and start to think like a director",
+    "id": 12,
+    "img": "",
+    "keywords": [
+      "take",
+      "shot",
+      "transition",
+      "cut",
+      "editing"
+    ],
+    "name": "Think like a director",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1xKSHKPRkC8MpwD4OroXRBaKgwttuzJHdMe0wIy26O_E/edit?usp=sharing",
+        "text": "Enjoy the \"Wrong Trousers\" in a new way and learn to think like a director",
+        "title": "DO - Wallace and Gromit"
+      }
+    ],
+    "show": true,
+    "unit": "FLM"
+  },
+  {
+    "desc": "Design, implement and test a solution to a problem",
+    "id": 9,
+    "img": "",
+    "keywords": [
+      "design"
+    ],
+    "name": "ASSESSMENT - Coding UX/UI",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://sites.google.com/ucc.on.ca/design-ex",
+        "text": "How can I demonstrate my knowledge of the design cycle and technology skillset for this project? Make a website! Here is an exemplar.",
+        "title": "Website example"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1_kcQ0FPWmwt2EZeRQnUeb01qZOqBar8ToDkQ2O7zFLY/edit?usp=sharing",
+        "text": "Project instructions and rubric.",
+        "title": "RUBRIC- How will I be graded?"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1YH1ZqJ22eQuRlv5ch3eU-2-rRNb8gN1xlhkXseqN4Oo/edit?usp=sharing",
+        "text": "Your project in this unit is to design and implement a user interface to improve the user experience for an existing software product.",
+        "title": "READ - Problem Solving"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "",
+    "id": 33,
+    "img": "",
+    "name": "Evaluation",
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "",
+    "id": 32,
+    "img": "",
+    "name": "Creating the solution",
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "",
+    "id": 31,
+    "img": "",
+    "name": "MILESTONE 2",
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Computers love doing things over and over and over ...",
+    "id": 8,
+    "img": "",
+    "keywords": [
+      "while",
+      "for",
+      "range",
+      "break"
+    ],
+    "name": "Loops",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "http://codingbat.com/prob/p193507",
+        "text": "Complete as many problems using loops as you can",
+        "title": "DO - Codingbat"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1U2YsbvjJ3KGE88PddLd4ti_dNrg_be3Ciycf0y82wD0/edit?usp=sharing",
+        "text": "",
+        "title": "READ - loops"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1_N7QFF9RfLA9sj9fHhpbj_XCSM18wOtlyaLPik-u8Ik/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - loops"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=6HWK6O4-28E",
+        "text": "Different video series this time. Good intro to while and for loops.",
+        "title": "WATCH - Loops"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "",
+    "id": 29,
+    "img": "",
+    "name": "Developing ideas",
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "",
+    "id": 30,
+    "img": "",
+    "name": "MILESTONE 1",
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Lists are a built in data type for storing ordered data. Very useful!",
+    "id": 10,
+    "img": "",
+    "keywords": [
+      "list",
+      "list index",
+      "list append",
+      "remove",
+      "list slicing",
+      "list reverse",
+      "list sort"
+    ],
+    "name": "Lists",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "http://codingbat.com/python/List-1",
+        "text": "Work through first one together and then do as many as you can",
+        "title": "DO - Codingbat list problems"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1Zd89CLGwxY4OQNXmjY_GgQyY0lSOhQuW1XVKh_SE4Xg/edit?usp=sharing",
+        "text": "",
+        "title": "READ - Lists"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1dkOJWw-3b4nuX5whjY6-KYfxDBA_rCpJbzKRPb3CqQg/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - Lists"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=ohCDWZgNIU0",
+        "text": "",
+        "title": "WATCH - Lists"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "",
+    "id": 28,
+    "img": "",
+    "name": "Inquiry & analysis",
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Time for a check in to how you are doing. Submit your notebook and complete a multiple choice test.",
+    "id": 7,
+    "img": "",
+    "name": "DIAGNOSTIC",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "All topics from class notes, readings and keywords are fair game.",
+        "title": "Multiple choice test"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1HqATDty9g9R7X-mWq0qPIYDbH5lksqDFMADnUKakO2A/edit?usp=sharing",
+        "text": "Are you paying attention and keeping good notes? Titles, dates, neatness and completion?",
+        "title": "Notebook check"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Functions let you re-use code. What if you want to re-use many functions? The answer is modules.",
+    "id": 6,
+    "img": "",
+    "keywords": [
+      "import",
+      "module",
+      "os",
+      "time",
+      "tkinter",
+      "pyc"
+    ],
+    "name": "Modules",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1Rl5VesngynsCW8zJ2RhpAxudbvn4SRQ2ZoPRcovuM3g/edit?usp=sharing",
+        "text": "Program the examples from the reading and adapt them to learn more",
+        "title": "DO - Examples"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1Rl5VesngynsCW8zJ2RhpAxudbvn4SRQ2ZoPRcovuM3g/edit?usp=sharing",
+        "text": "",
+        "title": "READ - Modules"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1da0KIp2F6uO8f0lHOsuokwpTMXZBijgKsMCdE9xsVlE/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - Modules"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Often you have calculations and operations you need to repeat. Don't repeat yourself, write a function!",
+    "id": 5,
+    "img": "",
+    "keywords": [
+      "function",
+      "parameters",
+      "arguments",
+      "docstring",
+      "return",
+      "def"
+    ],
+    "name": "Functions",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "http://codingbat.com/python/Warmup-1",
+        "text": "Do first warmup together and then work through warmup1",
+        "title": "DO - Codingbat"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1LBPGgUh3vARkvf88wAhNaIO4nbpo3de1kRKh8v7uDZQ/edit?usp=sharing",
+        "text": "",
+        "title": "READ - Functions"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1UHYXpVfy7Xoloh-kYY88TI0TvPfo7C-H7pCj5nyGNu8/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - Function"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=NE97ylAnrz4",
+        "text": "",
+        "title": "WATCH - Functions"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Just like in your daily life, there is data to evaluate in Python. Use if elif else statements to test conditions and react accordingly.",
+    "id": 4,
+    "img": "",
+    "keywords": [
+      "if elif else",
+      "chained conditional",
+      "nested conditional",
+      "relational operators",
+      "logical operators",
+      "input()"
+    ],
+    "name": "Logical conditions",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/forms/d/e/1FAIpQLSfYY0F1tEOT_D4I35DDYetJupicZZ6b6uo6uWkoccBkqFoARA/viewform",
+        "text": "",
+        "title": "QUIZ"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.cemc.uwaterloo.ca/contests/computing/2014/stage%201/juniorEn.pdf",
+        "text": "The Canadian Computing Contest runs each February. Try out 2014 Junior problem 1# - Triangle Times",
+        "title": "DO - Triangle Times"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1Zkn3WXfAYU7YBR5_Z5DEvba7ld1r8DCr9KU-KEutrDA/edit?usp=sharing",
+        "text": "",
+        "title": "READ - If elif else"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/16wNLRhU_KVm9MyYJrO4mgBvSIjyhxtbwItxFohL3GMc/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - if elif else"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=f4KOjWS_KZs",
+        "text": "",
+        "title": "WATCH - If then else"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Numeric data in Python is handled as int or float data.",
+    "id": 3,
+    "img": "",
+    "keywords": [
+      "int",
+      "float",
+      "int()",
+      "float()",
+      "operators",
+      "BEDMAS"
+    ],
+    "name": "Numbers and math",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/forms/d/e/1FAIpQLSfZ47fDZImUG3OmwutjyG6BLYC2P7LKWZ7QcSZH0qJ4JscYlg/viewform",
+        "text": "",
+        "title": "QUIZ"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Get your math homework out and write a program to solve a problem.",
+        "title": "DO - Math homework"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1TublrXRYjnjW1nzCPI6gH3Q4gp8OPCI7E4lptm7YvhY/edit?usp=sharing",
+        "text": "",
+        "title": "READ - Numbers and math"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1y-kVRB2F9yh_BKdBx5QAjNhr6ETdI_b93lOOrSJ_fHM/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - Numbers and Math"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=Aj8FQRIHJSc",
+        "text": "",
+        "title": "WATCH - Math in Python"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Text data is stored in Python as strings, or text within double or single quotes.",
+    "id": 2,
+    "img": "",
+    "keywords": [
+      "strings",
+      "single-line comments",
+      "multi-line comments"
+    ],
+    "name": "String data",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/forms/d/e/1FAIpQLSe8GFO6JXBye8nSmaP9-ONLcn9kcpj0JsZCRORTvrF6gEnlGA/viewform",
+        "text": "",
+        "title": "QUIZ"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Add a multi-line banner and single line comments to your Ascii Art hello world program.",
+        "title": "DO - Comment hello world"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1et59lE6zZD6-FLXaz51ydEuC2C4n1sJPD_xWTCXF2ww/edit?usp=sharing",
+        "text": "",
+        "title": "READ - Strings and comments"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=iAzShkKzpJo",
+        "text": "",
+        "title": "WATCH - Strings"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Learn how to write your first Python program",
+    "id": 1,
+    "img": "",
+    "keywords": [
+      "interpreter",
+      "source code",
+      "editor",
+      "print()"
+    ],
+    "name": "Hello Python",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20",
+        "text": "Get creative and print a fancy Hello World to the screen. You will probably experience \"bugs\" and will have to \"debug\" your program.",
+        "title": "DO - Ascii Art Hello World"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Run Hello World from the interpreter and from a source file",
+        "title": "DO - Hello World"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1bA6jJg7wnN8bXw5t0WRQW-yy6rgNqa9yF1_rBkrqFIs/edit?usp=sharing",
+        "text": "",
+        "title": "READ - First steps"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/10P8BdRxks7_UcpXPTvekKPuf5QAYTmP9Hbq-1Q3q4y8/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=KOdfpbnWLVo&list=PLi01XoE8jYohWFPpC17Z-wWhPOSuh8Er-",
+        "text": "",
+        "title": "WATCH - Hello World"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Computers are all around us. This unit will help you learn to code using Python.",
+    "id": 0,
+    "img": "",
+    "keywords": [
+      "Guido Van Rossum",
+      "Python",
+      "syntax",
+      "open-source",
+      "high-level",
+      "portable",
+      "interpreted",
+      "compiled"
+    ],
+    "name": "Python Boot Camp",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/forms/d/e/1FAIpQLSeMYL0kmRCsq_4w4k3nwT8OmIDGfNn0O3eKnQU9ywMY88rpRw/viewform",
+        "text": "",
+        "title": "QUIZ"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1c7TA9tEvI5ZgW_Txf3NUIJdnNPEcOSTM3XU6Es18bbg/edit?usp=sharing",
+        "text": "",
+        "title": "READ - About Python"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1EbWbdA5TcVoH6k01xv-fQBbOPtwCQsvquQ95AjFhfps/edit?usp=sharing",
+        "text": "",
+        "title": "NOTES - About Python"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.youtube.com/watch?v=bY6m6_IIN94&t=4s",
+        "text": "",
+        "title": "WATCH - Talk to machines"
+      }
+    ],
+    "show": true,
+    "unit": "PBC"
+  },
+  {
+    "desc": "Design, implement and test a solution to a problem",
+    "id": 26,
+    "img": "",
+    "name": "ASSESSMENT - Making",
+    "segments": [
+      {
+        "title": "DO - Show-case website",
+        "text": "Using Google Sites, create a skeleton of a web site that you will use to submit your deliverables this year (name mhoel8).",
+        "segimg": "",
+        "seglink": "https://sites.google.com/ucc.on.ca/design-ex"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1TzGISQ3WY3NGbkQ9vYvr9UDc0rJf6PHxcG1fcjOifeo/edit?usp=sharing",
+        "text": "How will I be assessed?",
+        "title": "RUBRIC"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Work period",
+    "id": 27,
+    "img": "",
+    "name": "Evaluation",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Work periods",
+    "id": 25,
+    "img": "",
+    "name": "Creating the solution",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Students ensure their Developing ideas requirements are ready on their web sites for grading.",
+    "id": 24,
+    "img": "",
+    "name": "MILESTONE 2",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Create and take photos of your cardboard mock-ups",
+    "id": 43,
+    "img": "",
+    "name": "Cardboard mockups",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Work period",
+    "id": 23,
+    "img": "",
+    "name": "Developing ideas",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Students ensure their Inquiry & analysis requirements are ready on their web sites for grading.",
+    "id": 22,
+    "img": "",
+    "name": "MILESTONE 1",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Work period - Screenshots and Quicktime movies are essential to document the process for your later Kickstarter campaign",
+    "id": 20,
+    "img": "",
+    "name": "Inquiry and analysis",
+    "show": false,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Time for a check in to how you are doing. Submit your notebook and complete a multiple choice test.",
+    "id": 21,
+    "img": "",
+    "name": "DIAGNOSTIC",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Multiple choice quiz on technical and design topics",
+        "title": "MC quiz"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/document/d/1HqATDty9g9R7X-mWq0qPIYDbH5lksqDFMADnUKakO2A/edit?usp=sharing",
+        "text": "Are you paying attention and taking good notes?",
+        "title": "Notebook check"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Create something of your choice in Illustrator! This is your chance to experiment more fully with the software.",
+    "id": 19,
+    "img": "",
+    "name": "Lasercut genius hour",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Remember, cuts are .01 point in stroke width and RGB 255 0 0 and engravings are RGB 0 0 0. Have fun! Take screenshots of outcome.",
+        "title": "DO - Illustrator"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://www.troteclaser.com/en-ca/knowledge/do-it-yourself-samples/",
+        "text": "Check out some cool examples and write down some ideas. What would be the effort to create them?",
+        "title": "NOTES - Examples"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "In this lesson you will learn the basics of making cuts and engravings using Adobe Illustrator.",
+    "id": 18,
+    "img": "",
+    "keywords": [
+      "laser cutting",
+      "rgb",
+      "Illustrator",
+      "Trotec"
+    ],
+    "name": "Lasercut boot camp",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "",
+        "title": "WATCH - lasercut demo"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://drive.google.com/file/d/1W-7DY490JshnpHhSBiU6v5erDLy9pgyv/view?usp=sharing",
+        "text": "Re-create the simple example using Illustrator. Take annotated screenshots of any problems during the process for later.",
+        "title": "DO - Illustrator"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://drive.google.com/file/d/101XSbMrE8HK3EVD0nC-wonP4A-2Zitcf/view?usp=sharing",
+        "text": "Make notes on how to make a simple 4x2 cm rectangle with a border engraving like my example using Illustrator. This takes 5 mins to cut.",
+        "title": "NOTES - Illustrator"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://drive.google.com/file/d/1xoO-Ed1hP6Qnc_t4nNP7Ew-YeDMl1GTC/view?usp=sharing",
+        "text": "Objects may be laser cut directly from Adobe Illustrator .ai files and then printed using the Trotec software.",
+        "title": "NOTES - process"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Create something of your choice in TInkerCAD! This is your chance to experiment more fully with the software.",
+    "id": 17,
+    "img": "",
+    "name": "3D Genius hour",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Take screenshots of your process so it can be documented and annotated later and submitted later in your web site.",
+        "title": "DO - document"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Import your .stl and slice it to a .gcode so your design will be a quality print, but not take an unreasonably long time.",
+        "title": "DO - Slice with Cura"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Tinker with TinkerCAD and then export to a .stl",
+        "title": "DO - Tinker with TinkerCAD"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "In this lesson you will create a simple shape in TinkerCAD, export to STL and then slice using Cura into a .gcode file for printing.",
+    "id": 16,
+    "img": "",
+    "keywords": [
+      ".stl",
+      "TinkerCAD",
+      "slice",
+      "gcode",
+      "Cura"
+    ],
+    "name": "3D boot camp",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "https://www.simplify3d.com/support/articles/3d-printing-gcode-tutorial/",
+        "text": "Open your .gcode file with TextEdit. What is a .gcode file? What is G1? G0? G92? M82?",
+        "title": "NOTES - .gcode file"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://drive.google.com/file/d/1RoC86B7AlZ8d6xrZqS5vGWDiLOAOcACf/view?usp=sharing",
+        "text": "Download Cura 3.4.1 and create .gcode with from .stl wit < 1 hour of print time. This is your challenge! Screen shot your work for web site.",
+        "title": "DO - Cura .gcode"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://drive.google.com/file/d/1Q_RzSCGrG69TDSzudhjZ4REGTyzs4kMe/view?usp=sharing",
+        "text": "Signup for cloud TinkerCAD and create simple 4x4 cube base and with a paraboloid top. Export to .stl for further processing.",
+        "title": "DO - TinkerCAD .stl"
+      },
+      {
+        "segimg": "",
+        "seglink": "https://drive.google.com/file/d/1J6TBBvC-eRXe2v6keOfnHlTkim_dIu6p/view?usp=sharing",
+        "text": "What is the process for creating a 3D printable file?",
+        "title": "NOTES - Process"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "",
+    "id": 15,
+    "img": "",
+    "keywords": [
+      "design",
+      "inquiry & analyzing",
+      "developing ideas",
+      "creating the solution",
+      "evaluation"
+    ],
+    "name": "What is design?",
+    "segments": [
+      {
+        "title": "Assessments?",
+        "text": "Review assessments with particular emphasis on first Python Algorithm assignment",
+        "segimg": "",
+        "seglink": ""
+      },
+      {
+        "segimg": "",
+        "seglink": "https://docs.google.com/presentation/d/1hDx-hUXL7mN8QcsIahzCkxv5LnT8FAlCaAPkvUPYMlk/edit?usp=sharing",
+        "text": "Listen and take notes on the stages of the design life cycle, assessment and deliverable products.",
+        "title": "NOTES - MYP Design"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  },
+  {
+    "desc": "Welcome to Year8 Design",
+    "id": 11,
+    "img": "",
+    "name": "Introductions",
+    "segments": [
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Anything else before we get started?",
+        "title": "Questions?"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Golden rule + all UCC rules.",
+        "title": "Expectations?"
+      },
+      {
+        "segimg": "",
+        "seglink": "",
+        "text": "Click on Powerschool Lessons page to request access to student lesson environment",
+        "title": "What will I learn here?"
+      },
+      {
+        "segimg": "https://s15.postimg.cc/8kkymlfuz/3196834036_80fed4c010_m.jpg",
+        "seglink": "https://docs.google.com/forms/d/e/1FAIpQLSe5CteScqWN1npMvm9yms_AWNuN-d5BaXITBvv6Qg19C5f6kQ/viewform",
+        "text": "Complete computing background quiz.",
+        "title": "Who are you?"
+      },
+      {
+        "segimg": "images/tyler-durden.jpg",
+        "seglink": "",
+        "text": "Long time teacher at UCC. Former developer for software firms in Toronto and California. Love sports and travel.",
+        "title": "Who am I?"
+      }
+    ],
+    "show": true,
+    "unit": "OLY"
+  }
+]
