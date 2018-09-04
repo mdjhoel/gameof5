@@ -421,7 +421,18 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     $rootScope.navPath = "includes/nav_admin.html";
 
   } // end of navAdin function
-
+	  
+  // upload data from modal
+  $rootScope.uploadData = function() {
+	  $location.url($rootScope.url);
+	  var myupload = document.getElementById("myupload");
+	  var jsondata = myupload.value;
+	  console.log(jsondata);
+	  if (jsondata != "") {
+		  $rootScope.readonly.badges = JSON.parse(jsondata);
+	  }
+  }
+	  
   // SAVE function - use to write out to Firebase
   $rootScope.save = function() {
   	// remove modal from url
