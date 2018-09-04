@@ -60,6 +60,23 @@
     <!-- container -->
   </div>
   
+  <!-- #upload Modal -->
+  <div id="modalupload" class="modal center">
+      <div class="modal-content">
+        <h4>Upload data</h4>
+        <p>You are about to data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
+		
+		<textarea name="upload" id='myupload' rows="30" cols="30">
+		Upload your JSON data here.
+		</textarea>
+		
+        <div class="modal-footer">
+          <a ng-click="uploadData()" class="modal-action modal-close btn-flat">Upload</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+	
   <!-- #About Modal -->
   <div id="modalcheck" class="modal">
       <div class="modal-content">
