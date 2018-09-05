@@ -60,18 +60,35 @@
     <!-- container -->
   </div>
   
-  <!-- #upload Modal -->
+   <!-- #upload Modal -->
   <div id="modalupload" class="modal center">
       <div class="modal-content">
-        <h4>Upload data</h4>
-        <p>You are about to data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
+        <h4>Upload badges data</h4>
+        <p>You are about upload data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
 		
 		<textarea name="upload" id='myupload' rows="30" cols="30">
 		Upload your JSON data here.
 		</textarea>
 		
         <div class="modal-footer">
-          <a ng-click="uploadData()" class="modal-action modal-close btn-flat">Upload</a>
+          <a ng-click="uploadData('badge')" class="modal-action modal-close btn-flat">Upload</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+  
+  <!-- #uplevel Modal -->
+  <div id="modaluplevel" class="modal center">
+      <div class="modal-content">
+        <h4>Upload levels data</h4>
+        <p>You are about to upload data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
+		
+		<textarea name="upload" id='myuplevel' rows="30" cols="30">
+		Upload your JSON data here.
+		</textarea>
+		
+        <div class="modal-footer">
+          <a ng-click="uploadData('level')" class="modal-action modal-close btn-flat">Upload</a>
           <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
         </div>
       </div>
