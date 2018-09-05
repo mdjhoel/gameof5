@@ -423,14 +423,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   } // end of navAdin function
 	  
   // upload data from modal
-  $rootScope.uploadData = function() {
-	  $location.url($rootScope.url);
-	  var myupload = document.getElementById("myupload");
-	  var jsondata = myupload.value;
-	  console.log(jsondata);
-	  if (jsondata != "") {
-		  $rootScope.readonly.badges = JSON.parse(jsondata);
-	  }
+  $rootScope.uploadData = function(uploadtype) {
+	$location.url($rootScope.url);
+	if (uploadtype == 'badge') {
+		var myupload = document.getElementById("myupload");
+		var jsondata = myupload.value;
+		if (jsondata != "") {
+			$rootScope.readonly.badges = JSON.parse(jsondata);
+		}
+	} else {
+		var myuplevel = document.getElementById("myuplevel");
+		var jsondata = myuplevel.value;
+		if (jsondata != "") {
+	  	  $rootScope.readonly.levels = JSON.parse(jsondata);
+		}
+	}
   }
 	  
   // SAVE function - use to write out to Firebase
