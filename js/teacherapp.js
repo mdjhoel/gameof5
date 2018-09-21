@@ -721,8 +721,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   } // end makePDF
 
   $rootScope.navUser2 = function(index) {
-    var username = Object.keys($rootScope.users)[index];
-    $rootScope.user = $rootScope.users[username];
+    var username = Object.keys($rootScope.listArray)[index];
+    $rootScope.user = $rootScope.listArray[username];
     $rootScope.filePath = "includes/student_view.html";
     $rootScope.navPath = "includes/nav_ad_stud.html";
   }
