@@ -29,12 +29,6 @@
       <p>Level: {{item.level.name}}</p>
       <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}}</p>
       <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
-      <br>
-      <p>
-          <input type="checkbox" class="filled-in checkbox-pink" id="deleteme{{$index}}" ng-click="$scope.showedit = !$scope.showedit"/>
-          <label for="deleteme{{$index}}"></label>
-          <a class="waves-effect waves-light btn pink" ng-init="$scope.showedit = true" ng-disabled="$scope.showedit" ng-click="removeuser(item.uid,$index)">Delete</a>
-        </p>
       <a ng-repeat="(name,value) in item.badges" ng-show="value>=3" href="#!" class="secondary-content"><img src='images/badges/{{name}}.svg'></a>
     </li>
     </ul>
