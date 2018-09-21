@@ -300,11 +300,18 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   $rootScope.nav = function(path) {
     $rootScope.filePath = path;
   }
+  
+  // Pick which ng-include to show
+  $rootScope.nav2 = function(path,navpath) {
+    $rootScope.filePath = path;
+    $rootScope.navPath = navpath;
+  }
 
   // Create listArray so sorts will work
   $rootScope.navList = function(path) {
     $rootScope.listArray = Object.values($rootScope.users);
     $rootScope.filePath = path;
+    $rootScope.navPath = "includes/nav_admin.html";
   } 
 
   // Edit a particular course
@@ -712,6 +719,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     doc.save(lesson.name + ".pdf");
 
   } // end makePDF
+
+  $rootScope.navUser2 = function(index) {
+    var username = Object.keys($rootScope.users)[index];
+    $rootScope.user = $rootScope.users[username];
+    $rootScope.filePath = "includes/student_view.html";
+    $rootScope.navPath = "includes/nav_ad_stud.html";
+  }
 
   $rootScope.navUser = function(index) {
     var username = Object.keys($rootScope.data.users)[index];
