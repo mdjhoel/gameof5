@@ -8,7 +8,7 @@
 <div class="col s12 m6">
   <div class="card">
     <div class="card-image">
-      <img ng-src="{{photoUrl}}">
+      <img ng-src="{{user.photoUrl}}">
     </div>
   </div>
 </div>
@@ -16,6 +16,7 @@
     <div class="card">
       <ul class="collection with-header">
         <li class="collection-header blue white-text"><table><td><span class="card-title">{{user.level.name}}</span></td><td><span class="chip white blue-text right">{{user.pointstotal}}</span></td></table>
+        <li class="collection-item"><table><td>Name</td><td><span class="right">{{user.name}}</span></td></table></li>
         <li class="collection-item"><table><td>Description</td><td><span class="right">{{user.level.desc}}</span></td></table></li>
         <li class="collection-item"><table><td>Privilage</td><td><span class="right">{{user.level.priv}}</span></td></table></li>
         <li class="collection-item"><table><td>Daily</td><td><span class="chip orange white-text right">{{user.dailytotal}}</span></td></table></li>
