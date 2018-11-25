@@ -61,7 +61,7 @@
             </tr>
           </table>
           <div class="card-action" align="center">
-            <a class="waves-effect waves-light btn light-green" ng-disabled="user.badgestotal == 0" ng-click="nav('includes/student_badges.html')">Details</a>
+            <a class="waves-effect waves-light btn light-green" ng-disabled="user.badges.length() == 0" ng-click="nav('includes/student_badges.html')">Details</a>
           </div>
          </div>
       </div>
@@ -83,7 +83,7 @@
             </tr>
           </table>
           <div class="card-action" align="center">
-            <a class="waves-effect waves-light btn light-green" ng-disabled="user.quiztotal == 0" ng-click="nav('includes/student_quiz.html')">Details</a>
+            <a class="waves-effect waves-light btn light-green" ng-disabled="user.quizzes.length() == 0" ng-click="nav('includes/student_quiz.html')">Details</a>
           </div>
           </div>
       </div>
