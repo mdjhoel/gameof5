@@ -29,7 +29,7 @@
       <p>Level: {{item.level.name}}</p>
       <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}}</p>
       <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
-      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3" href="#!" class="secondary-content"><img src='images/badges/{{name}}.svg'></a>
+      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img src='images/badges/{{name}}.svg' width="35px"></a>
     </li>
     </ul>
 </div>
