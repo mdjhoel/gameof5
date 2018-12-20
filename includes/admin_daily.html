@@ -29,9 +29,12 @@
 					 
 					 
 				   <div style="padding-top: 10px; padding-bottom: 10px;">
-				     <select id="secnum" class="browser-default" ng-model="dummy" ng-options="user as user.section for user in users | unique: 'section'">
+				     <!--<select id="secnum" class="browser-default" ng-model="dummy" ng-options="user as user.section for user in users | unique: 'section'">
 				     <option value="">SECTION</option>
-				   </select>
+				   </select>-->
+					<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
+        					<option ng-repeat="section in mysections" value="{{section}}" >{{section}}</option>
+      					</select>
 					   
 					</div>
 				 	<table class="table">
@@ -44,7 +47,7 @@
           					</tr>
         				</thead>
 
-        				<tbody ng-repeat="user in users" ng-show="user.section==dummy.section">
+        				<tbody ng-repeat="user in users" ng-show="user.section==dummy">
 				 			<tr>
 				 				<td>{{user.email}}</td>
 				 				<td>
