@@ -309,9 +309,16 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
   // Create listArray so sorts will work
   $rootScope.navList = function(path) {
-    $rootScope.listArray = Object.values($rootScope.users);
+    if ($rootScope.listArray == undefined) {
+       $rootScope.listArray = Object.values($rootScope.users);
+    }
     $rootScope.filePath = path;
     $rootScope.navPath = "includes/nav_admin.html";
+  } 
+
+  // set dropdown value
+  $rootScope.setDummy = function(value) {
+    $rootScope.dummy = value;     
   } 
 
   // Edit a particular course
@@ -379,6 +386,24 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         if (snapshot.val() != undefined) {
           $rootScope.users = snapshot.val();
           console.log("Data from Firebase, now stored in $rootScope.users.");
+		
+		
+	  // set up sections
+          var unique = {};
+          var distinct = [];
+          for (key in $rootScope.users) {
+            var user = $rootScope.users[key];
+            if( typeof(unique[user.section]) == "undefined"){
+              distinct.push(user.section);
+            }
+            unique[user.section] = 0;
+          }
+
+          $rootScope.mysections = distinct;
+          $rootScope.dummy = distinct[0];
+		
+		
+		
           $rootScope.$apply(function () { $rootScope.navPath = "includes/nav_admin.html"}); // reload so all tools are visible
         } else {
           if (cname == "Example") {
