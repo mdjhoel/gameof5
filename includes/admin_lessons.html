@@ -2,23 +2,19 @@
 <tr>
 	<td style='color: #8bc34a; font-size: 2em;'>Lessons
 	  <a href="" ng-click="helpToast('Edit or Add lessons and lesson segments.<br>Update lesson order and view completed lesson',5000,'black')">
-        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
           <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
           <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
-        </svg>
-      </a>
+          </svg>
+          </a>
 	</td>
 	<td class="right">
-		<a ng-click="addlesson(1,dummy.id,dummy.unit)" class="waves-effect waves-light btn light-green" ng-disabled="dummy==undefined && readonly.lessons.length > 0">Add</a>
-	</td>
-	<td class="right">
-		<!--<label for="unit">Unit</label>-->
-		<select id="name" class="browser-default" ng-model="dummy" ng-options="lesson as lesson.unit for lesson in readonly.lessons | unique: 'unit'"><option value="">UNIT</option></select>
+		<a ng-click="addlesson()" class="waves-effect waves-light btn light-green">Add</a>
 	</td>
 </tr>
 </table>
 
-<div ng-repeat="item in readonly.lessons" ng-show="item.unit==dummy.unit">
+<div ng-repeat="item in readonly.lessons">
 	<ul class="collection with-header">
 		<li class="collection-item">
 			<div class="row">
