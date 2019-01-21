@@ -841,25 +841,24 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   }
 
   // Add some new data to the rootScope
-  $rootScope.addlesson = function (loc,index,unit) {
+    // Add some new data to the rootScope
+  $rootScope.addlesson = function () {
      
-   if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
+    if (typeof $rootScope.readonly.lessons == undefined) { $rootScope.readonly.lessons = []; }
 			
-	// GOOD ENOUGH SOLUTION, finds right place to put new record, ADDS item to top of list, filter stops working for ng-repeat though!
-	for (var i = 0; i<$rootScope.readonly.lessons.length;i++) {
-		if ($rootScope.readonly.lessons[i].id == index) {
-			index = i;
-			break;
+	// max record number for next record to fix bug of duplicates
+	var max = 0;
+	for (i = 0; i < $rootScope.readonly.lessons.length; i++) {
+		if (parseInt($rootScope.readonly.lessons[i].id) > max) {
+			max = parseInt($rootScope.readonly.lessons[i].id);
 		}
 	}
-	index = index + 1;  // work around - places new record in second position, moving new one to top will cause unit selection to reset
-	console.log("index#: " + index);
-	console.log($rootScope.readonly.lessons);
-	var newrecord = {id:$rootScope.readonly.lessons.length,show:true,unit:unit,name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]}
-	$rootScope.readonly.lessons.splice(index,0,newrecord)
-	console.log($rootScope.readonly.lessons);
+	max = max + 1;
+	
+	var newrecord = {id:max,show:true,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]}
+	$rootScope.readonly.lessons.unshift(newrecord)
   }
-
+	  	  
   // Add some new data to the rootScope
   $rootScope.uplesson = function (index) {
     var curlesson = $rootScope.readonly.lessons[index];
