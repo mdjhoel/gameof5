@@ -309,9 +309,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
   // Create listArray so sorts will work
   $rootScope.navList = function(path) {
-    if ($rootScope.listArray == undefined) {
+    // do not need undefined check any more  
+    //if ($rootScope.listArray == undefined) {
        $rootScope.listArray = Object.values($rootScope.users);
-    }
+    //}
     $rootScope.filePath = path;
     $rootScope.navPath = "includes/nav_admin.html";
   } 
