@@ -1010,5 +1010,83 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         return 0;
     };
   }
+	  
+  $rootScope.checkWindow = function() {
+     if (window.innerWidth > 1000) {
+         return true;
+     }
+     return false;
+  }
+  
+  $rootScope.drawGraph = function() {
+      
+      c = document.getElementById("mycanvas");
+      ctx = c.getContext('2d');
+      stats = $rootScope.user.daily;
+
+      c.width = stats.length * 25 + 50; // number of lessons moved by 25px + clearance
+      c.height = 300;
+        
+      function circle(x,y,r) {
+         //ctx.strokeStyle = ss;
+         ctx.beginPath();
+	     ctx.arc(x, y, r, 0, Math.PI*2, true);
+	     ctx.fill();
+         ctx.stroke();
+      }
+      
+      x = 40
+      y = 300;
+      ctx.lineWidth = 1;
+      var hoverRects = []
+    
+      for(stat in stats) {
+
+        y = y - stats[stat].grade * 10;
+        if (stats[stat].grade == 3) {
+           y = 150;
+           ctx.fillStyle = "#0099ff";
+           ss = "black"
+        } else if (stats[stat].grade == 4) {
+           y = 100;
+           ctx.fillStyle = "orange";
+           ss = "white"
+        } else if (stats[stat].grade == 2) {
+           y = 200;
+           ctx.fillStyle = "pink"
+           ss = "white"
+        } else {
+           y = 250;
+           ctx.fillStyle = "red"
+           ss = "white"
+        }
+    
+        ctx.strokeStyle = "black"
+        ctx.lineTo(x-1,y);
+        ctx.stroke();    
+        circle(x,y,10);
+        //ctx.font = "bold 12px verdana, sans-serif"; not working for some reason
+        //ctx.fillText(stats[stat].grade,x,y);
+        var rect = {x: x, y: y, w: 10, h: 10, desc: stats[stat].desc, grade: stats[stat].grade, value: stats[stat].value};
+        hoverRects.push(rect);
+    
+        x = x + 25;
+
+     }
+      
+    c.addEventListener('click', function(event) {  
+        bounds = c.getBoundingClientRect();
+        posX = event.clientX - bounds.left;
+        
+        for (i = 0; i < hoverRects.length; i++) {            
+            if (posX > (hoverRects[i].x - hoverRects[i].w) && posX < (hoverRects[i].x + hoverRects[i].w)) {
+                alert("Comment: " + hoverRects[i].desc + "\n" + "Grade: " + hoverRects[i].grade + " | Value: " + hoverRects[i].value);
+                
+            }
+        }
+    });       
+  }	  
+	  
+	  
 
   });  // end app.run
