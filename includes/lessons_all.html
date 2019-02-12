@@ -15,7 +15,7 @@
 </table>
 
 <div class="collection black-text">
-	<a ng-repeat="item in readonly.lessons" href="" id='data{{$index}}' ng-disable="!item.show" class="collection-item" ng-click="setData($index)">
+	<a ng-repeat="item in readonly.lessons" href="" id='data{{$index}}' ng-disable="!item.show" class="collection-item" ng-click="setData($index)" ng-show="item.show || readonly.settings.show">
        <table style="padding: 0px !important; margin: 0px !important;">
         <tr align="left">
             <td width="60px" style="padding: 0px !important; vertical-align:top;">
