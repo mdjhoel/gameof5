@@ -151,6 +151,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             var args = $location.search();
             var dbstring = "teachers/" + args["teacher"] + "/courses/" + args["cname"];             
             $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
+	    $rootScope.refUserMsg = $rootScope.database.ref(dbstring + "/users/" + userId + "/message");
             $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
             $rootScope.rev = true; // added for Reverse button on lessons
 
@@ -166,13 +167,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                     $rootScope.navPath = "includes/nav_student.html";
                     $rootScope.filePath = "includes/student_view.html";  
 
- 					        $rootScope.refLessons.once("value").then(function(snapshot) {
-              			if (snapshot.val() != undefined) {
-                			$rootScope.readonly = snapshot.val();
-                			console.log("Data from Firebase, now stored in $rootScope.readonly.");
-              			} else {
-                			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
-              			}
+		    // Popup a message to remind user
+                    if ($rootScope.user.message != undefined) {
+                         $(document).ready(function(){
+                            $('#modalmessage').modal();
+                            $('#modalmessage').modal('open'); 
+                         });
+                    }
+			    
+ 		    $rootScope.refLessons.once("value").then(function(snapshot) {
+              		if (snapshot.val() != undefined) {
+                		$rootScope.readonly = snapshot.val();
+                		console.log("Data from Firebase, now stored in $rootScope.readonly.");
+              		} else {
+                		console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
+              		}
             		}); // query Firebase for lessons
 
                   } // if user is found
@@ -226,6 +235,20 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       });
     }
 
+	  
+  // clear the message so it doesn't come back
+  $rootScope.clearmessage = function() {
+    console.log("message cleared");
+    //$rootScope.user.message = undefined;
+    $rootScope.refUserMsg.remove()
+      .then(function() {
+        console.log("Remove succeeded.")
+      })
+      .catch(function(error) {
+        console.log("Remove failed: " + error.message)
+      });
+  }
+	  
   $rootScope.setUrl = function() {
     $location.url($rootScope.url);
   }
@@ -473,6 +496,23 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 	}
   }
 	  
+  // save user settings to the db
+  $rootScope.savesettings = function() {
+      
+      $location.url($rootScope.url); // so modal URL goes away
+      var userchk = document.getElementById("userchk").checked;
+      userdata = $rootScope.user;
+      if (userchk) { // if user data should be updated
+        userdata.email = $rootScope.email;
+        userdata.name = $rootScope.name;
+        userdata.photoUrl = $rootScope.photoUrl; 
+      }
+      userdata.preferences = {"dailychk": userdata.preferences.dailychk,"badgechk": userdata.preferences.badgechk, "levelchk": userdata.preferences.levelchk};
+      $rootScope.user = userdata;
+      $rootScope.refUser.set(userdata);
+      console.log("User preferences data set in database.")
+  }
+	  
   // SAVE function - use to write out to Firebase
   $rootScope.save = function() {
   	// remove modal from url
@@ -550,6 +590,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       var badgelist = [];
       var badgestotal = 0;
 
+      // if there are no preferences, then add false      
+      if (user.preferences == undefined) {
+          user.preferences = {"dailychk": false,"badgechk": false, "levelchk": false};
+      }
+	    
       user.confirmed = true;
       var d = new Date();
       user.dateconfirmed = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();   
@@ -615,6 +660,15 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       if (levels != undefined) {
         for (l = levels.length -1; l>=0; l--) {
           if (pointstotal >= levels[l].low && pointstotal <= levels[l].high) {
+		  
+	    // check to see if we should send a message
+            if (user.level.number != levels[l].number) {
+                if (user.preferences.levelchk) {
+                    console.log("Need to open a modal. New level reached");
+                    user.message = {"m1":"Congratulations!","m2":"You have reached a new level","m3": levels[l].name};
+                } 
+            }
+		  
             user.level = levels[l];
             user.level.number = l;
             break; // get out once level is found
