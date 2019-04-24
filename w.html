@@ -66,7 +66,7 @@
         <h4>Upload badges data</h4>
         <p>You are about upload data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
 		
-		<textarea name="upload" id='myupload' rows="30" cols="30">
+		<textarea name="upbadge" id='myupbadge' rows="30" cols="30">
 		Upload your JSON data here.
 		</textarea>
 		
@@ -76,8 +76,43 @@
         </div>
       </div>
   </div>
+  
+  <!-- #uplevel Modal -->
+  <div id="modaluplevel" class="modal center">
+      <div class="modal-content">
+        <h4>Upload levels data</h4>
+        <p>You are about to upload data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
+		
+		<textarea name="uplevel" id='myuplevel' rows="30" cols="30">
+		Upload your JSON data here.
+		</textarea>
+		
+        <div class="modal-footer">
+          <a ng-click="uploadData('level')" class="modal-action modal-close btn-flat">Upload</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
 	
-	
+  <!-- #Save Modal -->
+  <div id="modalcheck" class="modal">
+      <div class="modal-content">
+        <h4>Save edits</h4>
+        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
+        
+        <p ng-show="users != undefined">
+          <input type="checkbox" id="usertotals"/>
+          <label for="usertotals">Update and confirm users (this may take a minute)</label>
+        </p>
+ 
+        <div class="modal-footer">
+          <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat ">No</a>
+        </div>
+        
+      </div>
+  </div>
+ 
   <!-- #Save settings Modal -->
   <div id="modalmessage" class="modal">
       <div class="modal-content">
@@ -104,45 +139,8 @@
         </div>
         
       </div>
-  </div> 
-  
-  <!-- #uplevel Modal -->
-  <div id="modaluplevel" class="modal center">
-      <div class="modal-content">
-        <h4>Upload levels data</h4>
-        <p>You are about to upload data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
-		
-		<textarea name="upload" id='myuplevel' rows="30" cols="30">
-		Upload your JSON data here.
-		</textarea>
-		
-        <div class="modal-footer">
-          <a ng-click="uploadData('level')" class="modal-action modal-close btn-flat">Upload</a>
-          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
-        </div>
-      </div>
-  </div>
-	
-  <!-- #About Modal -->
-  <div id="modalcheck" class="modal">
-      <div class="modal-content">
-        <h4>Save edits</h4>
-        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
-        
-        <p ng-show="users != undefined">
-          <input type="checkbox" id="usertotals"/>
-          <label for="usertotals">Update and confirm users (this may take a minute)</label>
-        </p>
-
-      <label 
-        <div class="modal-footer">
-          <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
-            <a ng-click="setUrl()" class="modal-action modal-close btn-flat ">No</a>
-        </div>
-        
-      </div>
-    </div>
-
+  </div>    
+    
   <div id="modalprofile" class="modal center">
       <div class="modal-content">
         <h4>{{name}}</h4>
