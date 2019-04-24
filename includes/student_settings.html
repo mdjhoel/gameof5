@@ -1,0 +1,42 @@
+<table>
+<tr>
+  <td style='color: #8bc34a; font-size: 2em;'>Settings
+    <a href="" ng-click="helpToast('Set environment for your gameof5.',5000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+            <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+            <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+    </a>
+  </td>
+</tr>
+</table>
+
+<div id="usersettings" style="border-style: solid; border-width: .5px; padding: 10px;">
+    <h5>General settings</h5>
+    <input type="checkbox" id="userchk" ng-model="checkboxModel.user">
+    <label for="userchk">Update Google Info?</label>
+    <a href="" ng-click="helpToast('Only required if you have changed your Google data.',5000,'black')">
+        <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+            <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+            <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        </svg>
+    </a>
+    <br>
+</div>
+<br>
+
+<div id="contactme" style="border-style: solid; border-width: .5px; padding: 10px;">
+
+    <h5>Select when you wish to be contacted.</h5>
+    <input disabled type="checkbox" id="daily" ng-model="user.preferences.dailychk">
+    <label for="daily">Exceptional daily report?</label>
+    <br>
+    <input disabled type="checkbox" id="badge" ng-model="user.preferences.badgechk">
+    <label for="badge">Badge?</label>
+    <br>
+    <input type="checkbox" id="level" ng-model="user.preferences.levelchk">
+    <label for="level">Level-up?</label>
+    <br>
+</div>
+<br>
+<a href="#modalsettings" id="savesettings" title="Save edits" data-height="50" class="modal-action modal-trigger btn blue white-text" style="vertical-align: bottom;">Save</a>
