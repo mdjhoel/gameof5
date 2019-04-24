@@ -105,10 +105,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           if (theme == "teacher") {  
           	var dbstring = "teachers/" + userId; // get everything for this teacher
             $rootScope.refAdmin = $rootScope.database.ref(dbstring + "/admin");
-
-            $rootScope.refAdmin.once("value").then(function(snapshot) {
-              if (snapshot.val() != undefined) {
-                $rootScope.admin = snapshot.val();
+              
+            $rootScope.refAdmin.once("value").then(function(snapadmin) {
+              if (snapadmin.val() != undefined) {
+                $rootScope.admin = snapadmin.val();
                 console.log("Data from Firebase, now stored in $rootScope.admin.");
               } else {
                 //$rootScope.admin = {courses:[],"name":"","email":"","photoUrl":"","uid":""};
@@ -147,19 +147,22 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
           } else { // student
 
-            // example: localhost:8000/#!/teacher=9KXHxUezF3PDUdZgoG4optm4p6V2&cname=Test123
             var args = $location.search();
             var dbstring = "teachers/" + args["teacher"] + "/courses/" + args["cname"];             
             $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
-	    $rootScope.refUserMsg = $rootScope.database.ref(dbstring + "/users/" + userId + "/message");
+            $rootScope.refUserMsg = $rootScope.database.ref(dbstring + "/users/" + userId + "/message");
             $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
             $rootScope.rev = true; // added for Reverse button on lessons
 
-            $rootScope.refUser.once("value").then(function(snapshot) {
-              if (snapshot.val() != undefined) {
-                $rootScope.user = snapshot.val();
+            // GET STUDENT INFO
+            $rootScope.refUser.once("value").then(function(snapuser) {
+              if (snapuser.val() != undefined) {
+                $rootScope.user = snapuser.val();
                 console.log("Data from Firebase, now stored in $rootScope.user.");
+                
+                // Sync angular after going to database  
                 $rootScope.$apply(function () {  // prep for user view   
+                  
                   if ($rootScope.user.confirmed == false) {
                     $rootScope.error = "Not confirmed yet.";
                     $rootScope.filePath = "includes/patience.html";
@@ -167,22 +170,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                     $rootScope.navPath = "includes/nav_student.html";
                     $rootScope.filePath = "includes/student_view.html";  
 
-		    // Popup a message to remind user
+                    // Popup a message to remind user
                     if ($rootScope.user.message != undefined) {
                          $(document).ready(function(){
                             $('#modalmessage').modal();
                             $('#modalmessage').modal('open'); 
                          });
                     }
-			    
- 		    $rootScope.refLessons.once("value").then(function(snapshot) {
-              		if (snapshot.val() != undefined) {
-                		$rootScope.readonly = snapshot.val();
-                		console.log("Data from Firebase, now stored in $rootScope.readonly.");
-              		} else {
-                		console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
-              		}
-            		}); // query Firebase for lessons
+ 			        $rootScope.refLessons.once("value").then(function(snaplessons) {
+              			if (snaplessons.val() != undefined) {
+                			$rootScope.readonly = snaplessons.val();
+                			console.log("Data from Firebase, now stored in $rootScope.readonly.");
+              			} else {
+                			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
+              			}
+            		}); // query Firebase for lessons 
 
                   } // if user is found
                 }); // sync angular
@@ -191,8 +193,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
               } else {
                 // see if API data can be used to find data
                 var testref = $rootScope.database.ref("teachers/" + args["teacher"] + "/courses/" + args["cname"]);
-                testref.once("value").then(function(snapshot) {
-                	if (snapshot.val() == null) { // nope, something is wrong
+                testref.once("value").then(function(snapteachers) {
+                	if (snapteachers.val() == null) { // nope, something is wrong
                 		$rootScope.$apply(function () { $rootScope.error = "Invalid API data."; $rootScope.filePath = "includes/404.html"; return; });
                     } else { // yep, you have a match with this API teacher and cname
                    		console.log("No user data matching API retrieved from Firebase. Creating new user");
@@ -235,7 +237,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       });
     }
 
-	  
   // clear the message so it doesn't come back
   $rootScope.clearmessage = function() {
     console.log("message cleared");
@@ -248,7 +249,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         console.log("Remove failed: " + error.message)
       });
   }
-	  
+  
   $rootScope.setUrl = function() {
     $location.url($rootScope.url);
   }
@@ -371,9 +372,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       var dbstring = "teachers/" + $rootScope.admin.uid + "/courses/" + cname;
       $rootScope.refro = $rootScope.database.ref(dbstring + "/readonly" );
 
-      $rootScope.refro.once("value").then(function(snapshot) {
-        if (snapshot.val() != undefined) {
-          $rootScope.readonly = snapshot.val();
+      $rootScope.refro.once("value").then(function(snapread) {
+        if (snapread.val() != undefined) {
+          $rootScope.readonly = snapread.val();
           console.log("Data from Firebase, now stored in $rootScope.readonly.");
         } else {
           if (cname == "Example") {
@@ -457,9 +458,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
 
     refSVG = $rootScope.database.ref("svgs");
-    refSVG.once("value").then(function(snapshot) {
-    	if (snapshot.val() != undefined) {
-        	$rootScope.admin.badgelist = snapshot.val();
+    refSVG.once("value").then(function(snapsvg) {
+    	if (snapsvg.val() != undefined) {
+        	$rootScope.admin.badgelist = snapsvg.val();
             console.log("Data from Firebase, now stored in $rootScope.admin.badgelist.");
         } else {
             $rootScope.admin.badgelist = [ "balance", "book", "bubble", "calendar", "clock", "codetalk", "folder", "idea", "monkey", "phones", "question", "skull", "star", "stop", "world" ];
@@ -495,7 +496,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 		}
 	}
   }
-	  
+	
   // save user settings to the db
   $rootScope.savesettings = function() {
       
@@ -512,13 +513,15 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       $rootScope.refUser.set(userdata);
       console.log("User preferences data set in database.")
   }
-	  
+  
   // SAVE function - use to write out to Firebase
   $rootScope.save = function() {
   	// remove modal from url
   	$location.url($rootScope.url);
     if (document.getElementById('usertotals').checked) {
-      if ($rootScope.users != undefined) {setUserTotals();}
+      if ($rootScope.users != undefined) {       
+          setUserTotals(); 
+      }
     }
 
     var admin = angular.toJson($rootScope.admin); // get rid of Angular $$ data
@@ -575,12 +578,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   }
 
   function setUserTotals() {
-    
+
     var users = $rootScope.users;
     var userlist = [];
 
     for (key in users) {
-
       var pointstotal = 0;
       var quiztotal = 0;
       var dailytotal = 0;
@@ -594,13 +596,12 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       if (user.preferences == undefined) {
           user.preferences = {"dailychk": false,"badgechk": false, "levelchk": false};
       }
-	    
+        
       user.confirmed = true;
       var d = new Date();
       user.dateconfirmed = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();   
 
       if (daily != undefined) {
-
         if (daily.length == undefined) { // if user added later, process
           var newdaily = []; 
           for (dailykey in daily) {
@@ -655,20 +656,18 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       user.quiztotal = quiztotal;
       user.badgestotal = badgestotal;
       user.pointstotal = pointstotal;
-
+        
       var levels = $rootScope.readonly.levels;
       if (levels != undefined) {
         for (l = levels.length -1; l>=0; l--) {
           if (pointstotal >= levels[l].low && pointstotal <= levels[l].high) {
-		  
-	    // check to see if we should send a message
+            // check to see if we should send a message
             if (user.level.number != levels[l].number) {
                 if (user.preferences.levelchk) {
                     console.log("Need to open a modal. New level reached");
                     user.message = {"m1":"Congratulations!","m2":"You have reached a new level","m3": levels[l].name};
                 } 
             }
-		  
             user.level = levels[l];
             user.level.number = l;
             break; // get out once level is found
@@ -680,7 +679,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
       // Set user updates to $rootScope
       $rootScope.users[key] = user; 
-
     }
   }
 
@@ -834,6 +832,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   	var cname = removeBadChars(first);
   	$rootScope.admin.courses[index].name = cname;
   }
+  
   function removeBadChars(string) {
     var userId = string.split(".").join("");
     userId = userId.split("[").join("");
@@ -1142,6 +1141,4 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     });       
   }	  
 	  
-	  
-
   });  // end app.run
