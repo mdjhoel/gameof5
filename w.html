@@ -76,6 +76,35 @@
         </div>
       </div>
   </div>
+	
+	
+  <!-- #Save settings Modal -->
+  <div id="modalmessage" class="modal">
+      <div class="modal-content">
+        <h4>{{user.message.m1}}</h4>
+        <h5>{{user.message.m3}}</h5>
+        <p>{{user.message.m2}}</p>
+        
+        <div class="modal-footer">
+          <a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Thanks</a>
+        </div>
+        
+      </div>
+  </div> 
+    
+  <!-- #Save settings Modal -->
+  <div id="modalsettings" class="modal">
+      <div class="modal-content">
+        <h4>Save edits</h4>
+        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
+        
+        <div class="modal-footer">
+          <a ng-click="savesettings()" class="modal-action modal-close btn-flat">Yes</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+        
+      </div>
+  </div> 
   
   <!-- #uplevel Modal -->
   <div id="modaluplevel" class="modal center">
