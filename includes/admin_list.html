@@ -9,10 +9,10 @@
       			</a>
 		</td>
 		<td class="right">
-			<a ng-click="sortUser(listArray,'email')" class="waves-effect waves-light btn blue">Name</a>
-			<a ng-click="sortUser(listArray,'badgestotal')" class="waves-effect waves-light btn blue">Badges</a>
-			<a ng-click="sortUser(listArray,'quiztotal')" class="waves-effect waves-light btn blue">Quizzes</a>
-			<a ng-click="sortUser(listArray,'pointstotal')" class="waves-effect waves-light btn blue">Points</a>
+			<a ng-click="sortUser(listArray,'email')" class="btn waves-effect waves-light blue white-text">Name</a>
+			<a ng-click="sortUser(listArray,'badgestotal')" class="btn waves-effect waves-light blue white-text">Badges</a>
+			<a ng-click="sortUser(listArray,'quiztotal')" class="btn waves-effect waves-light blue white-text">Quizzes</a>
+			<a ng-click="sortUser(listArray,'pointstotal')" class="btn waves-effect waves-light blue white-text">Points</a>
 		</td>
 	</tr>
 	<tr>
@@ -26,15 +26,25 @@
 		</td>
 	</tr>
 </table>
+
+<style>
+    #badgie:hover {
+        width: 40px;
+    }
+</style>
+
 <div ng-repeat="(key, item) in listArray" ng-show="item.section == dummy">
-	<ul class="collection with-header">
+	<ul class="collection with-header">      
 	<li class="collection-item avatar">
       <img ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
-      <span class="title"><a href="" ng-click="navUser2($index)">{{item.name}}</a> ({{item.email}})</span>
-      <p>Level: {{item.level.name}}</p>
-      <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}}</p>
+      <!--<input type="checkbox" id="chk_{{item.name}}"><label for="chk_{{item.name}}"></label>-->
+      <a href="" ng-click="navUser2($index)">{{item.name}}</a> - ({{item.email}})<br>
+      <span class="title"><a href="" ng-click="navUser2($index)"></a></span>
+
+      <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}}</p>
       <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
-      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img src='images/badges/{{name}}.svg' width="35px"></a>
+      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img id="badgie" src='images/badges/{{name}}.svg' width="35px"></a><br>
+
     </li>
     </ul>
 </div>
