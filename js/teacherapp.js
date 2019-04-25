@@ -508,6 +508,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         userdata.name = $rootScope.name;
         userdata.photoUrl = $rootScope.photoUrl; 
       }
+
+      userdata.preferences.dailychk = false; // take out out when implemented on student_settings
+      userdata.preferences.badgechk = false; // take out out when implemented on student_settings
+	  
       userdata.preferences = {"dailychk": userdata.preferences.dailychk,"badgechk": userdata.preferences.badgechk, "levelchk": userdata.preferences.levelchk};
       $rootScope.user = userdata;
       $rootScope.refUser.set(userdata);
