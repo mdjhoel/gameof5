@@ -113,7 +113,18 @@
       </div>
   </div>
  
-  <!-- #Save settings Modal -->
+  <!-- #view daily info Modal -->    
+  <div id="modaltable" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Selected data</h4>
+      <div id="tablediv"></div>
+    </div>
+    <div class="modal-footer">
+      <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+    </div>
+  </div>
+	
+  <!-- #Message Modal -->
   <div id="modalmessage" class="modal">
       <div class="modal-content">
         <h4>{{user.message.m1}}</h4>
