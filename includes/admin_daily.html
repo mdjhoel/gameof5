@@ -8,7 +8,11 @@
         	</svg>
       	  </a>
 	</td>
-	<td><a ng-click="adddaily()" ng-disabled="readonly.lessons.length == 0" class="waves-effect waves-light btn right light-green">Add</a></td>
+	<td style="float:right;"><a ng-click="viewtable()" ng-disabled="readonly.lessons.length == 0" class="waves-effect waves-light btn right light-green">Table</a>
+    </td>
+    <td style="float:right;">
+        <a ng-click="adddaily()" ng-disabled="readonly.lessons.length == 0" class="waves-effect waves-light btn right blue">Add</a>
+    </td>
 </tr>
 </table>
 
@@ -17,7 +21,9 @@
 		<li class="collection-item">
 				<div class="row">
 
-					<label for="name">Lesson number</label>
+                    
+					<!--<label for="name">Lesson number</label>-->
+                     <input type="checkbox" id="{{item.id.id}}" ng-model="selIds[$index]"><label for="{{item.id.id}}">Lesson</label>
 					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson as lesson.name for lesson in readonly.lessons track by lesson.id"><option value="">Select</option></select>
 
 				 </div>
