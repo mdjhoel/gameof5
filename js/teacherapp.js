@@ -504,6 +504,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
       // set variables for processing
       var data = $rootScope.users;
       const nums = Object.keys($rootScope.selIds);
+      $rootScope.selIds = {}; // reset
       const mykeys = Object.keys(data)
       
       // start table
