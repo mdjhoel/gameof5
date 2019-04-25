@@ -129,6 +129,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                   $rootScope.o_admin = angular.toJson(o);
 
                   $rootScope.user = userId;
+		  $rootScope.selIds = {};  // added for admin_daily selected days for reports
                   $rootScope.navPath = "includes/nav_courses.html";
                   $rootScope.filePath = "includes/admin_courses.html";
 
@@ -496,7 +497,56 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 		}
 	}
   }
-	
+ 
+  // show selected data in table
+  $rootScope.viewtable = function() {
+      
+      // set variables for processing
+      var data = $rootScope.users;
+      const nums = Object.keys($rootScope.selIds);
+      const mykeys = Object.keys(data)
+      
+      // start table
+      mytab = "<table class='highlight'>";
+      
+      for (const key of mykeys) { // loop through all students
+        var total = 0; // total number of points
+        mytab = mytab + "<tr>"
+        mytab = mytab + "<td>" + data[key].name + "</td>";
+        for (const num of nums) { // loop through selected ids
+            mygrade = (parseInt(data[key].daily[num].grade) + parseInt(data[key].daily[num].value));
+            total = total + mygrade;                
+            mycolor = "#dee2e8";
+            if (parseInt(data[key].daily[num].grade) > 3) {
+                mycolor = "green";
+            } else {
+                mycolor = "red";
+            }
+
+            if (data[key].daily[num].desc == "Normal day, nothing to report") {
+                //console.log(data[key].daily[i].desc);
+                //mytab = mytab + "<td style='color:#dee2e8;'>Normal</td>"
+                mytab = mytab + "<td><img id='badgie' src='images/badges/0.svg' width='35px' title='Normal day, nothing to report' style='color:#dee2e8;'></td>";
+            } else {
+                //mytab = mytab + "<td style='color:" + mycolor + "'>" + data[key].daily[num].desc + "</td>"
+                mytab = mytab + "<td><img id='badgie' src='images/badges/" + data[key].daily[num].badge + ".svg' width='35px' title='" + data[key].daily[num].desc + "' style='color:" + mycolor + "'></td>"
+            }
+                }
+            mytab = mytab + "<td><b>" + total + "</b></td>";
+            mytab = mytab + "</tr>"                
+        }
+        mytab = mytab + "</table>" // complete the table
+              
+      // Popup a message to remind user
+      mydiv = document.getElementById("tablediv");
+      mydiv.innerHTML = mytab;
+      
+        $(document).ready(function(){
+            $('#modaltable').modal();
+            $('#modaltable').modal('open'); 
+        });
+  }
+	  
   // save user settings to the db
   $rootScope.savesettings = function() {
       
