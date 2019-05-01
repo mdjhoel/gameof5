@@ -549,8 +549,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
   }
 	  
   // save user settings to the db
-  $rootScope.savesettings = function() {
-      
+  $rootScope.savesettings = function() { 
       $location.url($rootScope.url); // so modal URL goes away
       var userchk = document.getElementById("userchk").checked;
       userdata = $rootScope.user;
@@ -565,8 +564,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 	  
       userdata.preferences = {"dailychk": userdata.preferences.dailychk,"badgechk": userdata.preferences.badgechk, "levelchk": userdata.preferences.levelchk};
       $rootScope.user = userdata;
-      $rootScope.refUser.set(userdata);
-      console.log("User preferences data set in database.")
+      // user update, not set, so only basics are updated 
+      $rootScope.refUser.update({preferences: userdata.preferences, email: userdata.email, name: userdata.name, photoUrl: userdata.photoUrl});
+      console.log("Student settings data updated in database.")
   }
   
   // SAVE function - use to write out to Firebase
