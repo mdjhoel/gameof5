@@ -2,17 +2,16 @@
 	<tr>
 		<td style='color: #8bc34a; font-size: 2em;'>Users</td>
 		<td class="right">
-			<!--<select id="secnum" class="browser-default" ng-model="dummy" ng-options="user as user.section for user in listArray | unique: 'section'">
-				<option value="">SECTION</option>
-			</select>-->
-			<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
+			<select id="secnum" class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)" ng-options="user as user.section for user in listArray | unique: 'section'">
+			</select>
+			<!--<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
         			<option ng-repeat="section in mysections" value="{{section}}" >{{section}}</option>
-      			</select>
+      			</select>-->
 		</td>
 	</tr>
 </table>
 
-<div ng-repeat="(key, item) in users" ng-show="item.section==dummy">
+<div ng-repeat="(key, item) in users" ng-show="item.section==dummy.section">
 	<ul class="collection with-header">
 		<li class="collection-item">
 			<form class="col s12">
