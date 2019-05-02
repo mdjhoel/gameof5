@@ -717,20 +717,23 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
         for (l = levels.length -1; l>=0; l--) {
           if (pointstotal >= levels[l].low && pointstotal <= levels[l].high) {
             // check to see if we should send a message
-            if (user.level.number != levels[l].number) {
-                if (user.preferences.levelchk) {
-                    console.log("Need to open a modal. New level reached");
-                    user.message = {"m1":"Congratulations!","m2":"You have reached a new level","m3": levels[l].name};
-                } 
+            if (user.level != undefined) {
+                if (user.level.number != levels[l].number) {
+                    if (user.preferences.levelchk) {
+                        console.log("Need to open a modal. New level reached");
+                        user.message = {"m1":"Congratulations!","m2":"You have reached a new level","m3": levels[l].name};
+                    } 
+                }
+            } else {
+                user.level = {name:"Option not enabled",desc:"",number:0,low:0,high:0,priv:""};
             }
+
             user.level = levels[l];
             user.level.number = l;
             break; // get out once level is found
           }
         }
-      } else {
-        user.level = {name:"Option not enabled",desc:"",number:0,low:0,high:0,priv:""};
-      }
+      } 
 
       // Set user updates to $rootScope
       $rootScope.users[key] = user; 
