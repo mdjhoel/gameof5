@@ -111,9 +111,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
                 $rootScope.admin = snapadmin.val();
                 console.log("Data from Firebase, now stored in $rootScope.admin.");
               } else {
-                //$rootScope.admin = {courses:[],"name":"","email":"","photoUrl":"","uid":""};
-                $rootScope.admin = {"courses":[{"desc":"Example of how to structure a course and helpful hints. Warning: demo course. You are urged to create your own from scratch.","descname":"Example course, lessons and gamification","name":"Example"}],"email":"tyler.durden@gmail.com","name":"Tyler Durden","photoUrl":"images/tyler-durden.jpg","uid":"9KXHxUezF3PDUdZgoG4optm4p6V2"};
-                console.log("No data from Firebase, stored in $rootScope.admin. Using default $rootScope.admin.");                
+                    //$rootScope.admin = {courses:[],"name":"","email":"","photoUrl":"","uid":""};
+                    $rootScope.admin = {"courses":[{"desc":"Example of how to structure a course and helpful hints. Warning: demo course. You are urged to create your own from scratch.","descname":"Example course, lessons and gamification","name":"Example"}],"email":"tyler.durden@gmail.com","name":"Tyler Durden","photoUrl":"images/tyler-durden.jpg","uid":"9KXHxUezF3PDUdZgoG4optm4p6V2","school":"School of Hard Knocks"};
+                    console.log("No data from Firebase, stored in $rootScope.admin. Using default $rootScope.admin.");  
+                    $(document).ready(function(){
+                        $('#modalschool').modal();
+                        var val = $('#modalschool').modal('open'); 
+                    });              
               }
 
               $rootScope.$apply(function () { // apply syncs Angular and Firebase
