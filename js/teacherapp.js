@@ -348,8 +348,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
 
   // set dropdown value
   $rootScope.setDummy = function(value) {
-    $rootScope.dummy = value;     
-  } 
+    //console.log(value);
+    $rootScope.dummy = value.section;     
+  }
 
   // Edit a particular course
   $rootScope.navAdmin = function(cname) {
@@ -418,7 +419,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           console.log("Data from Firebase, now stored in $rootScope.users.");
 		
 		
-	  // set up sections
+	// set up sections
           var unique = {};
           var distinct = [];
           for (key in $rootScope.users) {
@@ -430,9 +431,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
           }
 
           $rootScope.mysections = distinct;
+            console.log($rootScope.mysections)
           $rootScope.dummy = distinct[0];
-		
-		
 		
           $rootScope.$apply(function () { $rootScope.navPath = "includes/nav_admin.html"}); // reload so all tools are visible
         } else {
