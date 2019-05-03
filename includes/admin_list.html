@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td class="left">
-		<select id="secnum2" class="browser-default" ng-model="dummy2" ng-options="user2 as user2.section for user2 in listArray | unique:'section'">
+		<select id="secnum2" class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)" ng-options="user2 as user2.section for user2 in listArray | unique:'section'">
 		</select>
 		<!--<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
         	   <option ng-repeat="section in mysections" value="{{section}}" >{{section}}</option>
@@ -32,7 +32,7 @@
     }
 </style>
 
-<div ng-repeat="(key, item) in listArray" ng-show="item.section == dummy">
+<div ng-repeat="(key, item) in listArray" ng-show="item.section == dummy.section">
 	<ul class="collection with-header">      
 	<li class="collection-item avatar">
       <img ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
