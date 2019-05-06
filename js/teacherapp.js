@@ -434,6 +434,18 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             console.log($rootScope.mysections)
           $rootScope.dummy = distinct[0];
 		
+          // May 07, 2019 - add listener to each user and then replace prefs, photo, name if they save
+          var myuseruids = Object.keys($rootScope.users);
+          for (curruid of myuseruids) {
+                var myprefs = firebase.database().ref(dbstring + '/users/' + curruid).on('value', function(updatesnap) {
+                    var updateduser = updatesnap.val();
+                    $rootScope.users[updateduser.uid].preferences = updateduser.preferences;
+                    $rootScope.users[updateduser.uid].photoUrl = updateduser.photoUrl;
+                    $rootScope.users[updateduser.uid].name = updateduser.name;
+                    console.log($rootScope.users);
+                }); 
+          }
+		
           $rootScope.$apply(function () { $rootScope.navPath = "includes/nav_admin.html"}); // reload so all tools are visible
         } else {
           if (cname == "Example") {
