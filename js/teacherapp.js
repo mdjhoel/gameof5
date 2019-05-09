@@ -155,6 +155,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             var args = $location.search();
             var dbstring = "teachers/" + args["teacher"] + "/courses/" + args["cname"];             
             $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
+            $rootScope.refUsers = $rootScope.database.ref(dbstring + "/users");
             $rootScope.refUserMsg = $rootScope.database.ref(dbstring + "/users/" + userId + "/message");
             $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
             $rootScope.rev = true; // added for Reverse button on lessons
@@ -162,7 +163,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             // GET STUDENT INFO
             $rootScope.refUser.once("value").then(function(snapuser) {
               if (snapuser.val() != undefined) {
-                $rootScope.user = snapuser.val();
+                $rootScope.users = snapuser.val();
+                $rootScope.user = snapuser.val()[userId];
                 console.log("Data from Firebase, now stored in $rootScope.user.");
                 
                 // Sync angular after going to database  
@@ -344,6 +346,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
     //}
     $rootScope.filePath = path;
     $rootScope.navPath = "includes/nav_admin.html";
+  } 
+	  
+	  
+  // Create listArray so sorts will work
+  $rootScope.navListStudent = function(path) {   
+    if ($rootScope.users == undefined) {
+        console.log($rootScope.users + " undefined")
+        return;
+    } else {
+       $rootScope.listArray = Object.values($rootScope.users); 
+       $rootScope.listArray.sort(generateSortFn('pointstotal', true));
+       $rootScope.listArray = $rootScope.listArray.slice(0,5); // slice top 5
+       $rootScope.filePath = path;
+       $rootScope.navPath = "includes/nav_student.html";
+    }
   } 
 
   // set dropdown value
