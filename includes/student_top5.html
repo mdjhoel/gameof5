@@ -1,0 +1,34 @@
+<table>
+	<tr>
+	    	<td style='color: #8bc34a; font-size: 2em;'>List users <span style="font-size:1em;" ng-show="listArray[0].dateconfirmed != undefined">({{listArray[0].dateconfirmed}})</span>
+        		<a href="" ng-click="helpToast('View top 5 registered students by daily points.<br>Date is last time rankings calculated.',5000,'black')">
+				<svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          			<ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          			<text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        			</svg>
+      			</a>
+		</td>
+	</tr>
+</table>
+
+<style>
+    #badgie:hover {
+        width: 40px;
+    }
+</style>
+
+<div ng-repeat="(key, item) in listArray">
+	<ul class="collection with-header">      
+	<li class="collection-item avatar">
+      <img ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
+      <!--<input type="checkbox" id="chk_{{item.name}}"><label for="chk_{{item.name}}"></label>-->
+      {{item.name}} - ({{item.email}})<br>
+      <span class="title"><a href="" ng-click="navUser2($index)"></a></span>
+
+      <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}}</p>
+      <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
+      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img id="badgie" src='images/badges/{{name}}.svg' width="35px"></a><br>
+
+    </li>
+    </ul>
+</div>
