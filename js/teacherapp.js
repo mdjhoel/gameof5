@@ -161,7 +161,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             $rootScope.rev = true; // added for Reverse button on lessons
 
             // GET STUDENT INFO
-            $rootScope.refUser.once("value").then(function(snapuser) {
+            $rootScope.refUsers.once("value").then(function(snapuser) {
               if (snapuser.val() != undefined) {
                 $rootScope.users = snapuser.val();
                 $rootScope.user = snapuser.val()[userId];
