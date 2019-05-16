@@ -18,17 +18,16 @@
 </style>
 
 <div ng-repeat="(key, item) in listArray">
-	<ul class="collection with-header">      
-	<li class="collection-item avatar">
-      <img ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
+   <ul class="collection with-header">      
+      <li class="collection-item avatar">
+         <img ng-show="item.photoUrl.indexOf('/mo/') <0" ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
+         <img ng-show="item.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{item.name}}" height='50px' class="circle">
       <!--<input type="checkbox" id="chk_{{item.name}}"><label for="chk_{{item.name}}"></label>-->
-      {{item.name}} - ({{item.email}})<br>
-      <span class="title"><a href="" ng-click="navUser2($index)"></a></span>
-
-      <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}}</p>
-      <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
-      <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img id="badgie" src='images/badges/{{name}}.svg' width="35px"></a><br>
-
+         {{item.name}} - ({{item.email}})<br>
+         <span class="title"><a href="" ng-click="navUser2($index)"></a></span>
+         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}}</p>
+         <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
+         <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img id="badgie" src='images/badges/{{name}}.svg' width="35px"></a><br>
     </li>
-    </ul>
+ </ul>
 </div>
