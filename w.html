@@ -37,26 +37,14 @@
 
 <body ng-app="teacherpages">
 
-<!-- logo -->
+  <!-- logo -->
   <div id="g5header" align="center"><img width="200px" src="images/header.svg"/></div>
- 
-   <div class="container">
-    <div class="row">
-    	<div ng-include="navPath"></div>
-    </div>
-	  <div class="row">
-      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-    </div>
-    <div class="row">
-  	  <div ng-include="filePath" onload="finishLoading()"></div>
-    </div>
-    <div class="row">
-      <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
-      <!-- footer -->
-      <div id="g5footer"></div>
-  		<!-- end row -->    
-  	</div>
-  	
+  <div class="container">
+    <div ng-include="navPath" style="width:100%"></div> <!-- removed row to move tools down -->
+    <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%; padding-bottom: 0px;'>
+  	<div ng-include="filePath" onload="finishLoading()"></div>
+    <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%;'>
+    <div id="g5footer"></div>
     <!-- container -->
   </div>
 
