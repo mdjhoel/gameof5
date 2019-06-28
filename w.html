@@ -264,6 +264,36 @@
           <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
         </div>
   </div>
+		
+  <div id="modalsettings" class="modal center">
+      <div class="modal-content">
+          <h4>Settings</h4>
+        
+          <div class="container">
+              <table width="50%">
+                <tr>
+                    <td>Show greyed out lessons</td>
+                    <td>
+                        <div class="switch">
+                            <label>
+                              off
+                              <input type="checkbox" ng-click="readonly.settings.show = !readonly.settings.show" ng-checked="readonly.settings.show">
+                              <span class="lever"></span>
+                              on
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+              </table>
+          </div>
+          
+          
+        
+        <div class="modal-footer">
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
 
 </body>
 
