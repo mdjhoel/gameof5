@@ -161,11 +161,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize']);
             $rootScope.rev = true; // added for Reverse button on lessons
 
             // GET STUDENT INFO
-            $rootScope.refUsers.once("value").then(function(snapuser) {
+            $rootScope.refUser.once("value").then(function(snapuser) {
               if (snapuser.val() != undefined) {
-                $rootScope.users = snapuser.val();
-                $rootScope.user = snapuser.val()[userId];
-                console.log("Data from Firebase, now stored in $rootScope.user.");
+                $rootScope.user = snapuser.val();
+                  
+                $rootScope.refUsers.once("value").then(function(snapusers) {
+                    $rootScope.users = snapusers.val(); // added for leaderboard
+                });
                 
                 // Sync angular after going to database  
                 $rootScope.$apply(function () {  // prep for user view   
