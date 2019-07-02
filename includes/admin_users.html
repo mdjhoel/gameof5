@@ -16,7 +16,7 @@
 		<li class="collection-item">
 			<form class="col s12">
 				<div class="row">
-					<div><h5>{{item.name}}</h5></div>
+					<div><h5>{{item.name}} ({{item.email}})</h5></div>
 					<div class="input-field col s12 m6">
 				  		 <label class='md-no-float' for="section" data-error="wrong" data-success="right">Section number</label>
 				  	     <input id="section" type="number" oninput="javascript: if (this.value.length > 3) this.value = this.value.slice(0, this.maxLength);" ng-model="item.section">
