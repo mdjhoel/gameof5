@@ -1,3 +1,9 @@
+<style>
+    #sorter:hover {
+        text-decoration: underline;
+        font-weight: bold;
+    }
+</style>
 <table>
 	<tr>
 	    	<td style='color: #8bc34a; font-size: 2em;'>List users <span style="font-size:1em;" ng-show="listArray[0].dateconfirmed != undefined">({{listArray[0].dateconfirmed}})</span>
@@ -9,21 +15,20 @@
       			</a>
 		</td>
 		<td class="right">
-			<a ng-click="sortUser(listArray,'email')" class="btn waves-effect waves-light blue white-text">Name</a>
-			<a ng-click="sortUser(listArray,'badgestotal')" class="btn waves-effect waves-light blue white-text">Badges</a>
-			<a ng-click="sortUser(listArray,'quiztotal')" class="btn waves-effect waves-light blue white-text">Quizzes</a>
-			<a ng-click="sortUser(listArray,'pointstotal')" class="btn waves-effect waves-light blue white-text">Points</a>
+            <a href="#!" id="sorter" ng-click="sortUser(listArray,'section')">Section</a> |
+			<a href="#!" id="sorter" ng-click="sortUser(listArray,'email')">Name</a> |
+			<a href="#!" id="sorter" ng-click="sortUser(listArray,'badgestotal')">Badges</a> |
+			<a href="#!" id="sorter" ng-click="sortUser(listArray,'quiztotal')">Quizzes</a> |
+			<a href="#!" id="sorter" ng-click="sortUser(listArray,'pointstotal')">Points</a>
 		</td>
 	</tr>
+    <!--
 	<tr>
 		<td class="left">
 		<select id="secnum2" class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)" ng-options="user2 as user2.section for user2 in listArray | unique:'section'">
 		</select>
-		<!--<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
-        	   <option ng-repeat="section in mysections" value="{{section}}" >{{section}}</option>
-      	        </select>-->
 		</td>
-	</tr>
+	</tr>-->
 </table>
 
 <style>
@@ -32,18 +37,34 @@
     }
 </style>
 
-<div ng-repeat="(key, item) in listArray" ng-show="item.section == dummy.section">
-   <ul class="collection with-header">      
+<!--<div ng-repeat="(key, item) in listArray" ng-show="item.section == dummy.section">-->
+<div ng-repeat="(key, item) in listArray">
+   <ul class="collection with-header">    
       <li class="collection-item avatar">
-         <img ng-show="item.photoUrl.indexOf('/mo/') <0" ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle">
-         <img ng-show="item.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{item.name}}" height='50px' class="circle">
-         <!--<input type="checkbox" id="chk_{{item.name}}"><label for="chk_{{item.name}}"></label>-->
-         <a href="" ng-click="navUser2($index)">{{item.name}}</a> - ({{item.email}})<br>
-         <span class="title"><a href="" ng-click="navUser2($index)"></a></span>
-
-         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}}</p>
+         <img ng-show="item.photoUrl.indexOf('/mo/') <0" ng-src='{{item.photoUrl}}' alt="{{item.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+         <img ng-show="item.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{item.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+         <a href="{{view}}" ng-click="navUser3($index)" target='_blank'>{{item.name}}</a> - ({{item.email}})<br>
+         
+         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}} | <a href="#!" id="sorter" ng-click="$scope.showedit = !$scope.showedit" ng-init="$scope.showedit = false">Edit</a></p>
          <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
-         <a ng-repeat="(name,value) in item.badges" ng-show="value>=3"><img id="badgie" src='images/badges/{{name}}.svg' width="35px"></a><br>
+         <div class="secondary-content">
+                <p ng-show="item.section != undefined" class="chip blue white-text">{{item.section}}</p>
+         </div>
+          
+         <div ng-show="$scope.showedit">
+             <br>
+             <div class="input-field col s12 m6">
+				<label class='md-no-float' for="section" data-error="wrong" data-success="right">Section number</label>
+				<input id="section" type="number" oninput="javascript: if (this.value.length > 3) this.value = this.value.slice(0, this.maxLength);" ng-model="item.section">
+             </div>
+					
+             <div class="col s12 m6">
+				<input type="checkbox" class="filled-in checkbox-pink" id="deleteme{{$index}}" ng-click="$scope.showkill = !$scope.showkill"/>
+				<label for="deleteme{{$index}}"></label>
+				<a class="waves-effect waves-light btn pink" ng-init="$scope.showkill = true" ng-disabled="$scope.showkill" ng-click="removeuser(item.uid,$index)">Delete</a>
+             </div>
+         </div>
+
        </li>
     </ul>
 </div>
