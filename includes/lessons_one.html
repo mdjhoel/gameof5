@@ -1,38 +1,34 @@
 <div class="row">
     <div class="col s12">
-      <div class="card z-depth-1">
-    
-        <div class="card-image z-depth-0">
-          <img ng-src="{{lesson.img}}" ng-hide="lesson.img ==''"/>
-        <div class="card-content">
-          <h3 style="margin-top:0px;">{{lesson.name}}</h3>
-          <p style="font-size: large;">{{lesson.desc}}</p>
-
-
-          <div class="collection">
-            <div ng-repeat="item in lesson.segments.slice().reverse()" class="row" style="margin-bottom: 0px; margin-top: 0px;">
-            <a href="" class="collection-item" ng-click="showme = !showme">{{item.title}}</a>
-              <div ng-show="showme" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
-                <div class="card-image" ng-hide="item.segimg ==''">
-                  <img ng-src="{{item.segimg}}"/>
-                </div>
-                <div class="card-content">
-                  <p>{{item.text}}</p>
-                  <a href="{{item.seglink}}" ng-show="item.seglink != ''" target="_blank">Link</a>
-                </div>
-              </div>
-              </div>
+      <div class="card">
+        <div class="card-content blue lighten-2 white-text">
+          <h4>{{lesson.name}}</h4>
+          <p>{{lesson.desc}}</p>
+        </div>
+        <div class="card-content black-text">
+            
+            <div class="collection">
+            <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()" >
+              <a ng-show="item.seglink == ''">
+                  <h6 style="color: black; padding-bottom: 0px;">{{item.title}}</h6>
+              </a>
+              <a href="{{item.seglink}}" target="_blank" ng-show="item.seglink != ''">
+                  <h6 style="text-decoration: underline;">{{item.title}}</h6>
+              </a>
+              <p style="color:darkgrey; padding-top: 0px;" ng-show="item.text!=''">
+                    {{item.text}}
+              </p>
+            </div>
           </div>
 
-          <a href="" ng-click="makePDF(lesson)" id="pdf" title="PDF" data-height="50" class="btn light-green white-text" style="vertical-align: bottom;">PDF</a>
         </div>
         <div class="card-action">
           <div ng-hide="lesson.keywords.length == 0 &&  lesson.expectations.length == 0">
-            <div title="keywords" class="chip blue white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
+            <div title="keywords" class="chip pink white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
             <div title="curriculum expectations" class="chip orange white-text" ng-repeat="expectation in lesson.expectations">{{expectation}}</div>
           </div>
           </div>
       </div>
+        
+      </div>
     </div>
-  </div>
-</div>   
