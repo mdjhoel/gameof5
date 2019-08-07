@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gameof5</title>
+  <link href="css/stylesheet.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/materialize.min.css">
+
+  <!-- load Angular 1.6.5 -->
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <script src="js/angular-sanitize.min.js"></script>
+  <script src="js/jspdf135.js"></script>
+
+  <!-- Angularjs custom code -->
+  <script src="js/studentapp.js"></script>
+    
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    
+  <!-- Chart and Angular chart -->
+  <link href="js/chartjs/Chart.css" rel="stylesheet">
+  <script src="js/chartjs/Chart.js"></script>
+  <script src="js/chartjs/Chartbundle.js"></script>
+  <script src="js/angular-chart.min.js"></script>
+  
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBVtxn_jTK6QSvvUrGLWRnuTO1Y1YAOWEA",
+      authDomain: "gameof5-4e8a1.firebaseapp.com",
+      databaseURL: "https://gameof5-4e8a1.firebaseio.com/",
+      projectId: "gameof5-4e8a1",
+      storageBucket: "",
+      messagingSenderId: ""
+    };
+    firebase.initializeApp(config);
+  </script>
+    
+  <style>
+            
+      .sidenav-header {
+          background-color: blue;
+          padding: 10px;
+      }
+      
+  </style>
+     
+</head>
+
+<!-- local testing ... -->
+<!-- cd to Documents/gameof5 -->
+<!-- python -m SimpleHTTPServer -->
+
+<body ng-app="studentpages">
+
+  <!-- logo -->
+  <div id="g5header" align="center"><img width="200px" src="images/header.svg"/></div>
+  <div class="container">
+    
+    <!-- remove ng-include
+    <div ng-include="navPath" style="width:100%"></div>
+    <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%; padding-bottom: 0px;'>  
+  	<div ng-include="filePath" onload="finishLoading()"></div>
+    -->
+      
+    <nav class="z-depth-0 white">
+        <div class="nav-wrapper black-text">
+          <a href="#" data-activates="mobile-demo" class="button-collapse show-on-large top">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="10px" width="50px" height="50px" style="padding-top: 10px;" viewBox="0 0 800 800">
+                <path fill="#000" d="M590.7,572.6H209.5c-14.8,0-26.8-12-26.8-26.8c0-14.8,12-26.8,26.8-26.8h381.1c14.8,0,26.8,12,26.8,26.8
+                        C617.5,560.7,605.6,572.6,590.7,572.6z"/>
+                <path fill="#000" d="M590.7,279.1H209.5c-14.8,0-26.8-12-26.8-26.8s12-26.8,26.8-26.8h381.1c14.8,0,26.8,12,26.8,26.8
+                        C617.5,267,605.6,279.1,590.7,279.1z"/>
+                <path fill="#000" d="M590.7,422.9H209.5c-14.8,0-26.8-12-26.8-26.8c0-14.8,12-26.8,26.8-26.8h381.1c14.8,0,26.8,12,26.8,26.8
+                        C617.5,410.9,605.6,422.9,590.7,422.9z"/>
+              </svg>
+          </a>
+          <b>My Dashboard</b>
+
+          <ul class="side-nav grey" id="mobile-demo">
+            <li class="sidenav-header blue">
+              <div class="row">
+                <div class="col s4">
+                    <img ng-src="{{user.photoUrl}}" class="circle" width="50px">
+                </div>
+                <div class="col s8" style="vertical-align:middle;">
+                    <a class="btn-flat dropdown-button waves-effect waves-light white-text" href="#" data-activates="profile-dropdown">{{user.name}}</a>
+                    <ul id="profile-dropdown" class="dropdown-content white-text">
+                        <li><a href="#modalprofile" class="modal-action modal-trigger">Profile</a></li>
+                        <li><a href="https://gameof5.com" target="_blank">Help</a></li>
+                    </ul>
+                </div>
+              </div>
+            </li>
+
+            <li class="blue">
+              <ul class="collapsible collapsible-accordion">
+                  <li>
+                    <a class="collapsible-header white-text waves-effect waves-blue">Lessons</a>
+                    <div class="collapsible-body z-depth-3">
+
+                        <div class="collection black-text">
+                            <a ng-repeat="item in readonly.lessons" href="#modallesson" id='data{{$index}}' ng-disable="!item.show" class="collection-item modal-action modal-trigger" ng-click="setData($index)" ng-show="item.show || readonly.settings.show">
+                               <table style="padding: 0px !important; margin: 0px !important;">
+                                <tr align="left">
+                                    <td width="60px" style="padding: 0px !important; vertical-align:top;">
+                                        <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-style="!item.show && {opacity: .5};">
+                                            <circle id="0" stroke-width="3" stroke="#2196f3" fill="#8bc34a" r="25" cy="29.9375" cx="30"/>
+                                            
+                                            <text ng-if="(readonly.lessons.length - $index) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                                            <text ng-if="(readonly.lessons.length - $index) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                                        </svg>
+                                    </td>
+                                    <td style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
+                                         <p ng-style="!item.show && {opacity: .5};"><b>{{item.unit + '-' + item.name}}</b>
+                                        </p>
+                                    </td>
+                                </tr>
+                               </table>     
+                            </a>
+                        </div>
+
+                    </div>
+                  </li>
+              </ul>
+            </li>
+
+            <div style="background-color: white; color: dodgerblue; padding: 15px">
+                 <h6>gameof5</h6>
+                 <p style="line-height: normal; color: black;">Is a web app that allows teachers to digitally store, structure, present, and gamify their lessons to increase student engagement.</p> 
+            </div>
+
+            <li class="sidenav-footer grey darken-2">
+              <div class="row">  
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </nav> 
+
+    
+    <div class="row">
+        
+        <div class="col s12 m6 l4">
+         <div class="card animate fadeRight">
+            <div class="card-content orange lighten-1 white-text">
+               <p class="card-stats-title">Level</p>
+               <h4 class="card-stats-number white-text">{{levelname}}</h4>
+            </div>
+            <div class="card-action orange">
+               <div class="center-align">
+                    <canvas id="pointbar" height="100%" class="chart-horizontal-bar" chart-series="pointseries" chart-data="pointdata" chart-options="pointoptions" chart-labels="pointlabels" chart-colors="pointColorBar">
+                    </canvas> 
+               </div>
+            </div>
+         </div>
+        </div>
+        
+        <div class="col s12 m6 l4">
+         <div class="card animate fadeRight">
+            <div class="card-content green lighten-1 white-text">
+               <p class="card-stats-title">Daily XP</p>
+               <h4 class="card-stats-number white-text">{{dailypercent}}%</h4>
+            </div>
+            <div class="card-action green">
+               <div class="center-align">
+                    <canvas id="dailybar" height="100%" class="chart chart-bar" chart-series="dailyseries" chart-data="dailydata" chart-options="dailyoptions" chart-labels="dailylabels" chart-colors="dailyColorBar">
+                    </canvas> 
+               </div>
+            </div>
+         </div>
+        </div>
+        <div class="col s12 m6 l4">
+            <div class="card animate fadeLeft">
+                <div class="card-content cyan white-text">
+                    <p class="card-stats-title">Quizzes</p>
+                    <h4 class="card-stats-number white-text">{{quizpercent}}%</h4>
+                </div>
+            <div class="card-action cyan darken-1">
+               <div class="center-align">
+                    <canvas id="quizbar" height="100%" class="chart chart-bar" chart-series="quizseries" chart-data="quizdata" chart-options="quizoptions" chart-labels="quizlabels" chart-colors="quizColorBar">
+                    </canvas> 
+               </div>
+            </div>
+         </div>
+       </div>  
+    </div>
+      
+    <div class="row">
+      <div class="col s12 m6">
+              <ul class="collection with-header">
+                <li class="collection-item cyan white-text">
+                    <p>Top comments</p>
+                </li>
+                <li class="collection-item avatar" ng-repeat="daily in readonly.daily" ng-show="user.daily[$index].grade != 3 && user.daily[$index].grade != null">
+                  <img ng-src="images/badges/{{user.daily[$index].badge}}.svg" class="circle"/>
+                  <p class="title"><a href="#modallesson" class="modal-action modal-trigger" ng-click=setDataById(daily.id.id)>{{daily.id.name}}</a></p>
+                  <p>{{user.daily[$index].desc}}</p>
+                  <div href="#!" class="secondary-content">
+                    <p ng-show="user.daily[$index].grade == 4" class="chip orange white-text">{{user.daily[$index].grade}}</p>
+                    <p ng-show="user.daily[$index].grade == 3" class="chip blue white-text">{{user.daily[$index].grade}}</p>
+                      <p ng-show="user.daily[$index].grade == 2" class="chip pink lighten-2 white-text">{{user.daily[$index].grade}}</p>
+                      <p ng-show="user.daily[$index].grade < 2" class="chip red white-text">{{user.daily[$index].grade}}</p>
+                  </div>              
+                </li>
+              </ul>
+        </div>
+    
+        
+        <div class="col s12 m6">
+            <ul class="collection with-header">
+                <li class="collection-item green lighten-1 white-text">
+                    <p>Top skills</p>
+                </li>
+                    <li class="collection-item avatar" ng-repeat="(key, value) in user.badges">
+                      <span ng-repeat="badge in readonly.badges" ng-show="readonly.badges[$index].id == key">
+                      <img ng-src="images/badges/0.svg" title="{{badge.name}}" ng-show="value < 3" class="circle"/>
+                      <img ng-src="images/badges/{{key}}.svg" title="{{badge.name}}" ng-show="value >= 3" class="circle"/>
+                      <p class="title">{{badge.name}}</p>
+                      <p ng-show="value >= 3" style='color: orange;'>You have earned the badge.</p>
+                      <p ng-show="value < 3">Almost there. You need 3x to earn the badge.</p>
+                      <div class="secondary-content">
+                        <p class="chip blue white-text">{{value * badge.value}}</p>
+                      </div>
+                      </span>
+                    </li>
+            </ul>
+        </div>
+        
+      </div> <!-- end row -->
+        
+</div> <!-- end container -->
+    
+  <!-- #Save Modal -->
+  <div id="modalcheck" class="modal">
+      <div class="modal-content">
+        <h4>Save edits</h4>
+        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
+        
+        <p ng-show="users != undefined">
+          <input type="checkbox" id="usertotals"/>
+          <label for="usertotals">Update and confirm users (this may take a minute)</label>
+        </p>
+ 
+        <div class="modal-footer">
+          <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat ">No</a>
+        </div>
+        
+      </div>
+  </div>
+ 	
+  <!-- #Message Modal -->
+  <div id="modalmessage" class="modal">
+      <div class="modal-content">
+        <h4>{{message.m1}}</h4>
+        <h5>{{message.m3}}</h5>
+        <p>{{message.m2}}</p>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div> 
+       
+  <div id="modalprofile" class="modal center">
+      <div class="modal-content">
+        <h4>{{user.name}}</h4>
+        <img ng-src="{{user.photoUrl}}" width="200px" style="border-radius:50%;">
+        <p>{{user.email}}</p>
+        
+        <div class="modal-footer">
+          <!--<a ng-click="signout()" class="modal-action modal-close btn-flat">Sign out</a>-->
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+    
+  <div id="modallesson" class="modal center">
+      <div class="modal-content">
+        <div ng-include="filePath" onload="finishLoading()"></div>
+        <div class="modal-footer">
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+	
+</body>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+
+<script>
+
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  	$('.modal').modal();
+	$('.tooltipped').tooltip({delay: 50});
+  });
+
+  // disable back button, so users do not leave one page app and get confused
+  history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+    
+  // side nav  
+  $(document).ready(function(){
+    $('.button-collapse').sideNav({
+          menuWidth: 400, // Default is 300
+          edge: 'right', // Choose the horizontal origin
+          closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          draggable: true // Choose whether you can drag to open on touch screens
+    }
+  );
+      
+  // START OPEN
+  $('.button-collapse').sideNav('show');
+  });
+
+
+</script>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</html>

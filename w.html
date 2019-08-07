@@ -11,6 +11,12 @@
   <script src="js/angular-route.js"></script>
   <script src="js/angular-sanitize.min.js"></script>
   <script src="js/jspdf135.js"></script>
+    
+  <!-- Chart and Angular chart -->
+  <link href="js/chartjs/Chart.css" rel="stylesheet">
+  <script src="js/chartjs/Chart.js"></script>
+  <script src="js/chartjs/Chartbundle.js"></script>
+  <script src="js/angular-chart.min.js"></script>
 
   <script src="js/teacherapp.js"></script>
   <!-- Firebase -->
@@ -102,7 +108,7 @@
         <h4>Save edits</h4>
         <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
         
-        <p ng-show="users != undefined">
+        <p ng-show="cdata.users != undefined">
           <input type="checkbox" id="usertotals"/>
           <label for="usertotals">Update and confirm users (this may take a minute)</label>
         </p>
@@ -134,7 +140,7 @@
         <p>{{user.message.m2}}</p>
         
         <div class="modal-footer">
-          <a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Thanks</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Thanks</a>
         </div>
         
       </div>
@@ -157,7 +163,7 @@
   <div id="modalprofile" class="modal center">
       <div class="modal-content">
         <h4>{{name}}</h4>
-        <img ng-src="{{photoUrl}}" width="200px" style="border-radius:50%;">
+        <img ng-src="{{user.photoUrl}}" width="200px" style="border-radius:50%;">
         <p>{{email}}</p>
         
         <div class="modal-footer">
@@ -196,25 +202,25 @@
               <a href="" class="collection-item" ng-click="showme1 = !showme1">Lessons</a>
               <div ng-show="showme1" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
-                  <p>{{readonly.lessons}}</p>
+                  <p>{{cdata.readonly.lessons}}</p>
                 </div>
               </div>
               <a href="" class="collection-item" ng-click="showme2 = !showme2">Levels</a>
               <div ng-show="showme2" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
-                  <p>{{readonly.levels}}</p>
+                  <p>{{cdata.readonly.levels}}</p>
                 </div>
               </div>
               <a href="" class="collection-item" ng-click="showme3 = !showme3">Badges</a>
               <div ng-show="showme3" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
-                  <p>{{readonly.badges}}</p>
+                  <p>{{cdata.readonly.badges}}</p>
                 </div>
               </div>
-              <a ng-show="users != undefined" href="" class="collection-item" ng-click="showme4 = !showme4">Users</a>
+              <a href="" class="collection-item" ng-click="showme4 = !showme4">Users</a>
               <div ng-show="showme4" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
-                  <p>{{users}}</p>
+                  <p>{{cdata.users}}</p>
                 </div>
               </div>
           </div>
@@ -251,7 +257,7 @@
                <ol>
                   <li>Create a class email list and send them this API URL</li>
                   <li>Students follow the link to request access</li>
-                  <li>View new students using the Edit Users tool</li>
+                  <li>View new students using the View Users tool</li>
                   <li>Save new users as part of your class (click checkbox to OK users)</li>
                   <li>Students refresh gameof5 API URL and they will be in!</li>
                </ol>
@@ -277,7 +283,7 @@
                         <div class="switch">
                             <label>
                               off
-                              <input type="checkbox" ng-click="readonly.settings.show = !readonly.settings.show" ng-checked="readonly.settings.show">
+                              <input type="checkbox" ng-click="cdata.readonly.settings.show = !cdata.readonly.settings.show" ng-checked="cdata.readonly.settings.show">
                               <span class="lever"></span>
                               on
                             </label>
