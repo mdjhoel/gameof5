@@ -14,7 +14,7 @@
 </tr>
 </table>
 
-<div ng-repeat="item in readonly.lessons">
+<div ng-repeat="item in cdata.readonly.lessons">
 	<ul class="collection with-header">
 		<li class="collection-item">
 			<div class="row">
@@ -40,7 +40,8 @@
 				 <a class="waves-effect waves-light btn blue" ng-disabled="$last" ng-click="downlesson($index)">Down</a>
 				 <a class="waves-effect waves-light btn pink" ng-click="removelesson($index)">Delete</a>
 				 <a ng-click="setData($index)" class="waves-effect waves-light btn blue">View</a>
-				</div></div>
+				</div>
+            </div>
 				 <div ng-show="$scope.showdetails">
 				 	<br>
 				 	<h5>Details
@@ -110,7 +111,7 @@
 								<div class="input-field col s12">
 									<input id="seglink" type="text" ng-model="segment.seglink">
 							    	<label class='md-no-float' for="seglink">Link URL</label>
-								</div
+                                </div>
 								<div>
 									<a class="waves-effect waves-light btn pink" ng-click="removesegment($parent.$index,$index)">Delete</a>
 								</div>
@@ -118,6 +119,7 @@
 						</ul>
 					</div>
 				 </div>
+                </div>
 		</li>
 	</ul>
 </div>
