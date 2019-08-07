@@ -12,11 +12,10 @@
 		<a href="#modalupload" id="upload" title="Upload data" data-height="50" class="modal-action modal-trigger btn blue white-text" style="vertical-align: bottom;">Upload</a><span></span>
 		<a ng-click="addbadge()" class="waves-effect waves-light btn light-green">Add</a>
 	</td>
-	</td>
 </tr>
 </table>
 
-<div ng-repeat="item in readonly.badges">
+<div ng-repeat="item in cdata.readonly.badges">
 	<ul class="collection with-header">
 		<li class="collection-item">
 			<form class="col s12">
@@ -41,7 +40,7 @@
 						<div class="scrollmenu">
 
 							<a class="image" ng-click="item.id = mybadge" ng-repeat="mybadge in admin.badgelist" id='{{key}}{{$index}}' title="{{mybadge}}" >
-							<img src="images/badges/{{mybadge}}.svg" ng-style="{'opacity':item.id == mybadge ? '1' : '0.5' }"/>
+							<img ng-src="images/badges/{{mybadge}}.svg" ng-style="{'opacity':item.id == mybadge ? '1' : '0.5' }"/>
 							</a>
 
 						</div>
