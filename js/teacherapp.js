@@ -395,42 +395,32 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       $rootScope.selIds = {}; // reset
       const mykeys = Object.keys(data)
       
-      // start table
-      mytab = "<table class='highlight'>";
-      
+      csvstudent = "";
       for (const key of mykeys) { // loop through all students
+        
         var total = 0; // total number of points
-        mytab = mytab + "<tr>"
-        mytab = mytab + "<td>" + data[key].email + "</td>";
+
         for (const num of nums) { // loop through selected ids
             if (data[key].daily == undefined) { // added just in case students are added later
               continue;
             }
+
             mygrade = (parseInt(data[key].daily[num].grade) + parseInt(data[key].daily[num].value));
             total = total + mygrade;                
-            mycolor = "#dee2e8";
-            if (parseInt(data[key].daily[num].grade) > 3) {
-                mycolor = "green";
-            } else {
-                mycolor = "red";
-            }
 
-            if (data[key].daily[num].desc == "Normal day, nothing to report") {
-                mytab = mytab + "<td><img id='badgie' src='images/badges/0.svg' width='35px' title='Normal day, nothing to report' style='color:#dee2e8;'></td>";
+            if (data[key].daily[num].desc.includes(",")) { 
+                  var desc = data[key].daily[num].desc.replace(/,/g,"");
             } else {
-                //mytab = mytab + "<td><img id='badgie' src='images/badges/" + data[key].daily[num].badge + ".svg' width='35px' title='" + data[key].daily[num].desc + "' style='color:" + mycolor + "'></td>"
-                mytab = mytab + "<td>" + data[key].daily[num].desc + "</td>";
+                  var desc = data[key].daily[num].desc;
             }
-    
-            mytab = mytab + "<td><b>" + total + "</b></td>";
-            mytab = mytab + "</tr>"                
+            csvstudent = csvstudent + data[key].email + ",'" + $rootScope.cdata.readonly.lessons[num].name + "','" + desc + "'," + mygrade + "<br>";
+             
         }
       }
-        mytab = mytab + "</table>" // complete the table
               
       // Popup a message to remind user
       mydiv = document.getElementById("tablediv");
-      mydiv.innerHTML = mytab;
+      mydiv.innerHTML = csvstudent;
       
         $(document).ready(function(){
             $('#modaltable').modal();
