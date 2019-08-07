@@ -403,6 +403,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         mytab = mytab + "<tr>"
         mytab = mytab + "<td>" + data[key].email + "</td>";
         for (const num of nums) { // loop through selected ids
+            if (data[key].daily == undefined) { // added just in case students are added later
+              continue;
+            }
             mygrade = (parseInt(data[key].daily[num].grade) + parseInt(data[key].daily[num].value));
             total = total + mygrade;                
             mycolor = "#dee2e8";
