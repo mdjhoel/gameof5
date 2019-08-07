@@ -12,7 +12,7 @@
 </tr>
 </table>
 
-<div ng-repeat="item in readonly.quizzes">
+<div ng-repeat="item in cdata.readonly.quizzes">
 	<ul class="collection with-header">
 		<li class="collection-item">
 				<div class="row">
@@ -25,27 +25,27 @@
 				 </div>
 				 <div ng-show="$scope.showedit">
 					 
-					<div style="padding-top: 10px; padding-bottom: 10px;">
- 						<!--<select id="secnum" class="browser-default" ng-model="dummy" ng-options="user as user.section for user in users | unique: 'section'">
- 							<option value="">SECTION</option>
- 						</select>-->
+					<!--<div style="padding-top: 10px; padding-bottom: 10px;">
 					<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
         					<option ng-repeat="section in mysections" value="{{section}}" >{{section}}</option>
       					</select>
- 					</div>
+ 					</div>-->
 					 
 				 	<table class="table">
 				 		<thead>
           					<tr>
               					<th>Username</th>
+                                <th>Section</th>
               					<th>Grade</th>
               					<th>XP</th>
           					</tr>
         				</thead>
 
-        				<tbody ng-repeat="user in users" ng-show="user.section==dummy">
+        				<!--<tbody ng-repeat="user in cdata.users" ng-show="user.section==dummy">-->
+                        <tbody ng-repeat="user in cdata.users">
 				 			<tr>
 				 				<td>{{user.email}}</td>
+                                <td>{{user.section}}</td>
 				 				<td><input class="TextBox" type="number" validate="number" min=0 max=100 ng-model="user.quizzes[$parent.$index].grade" ng-change="user.quizzes[$parent.$index].name = $parent.item.name; user.quizzes[$parent.$index].xp = setQuiz(user.quizzes[$parent.$index].grade,$parent.$index)"/><td>
 				 				<td><span style='color: orange;'><b>XP </b></span><span class="chip blue white-text">{{user.quizzes[$parent.$index].xp}}</span></td>
 				 			</tr>
