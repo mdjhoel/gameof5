@@ -255,7 +255,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                     if ($rootScope.user.quizzes != undefined && $rootScope.user.daily != undefined && 
                     $rootScope.user.level != undefined) {
                         
-                        totals = ($rootScope.user.daily.length * 4) + ($rootScope.user.quizzes.length * 4) + $rootScope.user.daily.length;
+                        totals = (($rootScope.user.daily.length + 1) * 4) + (($rootScope.user.quizzes.length +1) * 4);
 
                         total_pts_now = Math.round(($rootScope.user.pointstotal * 100) / totals);
                         avgpct = Math.round(($rootScope.user.avgpoints * 100) / totals);
