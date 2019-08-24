@@ -126,9 +126,28 @@
               </ul>
             </li>
 
+	    <li class="light-green">
+              <ul class="collapsible collapsible-accordion">
+                  <li>
+                    <a class="collapsible-header white-text waves-effect waves-light-green">Leaders</a>
+                    <div class="collapsible-body z-depth-3">
+                       <ul class="collection">
+                          <li class="collection-item avatar" ng-repeat="cur_user in listArray">
+                            <br>
+                            <img ng-show="cur_user.photoUrl.indexOf('/mo/') <0" ng-src='{{cur_user.photoUrl}}' alt="{{cur_user.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+                            <img ng-show="cur_user.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{cur_user.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+                            <span class="title">{{cur_user.name}} - {{cur_user.pointstotal}}</span>
+                          </li>
+                      </ul>
+
+                    </div>
+                  </li>
+              </ul>
+            </li>
+	
             <div style="background-color: white; color: dodgerblue; padding: 15px">
                  <h6>gameof5</h6>
-                 <p style="line-height: normal; color: black;">Is a web app that allows teachers to digitally store, structure, present, and gamify their lessons to increase student engagement.</p> 
+                 <p style="line-height: normal; color: black;">Is a web app that allows teachers to digitally store, structure, present, and gamify their lessons.</p> 
             </div>
 
             <li class="sidenav-footer grey darken-2">
