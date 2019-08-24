@@ -994,12 +994,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
     if ($rootScope.cdata.readonly.daily == undefined) { $rootScope.cdata.readonly.daily = []; }
     $rootScope.cdata.readonly.daily.unshift({});
-
+    var d = new Date();
+    var dailydate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();  
     for (key in $rootScope.cdata.users) {
       
       var user = $rootScope.cdata.users[key];
       if (user.daily == undefined) { user.daily = []; }
-      user.daily.unshift({grade: 3, desc: "Normal day, nothing to report", badge: 0, value:0});
+      user.daily.unshift({grade: 3, desc: "Normal day, nothing to report", badge: 0, value:0, mydate: dailydate});
 
       $rootScope.cdata.users[key] = user;
     }
