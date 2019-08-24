@@ -217,6 +217,7 @@
                   <img ng-src="images/badges/{{user.daily[$index].badge}}.svg" class="circle"/>
                   <p class="title"><a href="#modallesson" class="modal-action modal-trigger" ng-click=setDataById(daily.id.id)>{{daily.id.name}}</a></p>
                   <p>{{user.daily[$index].desc}}</p>
+		  <p ng-show=user.daily[$index].mydate != undefined">{{user.daily[$index].mydate}}</p>
                   <div href="#!" class="secondary-content">
                     <p ng-show="user.daily[$index].grade == 4" class="chip orange white-text">{{user.daily[$index].grade}}</p>
                     <p ng-show="user.daily[$index].grade == 3" class="chip blue white-text">{{user.daily[$index].grade}}</p>
