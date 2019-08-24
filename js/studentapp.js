@@ -70,6 +70,9 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                   
                 $rootScope.refUsers.once("value").then(function(snapusers) {
                     $rootScope.users = snapusers.val(); // added for leaderboard
+                    $rootScope.listArray = Object.values($rootScope.users);
+                    $rootScope.listArray.sort(generateSortFn('pointstotal', true));
+                    $rootScope.listArray = $rootScope.listArray.slice(0,5);
                 });
                   
                 $rootScope.refLessons.once("value").then(function(snaplessons) {
