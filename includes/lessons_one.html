@@ -8,27 +8,24 @@
         <div class="card-content black-text">
             
             <div class="collection">
-            <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()" >
-              <a ng-show="item.seglink == ''">
-                  <h6 style="color: black; padding-bottom: 0px;">{{item.title}}</h6>
-              </a>
-              <a href="{{item.seglink}}" target="_blank" ng-show="item.seglink != ''">
-                  <h6 style="text-decoration: underline;">{{item.title}}</h6>
-              </a>
-              <p style="color:darkgrey; padding-top: 0px;" ng-show="item.text!=''">
-                    {{item.text}}
-              </p>
+                <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()">
+                    <h5 ng-show="item.seglink == ''" style="color: lightgrey;">{{item.title}}</h5>
+                    <a href="{{item.seglink}}" target="_blank">
+                        <h5 ng-show="item.seglink != ''">{{item.title}}</h5>
+                    </a>
+                    <p style="color:lightgrey;" ng-show="item.text!=''">
+                        {{item.text}}
+                    </p>
+                </div>
             </div>
-          </div>
-
         </div>
         <div class="card-action">
           <div ng-hide="lesson.keywords.length == 0 &&  lesson.expectations.length == 0">
             <div title="keywords" class="chip pink white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
             <div title="curriculum expectations" class="chip orange white-text" ng-repeat="expectation in lesson.expectations">{{expectation}}</div>
           </div>
-          </div>
+        </div>
       </div>
         
-      </div>
     </div>
+</div>
