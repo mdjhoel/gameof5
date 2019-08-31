@@ -787,7 +787,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   	if ($rootScope.admin.courses == undefined) {
     	$rootScope.admin.courses = [];
     }
-    if ($rootScope.admin.courses.length < 5) {
+    if ($rootScope.admin.courses.length < 10) {
       $rootScope.admin.courses.unshift({name: "", descname: "", desc: ""});
     }    
   }
