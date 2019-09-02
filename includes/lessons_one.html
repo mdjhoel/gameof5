@@ -9,7 +9,7 @@
             
             <div class="collection">
                 <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()">
-                    <h5 ng-show="item.seglink == ''" style="color: lightgrey;">{{item.title}}</h5>
+                    <h5 ng-show="item.seglink == ''">{{item.title}}</h5>
                     <a href="{{item.seglink}}" target="_blank">
                         <h5 ng-show="item.seglink != ''">{{item.title}}</h5>
                     </a>
