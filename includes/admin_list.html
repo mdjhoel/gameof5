@@ -45,7 +45,7 @@
          <img ng-show="item.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{item.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
          <a href="{{view}}" ng-click="navUser3($index)" target='_blank'>{{item.name}}</a> - ({{item.email}})<br>
          
-         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}} | <a href="#!" id="sorter" ng-click="$scope.showedit = !$scope.showedit" ng-init="$scope.showedit = false">Edit</a></p>
+         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}} | <a href="#!" id="sorter" ng-click="$scope.showedit = !$scope.showedit" ng-init="$scope.showedit = false">Edit Section</a></p>
          <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
          <div class="secondary-content">
                 <p ng-show="item.section != undefined" class="chip blue white-text">{{item.section}}</p>
