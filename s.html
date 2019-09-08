@@ -99,14 +99,15 @@
               </div>
             </li>
 
-            <li class="blue">
+           <li class="blue">
               <ul class="collapsible collapsible-accordion">
                   <li>
                     <a class="collapsible-header white-text waves-effect waves-blue">Lessons</a>
                     <div class="collapsible-body z-depth-3">
 
                         <div class="collection black-text">
-                            <a ng-repeat="item in readonly.lessons" href="#modallesson" id='data{{$index}}' ng-disable="!item.show" class="collection-item modal-action modal-trigger" ng-click="setData($index)" ng-show="item.show || readonly.settings.show">
+                            <div ng-repeat="item in readonly.lessons" style="border-style: solid;border-width: .5px;">
+                            <a href="#modallesson" id='data{{$index}}' class="collection-item modal-action modal-trigger" ng-click="setData($index)" ng-show="item.show">
                                <table style="padding: 0px !important; margin: 0px !important;">
                                 <tr align="left">
                                     <td width="60px" style="padding: 0px !important; vertical-align:top;">
@@ -124,8 +125,27 @@
                                 </tr>
                                </table>     
                             </a>
-                        </div>
 
+                             <div id='data{{$index}}' class="collection-item" ng-show="!item.show && readonly.settings.show">
+                               <table style="padding: 0px !important; margin: 0px !important;">
+                                <tr align="left">
+                                    <td width="60px" style="padding: 0px !important; vertical-align:top;">
+                                        <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-style="!item.show && {opacity: .5};">
+                                            <circle id="0" stroke-width="3" stroke="#2196f3" fill="#8bc34a" r="25" cy="29.9375" cx="30"/>
+                                            
+                                            <text ng-if="(readonly.lessons.length - $index) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                                            <text ng-if="(readonly.lessons.length - $index) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                                        </svg>
+                                    </td>
+                                    <td style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
+                                         <p ng-style="!item.show && {opacity: .5};"><b>{{item.unit + '-' + item.name}}</b>
+                                        </p>
+                                    </td>
+                                </tr>
+                               </table>     
+                            </div>
+
+                        </div> 
                     </div>
                   </li>
               </ul>
