@@ -160,10 +160,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     }
   
     $rootScope.courses = function() {
-                  
-        // check edits
-        if (!checkedits($rootScope.o_readonly,$rootScope.cdata.readonly)) {
-            askit = confirm("Please save your work.");
+               
+        // prep current
+	var c = angular.toJson(angular.copy($rootScope.cdata.readonly));
+
+	// check edits
+        if (!checkedits($rootScope.o_readonly,c)) {
+            askit = confirm("You are leaving without saving. Cancel to save, or OK to lose edits.");
             if (askit == false) {
                 return;
             } 
@@ -183,11 +186,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     } 
 
   function checkedits(original,current) {
-
-    var c = angular.toJson(current);
-    var o = original;
     
-    if (o == c) {
+    if (original == current) {
       return true;
     } else {
       return false;
@@ -254,7 +254,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     $rootScope.cname = cname;
         
     // Check to see if a new course has been added, if so write to database
-    if (!checkedits($rootScope.o_admin,$rootScope.admin)) {  
+    a = angular.toJson($rootScope.admin);  // make sure admin is in proper format to be compared
+    if (!checkedits($rootScope.o_admin,a)) {  
         // if new course added write it to Firebase
         var cRef = $rootScope.database.ref("teachers/" + $rootScope.admin.uid + "/admin/courses");
         var courses = angular.toJson($rootScope.admin.courses); // get rid of Angular $$ data
@@ -449,7 +450,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
     // get rid of Angular $$ data
     cdata = JSON.parse(angular.toJson($rootScope.cdata));    
-    $rootScope.o_readonly = cdata.readonly;
+    $rootScope.o_readonly = JSON.stringify(angular.copy(cdata.readonly)); // make o_readonly a string
     users = cdata.users;
       
     // .saveusers is set if all users are deleted, remove all records from database
@@ -468,7 +469,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         console.log("Users could not be saved." + error);
     });
       
-    refro.set($rootScope.o_readonly).then(function(){
+    refro.set(cdata.readonly).then(function(){
         console.log("Readonly data saved successfully.");
     }).catch(function(error) {
         console.log("Readonly could not be saved." + error);
