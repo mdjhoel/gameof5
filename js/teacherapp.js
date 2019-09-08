@@ -440,9 +440,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     }
       
     // if modal checkbox checked, then set totals for users
-    if (document.getElementById('usertotals').checked) {
+    //if (document.getElementById('usertotals').checked) {
+    if ($rootScope.cdata.users != null) {
         setUserTotals(); 
     }
+    //}
     
         
     // set flag on class
