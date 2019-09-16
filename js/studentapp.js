@@ -110,9 +110,11 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                         grades = [];
                         colors = [];
                         for (key in $rootScope.user.daily) {
-                            labels.push(key);
-                            grades.push($rootScope.user.daily[key].grade);
-                            colors.push('#ffffff'); 
+			    if ($rootScope.user.daily[key].grade != -99 || $rootScope.user.daily[key].grade != undefined) {
+                               labels.push(key);
+                               grades.push($rootScope.user.daily[key].grade);
+                               colors.push('#ffffff'); 
+			    }
                         }
 
                         $rootScope.dailypercent = Math.round(($rootScope.user.dailytotal / ($rootScope.user.daily.length * 4)) * 100);
