@@ -51,12 +51,12 @@
 
       .modal { width: 70% !important ; height: 70% !important ; }
 	  
-      .card-action {
-            height: 120px;  
-      }
-      
-      .card-content{
-            height: 120px;  
+      .mycardcontent {
+            height: 120px; 
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 20px;
       }
       
   </style>
@@ -200,11 +200,11 @@
         
         <div class="col s12 m6 l4">
          <div class="card animate fadeRight">
-            <div class="card-content orange lighten-1 white-text">
+            <div class="mycardcontent orange lighten-1 white-text">
                <p class="card-stats-title">{{user.level.name}}</p>
                <h4 class="card-stats-number white-text">{{user.pointstotal}}</h4>
             </div>
-            <div class="card-action orange">
+            <div class="mycardcontent orange">
                <div height="250px">
                		<h6 style="color: white;">{{user.level.desc}}</h6>
                		<span ng-show="user.pointstotal > user.avgpoints" style="color: blue;">+ {{user.pointstotal - user.avgpoints}} above average</span>
@@ -218,11 +218,11 @@
         
         <div class="col s12 m6 l4">
          <div class="card animate fadeRight">
-            <div class="card-content green lighten-1 white-text">
+            <div class="mycardcontent green lighten-1 white-text">
                <p class="card-stats-title">Daily XP</p>
                <h4 class="card-stats-number white-text">{{user.dailytotal}}</h4>
             </div>
-            <div class="card-action green">
+            <div class="mycardcontent green">
                <div class="center-align">
                     <canvas id="dailybar" height="100%" class="chart chart-bar" chart-series="dailyseries" chart-data="dailydata" chart-options="dailyoptions" chart-labels="dailylabels" chart-colors="dailyColorBar">
                     </canvas> 
@@ -232,11 +232,11 @@
         </div>
         <div class="col s12 m6 l4">
             <div class="card animate fadeLeft">
-                <div class="card-content cyan white-text">
+                <div class="mycardcontent cyan white-text">
                     <p class="card-stats-title">Quizzes</p>
                     <h4 class="card-stats-number white-text">{{user.quiztotal}}</h4>
                 </div>
-            <div class="card-action cyan darken-1">
+            <div class="mycardcontent cyan darken-1">
                <div class="center-align">
                     <canvas id="quizbar" height="100%" class="chart chart-bar" chart-series="quizseries" chart-data="quizdata" chart-options="quizoptions" chart-labels="quizlabels" chart-colors="quizColorBar">
                     </canvas> 
