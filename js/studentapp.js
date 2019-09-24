@@ -111,7 +111,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                         colors = [];
                         for (key in $rootScope.user.daily) {
 			    if ($rootScope.user.daily[key].grade != -99 || $rootScope.user.daily[key].grade != undefined) {
-                               labels.push(key);
+                               labels.push("xp: " + $rootScope.user.daily[key].grade);
                                grades.push($rootScope.user.daily[key].grade);
                                colors.push('#ffffff'); 
 			    }
@@ -263,7 +263,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                         avgpct = Math.round(($rootScope.user.avgpoints * 100) / totals);
 
                         $rootScope.pointlabels = ['me','class']; 
-                        $rootScope.pointdata = [total_pts_now,avgpct]; 
+                        $rootScope.pointdata = [$rootScope.user.pointstotal,$rootScope.user.avgpoints]; 
                         $rootScope.pointseries = ['Series A'];
                         $rootScope.pointColorBar = ['#ffffff','#2196f3']; 
                         $rootScope.levelname = $rootScope.user.level.name;
@@ -279,7 +279,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                                 displayColors: false,
                                 callbacks: {
                                   label: function(tooltipItem, data) {
-                                    return $rootScope.pointdata[tooltipItem.index] + '%';
+                                    return $rootScope.pointdata[tooltipItem.index];
                                   }
                                 }
                             },
@@ -350,7 +350,6 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
 
           } // student
     }); // if authorization changes
-    
 
   // ---------------------------------------------//
   // FUNCTIONS
