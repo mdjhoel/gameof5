@@ -5,6 +5,8 @@
   <title>Gameof5</title>
   <link href="css/stylesheet.css" rel="stylesheet">
   <link rel="stylesheet" href="css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
   <!-- load Angular 1.6.5 -->
   <script src="js/angular.min.js"></script>
@@ -106,7 +108,7 @@
                     <div class="collapsible-body z-depth-3">
 
                         <div class="collection black-text">
-                            <div ng-repeat="item in readonly.lessons" style="border-style: solid;border-width: .5px;">
+                            <div ng-repeat="item in readonly.lessons" style="border-style: solid;border-width: .35px; border-color: grey;">
                             <a href="#modallesson" id='data{{$index}}' class="collection-item modal-action modal-trigger" ng-click="setData($index)" ng-show="item.show">
                                <table style="padding: 0px !important; margin: 0px !important;">
                                 <tr align="left">
@@ -161,7 +163,8 @@
                             <br>
                             <img ng-show="cur_user.photoUrl.indexOf('/mo/') <0" ng-src='{{cur_user.photoUrl}}' alt="{{cur_user.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
                             <img ng-show="cur_user.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{cur_user.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
-                            <span class="title">{{cur_user.name}}</span>
+                            <span class="title">{{cur_user.name}}</span><br>
+                            <span class="title">{{cur_user.pointstotal}}</span>
                           </li>
                       </ul>
 
@@ -184,18 +187,20 @@
         </div>
       </nav> 
 
-    
     <div class="row">
         
         <div class="col s12 m6 l4">
          <div class="card animate fadeRight">
             <div class="card-content orange lighten-1 white-text">
-               <p class="card-stats-title">Level</p>
-               <h4 class="card-stats-number white-text">{{levelname}}</h4>
+               <p class="card-stats-title">{{user.level.name}}</p>
+               <h4 class="card-stats-number white-text">{{user.pointstotal}}</h4>
             </div>
             <div class="card-action orange">
-               <div class="center-align">
-                    <canvas id="pointbar" height="100%" class="chart-horizontal-bar" chart-series="pointseries" chart-data="pointdata" chart-options="pointoptions" chart-labels="pointlabels" chart-colors="pointColorBar">
+               <div height="250px">
+               		<h6 style="color: white;">{{user.level.desc}}</h6>
+               		<span ng-show="user.pointstotal > user.avgpoints" style="color: blue;">+ {{user.pointstotal - user.avgpoints}} above average</span>
+               		<span ng-show="user.pointstotal < user.avgpoints" style="color: blue;">- {{user.avgpoints - user.pointstotal}} below average</span>
+                    <!--<canvas id="pointbar" height="100%" class="chart-horizontal-bar" chart-series="pointseries" chart-data="pointdata" chart-options="pointoptions" chart-labels="pointlabels" chart-colors="pointColorBar">-->
                     </canvas> 
                </div>
             </div>
@@ -206,7 +211,7 @@
          <div class="card animate fadeRight">
             <div class="card-content green lighten-1 white-text">
                <p class="card-stats-title">Daily XP</p>
-               <h4 class="card-stats-number white-text">{{dailypercent}}%</h4>
+               <h4 class="card-stats-number white-text">{{user.dailytotal}}</h4>
             </div>
             <div class="card-action green">
                <div class="center-align">
@@ -220,7 +225,7 @@
             <div class="card animate fadeLeft">
                 <div class="card-content cyan white-text">
                     <p class="card-stats-title">Quizzes</p>
-                    <h4 class="card-stats-number white-text">{{quizpercent}}%</h4>
+                    <h4 class="card-stats-number white-text">{{user.quiztotal}}</h4>
                 </div>
             <div class="card-action cyan darken-1">
                <div class="center-align">
