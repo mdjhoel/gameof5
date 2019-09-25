@@ -252,7 +252,7 @@
                 <li class="collection-item cyan white-text">
                     <p>Top comments</p>
                 </li>
-		<li class="collection-item avatar" ng-repeat="daily in readonly.daily" ng-show="user.daily[$index].grade != 3 && user.daily[$index].grade != null && user.daily[$index].grade != -99">
+		  <li class="collection-item avatar" ng-repeat="daily in readonly.daily" ng-show="user.daily[$index].desc != 'Normal day, nothing to report' && user.daily[$index].desc != null && user.daily[$index].grade != -99">
                   <img ng-src="images/badges/{{user.daily[$index].badge}}.svg" class="circle"/>
                   <table>
                   <tr>
