@@ -293,7 +293,7 @@
         <div class="col s12 m6">
             <ul class="collection with-header">
                 <li class="collection-item green lighten-1 white-text">
-                    <p>Top skills</p>
+                    <p><a href="#modalbadges" style="color: white; text-decoration: underline;" class="modal-action modal-trigger">Top skills</a></p>
                 </li>
                     <li class="collection-item avatar" ng-repeat="(key, value) in user.badges">
                       <span ng-repeat="badge in readonly.badges" ng-show="readonly.badges[$index].id == key">
@@ -379,6 +379,27 @@
             <li class="collection-item" ng-repeat="level in readonly.levels">
                 <span>{{level.name}}</span>
                 <span class="secondary-content chip blue white-text">{{level.high}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+	
+  <!-- #badges modal -->
+  <div id="modalbadges" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Badges and Points</h4></li>
+            <li class="collection-item avatar" ng-repeat="badge in readonly.badges">
+                <img src="images/badges/{{badge.id}}.svg" height='50px' class="circle" />
+                <span class="title">{{badge.name}}</span><br>
+                <span class="secondary-content chip blue white-text">{{badge.value}}</span>
             </li>
         </ul>
           
