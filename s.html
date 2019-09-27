@@ -206,11 +206,23 @@
             </div>
             <div class="mycardcontent orange">
                <div height="250px">
-               		<h6 style="color: white;">{{user.level.desc}}</h6>
-               		<span ng-show="user.pointstotal > user.avgpoints" style="color: blue;">+ {{user.pointstotal - user.avgpoints}} above average</span>
-               		<span ng-show="user.pointstotal < user.avgpoints" style="color: blue;">- {{user.avgpoints - user.pointstotal}} below average</span>
-                    <!--<canvas id="pointbar" height="100%" class="chart-horizontal-bar" chart-series="pointseries" chart-data="pointdata" chart-options="pointoptions" chart-labels="pointlabels" chart-colors="pointColorBar">-->
-                    </canvas> 
+                   <h6 style="color: white;">{{user.level.desc}}</h6>
+                   <table>
+                       <tr>
+                           <!-- this is a spacer -->
+                           <td height="15px"></td>
+                       </tr>
+                       <tr>
+                           <td>
+                               <span style="color: white;" ng-show="user.pointstotal > user.avgpoints"><b>+ {{user.pointstotal - user.avgpoints}}</b> above average</span>
+
+                               <span style="color: white;" ng-show="user.pointstotal < user.avgpoints"><b>- {{user.avgpoints - user.pointstotal}}</b> below average</span>
+                            </td> 
+                           <td>
+                               <a href="#modallevels" style="color: white; text-decoration: underline;" class="modal-action modal-trigger right">Levels</a>
+                           </td>
+                       </tr>
+                   </table>
                </div>
             </div>
          </div>
@@ -355,6 +367,26 @@
         <div class="modal-footer">
           <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
         </div>
+      </div>
+  </div>
+	
+  <!-- #Levels modal -->
+  <div id="modallevels" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Levels and Points</h4></li>
+            <li class="collection-item" ng-repeat="level in readonly.levels">
+                <span>{{level.name}}</span>
+                <span class="secondary-content chip blue white-text">{{level.high}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
       </div>
   </div>
 	
