@@ -70,21 +70,30 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                   
                 $rootScope.refUsers.once("value").then(function(snapusers) {
                     $rootScope.users = snapusers.val(); // added for leaderboard
-                    $rootScope.listArray = Object.values($rootScope.users);
-                    $rootScope.listArray.sort(generateSortFn('pointstotal', true));
-                    $rootScope.listArray = $rootScope.listArray.slice(0,5);
                 });
                   
                 $rootScope.refLessons.once("value").then(function(snaplessons) {
-              			if (snaplessons.val() != undefined) {
-                			$rootScope.readonly = snaplessons.val();
-                			console.log("Data from Firebase, now stored in $rootScope.readonly.");
-                            $rootScope.$apply(function () {
-                                $rootScope.readonly = snaplessons.val();
-                                if ($rootScope.readonly.daily != undefined) {
-                                   $rootScope.readonly.daily.reverse(); 
-                                }
-                            });
+              		if (snaplessons.val() != undefined) {
+                		$rootScope.readonly = snaplessons.val();
+                		console.log("Data from Firebase, now stored in $rootScope.readonly.");
+                            	$rootScope.$apply(function () {
+                                	$rootScope.readonly = snaplessons.val();
+                                	
+					// account for new setting for leaderboard
+					$rootScope.listArray = Object.values($rootScope.users);
+					$rootScope.listArray.sort(generateSortFn('pointstotal', true));
+					if ($rootScope.readonly.settings.leadnumber == undefined) {
+					    $rootScope.readonly.settings.leadnumber = 5;
+					} 
+					$rootScope.listArray = $rootScope.listArray.slice(0,$rootScope.readonly.settings.leadnumber);
+					console.log($rootScope.listArray);
+					console.log($rootScope.listArray.length);
+					// end leaderboard
+					
+					if ($rootScope.readonly.daily != undefined) {
+                                   		$rootScope.readonly.daily.reverse(); 
+                                	}
+                            	});
               			} else {
                 			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
               			}
