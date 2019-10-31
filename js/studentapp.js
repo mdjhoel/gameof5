@@ -82,12 +82,14 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
 					// account for new setting for leaderboard
 					$rootScope.listArray = Object.values($rootScope.users);
 					$rootScope.listArray.sort(generateSortFn('pointstotal', true));
-					if ($rootScope.readonly.settings.leadnumber == undefined) {
+					if ($rootScope.readonly.settings == undefined) {
 					    $rootScope.readonly.settings.leadnumber = 5;
-					} 
+					} else if ($rootScope.readonly.settings.leadnumber == undefined) {
+					    $rootScope.readonly.settings.leadnumber = 5;
+					} else {
+					    console.log("Admin says to show " + $rootScope.readonly.settings.leadnumber + " leaders");
+					}
 					$rootScope.listArray = $rootScope.listArray.slice(0,$rootScope.readonly.settings.leadnumber);
-					console.log($rootScope.listArray);
-					console.log($rootScope.listArray.length);
 					// end leaderboard
 					
 					if ($rootScope.readonly.daily != undefined) {
