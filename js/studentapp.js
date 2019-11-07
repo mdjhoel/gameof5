@@ -107,6 +107,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                     if (snapcomments.val() != undefined) {
                         var comments = snapcomments.val();
                         $rootScope.$apply(function () {
+			    $rootScope.comments = comments;
                             console.log($rootScope.comments);
                             console.log("Current user comments accessed from Firebase.");
                         });
