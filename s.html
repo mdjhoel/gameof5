@@ -40,7 +40,12 @@
   </script>
     
   <style>
-            
+         
+      .material-icons{
+        display: inline-flex;
+        vertical-align: top;
+      }
+	  
       .sidenav-header {
           background-color: blue;
           padding: 10px;
@@ -260,7 +265,7 @@
       
     <div class="row">
       <div class="col s12 m6">
-              <ul class="collection with-header">
+             <ul class="collection with-header">
                 <li class="collection-item cyan white-text">
                     <p>Top comments</p>
                 </li>
@@ -268,22 +273,33 @@
                   <img ng-src="images/badges/{{user.daily[$index].badge}}.svg" class="circle"/>
                   <table>
                   <tr>
-                    <td><a href="#modallesson" class="modal-action modal-trigger" ng-click=setDataById(daily.id.id)>{{daily.id.name}}</a></td>
+                    <td><a href="#modallesson" class="modal-action modal-trigger" ng-click=setDataById(daily.id.id)>
+                        {{daily.id.name}}
+                    </a> <span ng-show="user.daily[$index].mydate != undefined"> ({{user.daily[$index].mydate}})</span></td>
                   </tr>
                   <tr>
                       <td width="95%">{{user.daily[$index].desc}}</td>
                       <td width="5%">
-                        <div href="#!" >
+                        <div href="#!">
                           <p ng-show="user.daily[$index].grade == 4" class="chip orange white-text">{{user.daily[$index].grade}}</p>
                           <p ng-show="user.daily[$index].grade == 3" class="chip blue white-text">{{user.daily[$index].grade}}</p>
                           <p ng-show="user.daily[$index].grade == 2" class="chip pink lighten-2 white-text">{{user.daily[$index].grade}}</p>
                           <p ng-show="user.daily[$index].grade < 2" class="chip red white-text">{{user.daily[$index].grade}}</p>
+                          
                         </div>       
                       </td>
                   </tr>
-                  <tr>
-                      <td><span ng-show="user.daily[$index].mydate != undefined">{{user.daily[$index].mydate}}</span></td>
-                  </tr>
+
+                  <tr style="padding-top: 10px;">
+                          <td>
+                              <a ng-click="$scope.showedit=!$scope.showedit"><i class="small material-icons" ng-show="comments[daily.id.id] == undefined">check_box_outline_blank</i><i class="small material-icons" ng-show="comments[daily.id.id] != undefined">check_box</i><span style="text-decoration-line: underline; line-height:24px;">Comment</span>
+                              </a>
+                              <div ng-show="$scope.showedit">
+                                <input class="TextBox" ng-model="comments[daily.id.id].comment" id="respond" + {{daily.id.id}} max=140/>
+                                <button ng-click="test(comments[daily.id.id].comment, daily.id.id)">push</button>
+                              </div>
+                          </td>
+                    </tr>
                   </table>    
                 </li>
               </ul>
