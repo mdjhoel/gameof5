@@ -61,6 +61,8 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
           $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
           $rootScope.refUsers = $rootScope.database.ref(dbstring + "/users");
           $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
+	  $rootScope.refCommentsStr = dbstring + "/comments";
+          $rootScope.refComments = $rootScope.database.ref(dbstring + "/comments/" + userId + "/response/");
           
           // GET STUDENT INFO
           $rootScope.refUser.once("value").then(function(snapuser) {
@@ -100,6 +102,21 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                 			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
               			}
                 }); // query Firebase for lessons 
+		      
+		$rootScope.refComments.once("value").then(function(snapcomments) {
+                    if (snapcomments.val() != undefined) {
+                        var comments = snapcomments.val();
+                        $rootScope.$apply(function () {
+                            console.log($rootScope.comments);
+                            console.log("Current user comments accessed from Firebase.");
+                        });
+                    } else {
+                       $rootScope.$apply(function () { 
+                           $rootScope.comments = {};
+                       });
+                       console.log("No comments for this user");
+                    }
+                });
                 
                 // Sync angular after going to database  
                 $rootScope.$apply(function () {  // prep for user view   
@@ -378,6 +395,17 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
 
   $rootScope.helpToast = function(msg,time,color) {
     Materialize.toast(msg, time, color);
+  }
+	  
+  $rootScope.test = function(myresponse,id) {
+      var js_time = Date.now();
+      var ref = $rootScope.refCommentsStr + "/" + $rootScope.user.uid + "/response/" + id;
+      if (myresponse == "") {
+        $rootScope.comments[id] = undefined;
+        $rootScope.database.ref(ref).set({}); 
+      } else {
+        $rootScope.database.ref(ref).set({comment: myresponse, time: js_time}); 
+      }
   }
 
   // Pick which ng-include to show
