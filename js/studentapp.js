@@ -17,6 +17,26 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
     };
   });
 
+  app.filter('searchFor', function(){
+      return function(arr, searchString){
+          console.log(searchString);
+          if(!searchString){
+              return arr;
+          }
+          var result = [];
+          angular.forEach(arr, function(item){
+              if (item.keywords != undefined){
+                  keywords = item.keywords.toString().toLocaleLowerCase();
+                  console.log(keywords)
+                  if(keywords.indexOf(searchString) !== -1){
+                      result.push(item);
+                  }
+              }
+          });
+          return result;
+      };
+  });
+
   app.run(function($rootScope,$location,service) {
 	  
     // get url so URL can be put back when users click on modals
