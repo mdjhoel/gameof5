@@ -296,7 +296,7 @@
 
                   <tr style="padding-top: 10px;">
                           <td>
-                              <a ng-click="$scope.showedit=!$scope.showedit"><i class="small material-icons" ng-show="comments[daily.id.id] == undefined">check_box_outline_blank</i><i class="small material-icons" ng-show="comments[daily.id.id] != undefined">check_box</i><span style="text-decoration-line: underline; line-height:24px;">Comment</span>
+                              <a ng-click="$scope.showedit=!$scope.showedit"><i class="small material-icons" ng-show="comments[daily.id.id] == undefined">chat_bubble_outline</i><i class="small material-icons" ng-show="comments[daily.id.id] != undefined">chat</i><span style="text-decoration-line: underline; line-height:24px;">Comment</span>
                               </a>
                               <div ng-show="$scope.showedit">
                                 <input class="TextBox" ng-model="comments[daily.id.id].comment" id="respond" + {{daily.id.id}} max=140/>
