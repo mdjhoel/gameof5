@@ -127,7 +127,7 @@
                       </div>
                         <div class="collection black-text">
                             <div ng-repeat="item in readonly.lessons | searchFor:searchString" style="border-style: solid;border-width: .35px; border-color: grey;">
-                            <a href="#modallesson" id='data{{$index}}' class="collection-item modal-action modal-trigger" ng-click="setData($index)" ng-show="item.show">
+                            <a href="#modallesson" id='data{{$index}}' class="collection-item modal-action modal-trigger" ng-click="setData(item.id)" ng-show="item.show">
                                <table style="padding: 0px !important; margin: 0px !important;">
                                 <tr align="left">
                                     <td width="60px" style="padding: 0px !important; vertical-align:top;">
