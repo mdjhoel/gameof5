@@ -547,8 +547,14 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
   }
 
   $rootScope.setData = function(index) {
-    if (!$rootScope.readonly.lessons[index].show) {return; }
-    $rootScope.lesson = $rootScope.readonly.lessons[index];
+    var id2index = 0;
+    for (i=0;i<$rootScope.readonly.lessons.length;i++) {
+        if ($rootScope.readonly.lessons[i].id == index) {
+            id2index = i;
+        }
+    }
+    if (!$rootScope.readonly.lessons[id2index].show) {return; }
+    $rootScope.lesson = $rootScope.readonly.lessons[id2index];
     $rootScope.filePath = "includes/lessons_one.html";
   }
   
