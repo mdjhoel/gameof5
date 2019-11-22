@@ -19,7 +19,6 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
 
   app.filter('searchFor', function(){
       return function(arr, searchString){
-          console.log(searchString);
           if(!searchString){
               return arr;
           }
@@ -27,7 +26,6 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
           angular.forEach(arr, function(item){
               if (item.keywords != undefined){
                   keywords = item.keywords.toString().toLocaleLowerCase();
-                  console.log(keywords)
                   if(keywords.indexOf(searchString) !== -1){
                       result.push(item);
                   }
@@ -81,8 +79,13 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
           $rootScope.refUser = $rootScope.database.ref(dbstring + "/users/" + userId);
           $rootScope.refUsers = $rootScope.database.ref(dbstring + "/users");
           $rootScope.refLessons = $rootScope.database.ref(dbstring + "/readonly");
-	  $rootScope.refCommentsStr = dbstring + "/comments";
+          $rootScope.refCommentsStr = dbstring + "/comments";
+          $rootScope.reflCommentsStr = dbstring + "/lcomments";
           $rootScope.refComments = $rootScope.database.ref(dbstring + "/comments/" + userId + "/response/");
+          $rootScope.reflComments = $rootScope.database.ref(dbstring + "/lcomments/");
+          $rootScope.refAllComments = $rootScope.database.ref(dbstring + "/lcomments/");
+          $rootScope.allComments = [];
+          $rootScope.avgComments = {};
           
           // GET STUDENT INFO
           $rootScope.refUser.once("value").then(function(snapuser) {
@@ -92,43 +95,40 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                   
                 $rootScope.refUsers.once("value").then(function(snapusers) {
                     $rootScope.users = snapusers.val(); // added for leaderboard
+                    // removed listarray
                 });
                   
                 $rootScope.refLessons.once("value").then(function(snaplessons) {
-              		if (snaplessons.val() != undefined) {
-                		$rootScope.readonly = snaplessons.val();
-                		console.log("Data from Firebase, now stored in $rootScope.readonly.");
-                            	$rootScope.$apply(function () {
-                                	$rootScope.readonly = snaplessons.val();
-                                	
-					// account for new setting for leaderboard
-					$rootScope.listArray = Object.values($rootScope.users);
-					$rootScope.listArray.sort(generateSortFn('pointstotal', true));
-					if ($rootScope.readonly.settings == undefined) {
-					    $rootScope.readonly.settings = {leadnumber:5};
-					} else {
-					    if ($rootScope.readonly.settings.leadnumber == undefined) {
-						$rootScope.readonly.settings.leadnumber = 5;  
-					    } 
-					}
-					$rootScope.listArray = $rootScope.listArray.slice(0,$rootScope.readonly.settings.leadnumber);
-					// end leaderboard
-					
-					if ($rootScope.readonly.daily != undefined) {
-                                   		$rootScope.readonly.daily.reverse(); 
-                                	}
-                            	});
+              			if (snaplessons.val() != undefined) {
+                			$rootScope.readonly = snaplessons.val();
+                			console.log("Data from Firebase, now stored in $rootScope.readonly.");
+                            $rootScope.$apply(function () {
+                                $rootScope.readonly = snaplessons.val();
+                                
+                                // account for new setting for leaderboard
+                                $rootScope.listArray = Object.values($rootScope.users);
+                                $rootScope.listArray.sort(generateSortFn('pointstotal', true));
+                                if ($rootScope.readonly.settings.leadnumber == undefined) {
+                                    $rootScope.readonly.settings.leadnumber = 5;
+                                } 
+                                $rootScope.listArray = $rootScope.listArray.slice(0,$rootScope.readonly.settings.leadnumber);
+                                // end leaderboard
+                                
+                                if ($rootScope.readonly.daily != undefined) {
+                                   $rootScope.readonly.daily.reverse(); 
+                                }
+                                
+                            });
               			} else {
-                			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");                
+                			console.log("No lessons data retrieved from Firebase. $rootScope.readonly is undefined");               
               			}
-                }); // query Firebase for lessons 
-		      
-		$rootScope.refComments.once("value").then(function(snapcomments) {
+                }); // query Firebase for lessons
+                  
+                $rootScope.refComments.once("value").then(function(snapcomments) {
                     if (snapcomments.val() != undefined) {
                         var comments = snapcomments.val();
                         $rootScope.$apply(function () {
-			    $rootScope.comments = comments;
-                            console.log($rootScope.comments);
+                            $rootScope.comments = comments;
                             console.log("Current user comments accessed from Firebase.");
                         });
                     } else {
@@ -138,7 +138,82 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                        console.log("No comments for this user");
                     }
                 });
-                
+                  
+                $rootScope.reflComments.once("value").then(function(snapcomments) {
+                    if (snapcomments.val() != undefined) {
+                        var lcomments = snapcomments.val();
+                        $rootScope.$apply(function () {
+                            $rootScope.lcomments = lcomments;
+                            console.log("Current user lesson comments accessed from Firebase.");
+                        });
+                    } else {
+                       $rootScope.$apply(function () { 
+                           $rootScope.lcomments = {};
+                       });
+                       console.log("No comments for this user");
+                    }
+                });
+                  
+                // listener for new lesson comments
+                $rootScope.listener = $rootScope.refAllComments.on('value', function(updatesnap) {
+                    //setTimeout(function(){ 
+                    //$rootScope.$apply(function () { 
+                            $rootScope.allComments = updatesnap.val();
+                            $rootScope.avgComments = {};
+                            if ($rootScope.allComments != null) {
+                                //console.log($rootScope.allComments);
+                                
+                                for (lesson in $rootScope.allComments) {
+                                    
+                                    for (user in $rootScope.allComments[lesson]) {
+                                        
+                                        clarity = parseInt($rootScope.allComments[lesson][user]['clarity']);
+                                        
+                                        //console.log(clarity);
+                                        
+                                        if ($rootScope.avgComments[lesson] == undefined) {
+                                            $rootScope.avgComments[lesson] = {total: parseInt(clarity), number: 1}
+                                            //console.log($rootScope.avgComments);
+                                        } else {
+                                            oldtotal = parseInt($rootScope.avgComments[lesson]['total']);
+                                            //console.log(oldtotal);
+                                            newtotal = clarity;
+                                            //console.log(newtotal);
+                                            
+                                            oldnum = parseInt($rootScope.avgComments[lesson]['number']);
+                                            
+                                            $rootScope.avgComments[lesson] = {total: oldtotal + newtotal, number: oldnum + 1};
+                                            
+                                        }
+                                    }
+                                    
+                                    avg = $rootScope.avgComments[lesson]['total'] / $rootScope.avgComments[lesson]['number'];
+                                    
+                                    if (avg <= 2) {
+                                        c = "#e91e63"; // red
+                                        t = "Redo lesson please!";
+                                    } else if (avg > 2 && avg < 4) {
+                                        c = "#ff9800"; // blue
+                                        t = "Thorough review please.";
+                                    } else {
+                                        c = "#8bc34a"; // green
+                                        t = "Quick review. Let's go!";
+                                    }
+                                    
+                                    $rootScope.avgComments[lesson]['average'] = avg;
+                                    $rootScope.avgComments[lesson]['color'] = c;
+                                    $rootScope.avgComments[lesson]['tip'] = t;
+
+                                }
+                            }
+                    // apply changes now!
+                    //$rootScope.$apply(function () { 
+                    setTimeout(function(){
+                         $rootScope.avgComments = $rootScope.avgComments;       
+                    }, 0); 
+
+                }); 
+
                 // Sync angular after going to database  
                 $rootScope.$apply(function () {  // prep for user view   
                   
@@ -231,12 +306,22 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                         labels = [];
                         grades = [];
                         colors = [];
+
+                        
                         for (key in $rootScope.user.quizzes) {
                             labels.push($rootScope.user.quizzes[key].name);
-                            if ($rootScope.user.quizzes[key].xp == 0 && $rootScope.user.quizzes[key].grade != -99) { 
+                            
+                            // this is to catch for old way of entering quizzes HOEL
+                            if ($rootScope.user.quizzes[key].grade == -99 && $rootScope.user.quizzes[key].xp == 0) {
+                                $rootScope.user.quizzes[key].xp = -99;                          
+                            }
+                                
+                            if ($rootScope.user.quizzes[key].xp == 0 ) {
                                 grades.push(1);
                                 colors.push('#000');
-                            } else if ($rootScope.user.quizzes[key].grade == -99) {
+                            } else if ($rootScope.user.quizzes[key].xp == -99 || $rootScope.user.quizzes[key].xp == undefined) {
+                                $rootScope.user.quizzes[key].xp = -99;
+                                $rootScope.user.quizzes[key].desc = "";
                                 grades.push(1);
                                 colors.push('#e91e63');
                             } else {
@@ -245,13 +330,13 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                             }
                             
                         }
-
+                        
                         $rootScope.quizpercent = Math.round(($rootScope.user.quiztotal / ($rootScope.user.quizzes.length * 4)) * 100);
                         $rootScope.quizlabels = labels; 
                         $rootScope.quizdata = grades; 
                         $rootScope.quizseries = ['Series A'];
                         $rootScope.quizColorBar = colors; 
-
+                        
                         $rootScope.quizoptions = {
                             responsive: true,
                             legend: {
@@ -273,12 +358,17 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                                 enabled: true,
                                 displayColors: false,
                                 mode: 'single',
-                                callbacks: {
+                                callbacks: { // HOEL
                                   label: function(tooltipItem, data) {
-                                    if ($rootScope.user.quizzes[tooltipItem.index].grade == -99) {
-                                        label = 'Did not take test';
+                                    if ($rootScope.user.quizzes[tooltipItem.index].xp == -99) {
+                                        label = 'Excused';
                                     } else {
-                                        var label = $rootScope.user.quizzes[tooltipItem.index].grade + '%';
+                                        // code to account for new way of entering quizzes
+                                        if ($rootScope.user.quizzes[tooltipItem.index].desc == undefined) {
+                                            $rootScope.user.quizzes[tooltipItem.index].desc = "";
+                                        }
+                                        
+                                        var label = 'xp: ' + $rootScope.user.quizzes[tooltipItem.index].xp + " " + $rootScope.user.quizzes[tooltipItem.index].desc;
                                     }
                                     return label;
                                   }
@@ -399,25 +489,11 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
 
           } // student
     }); // if authorization changes
-
+      
   // ---------------------------------------------//
   // FUNCTIONS
   // ---------------------------------------------//
-      
-    $rootScope.signin = function() {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider).then(function(result) {  
-      });
-    }
     
-  $rootScope.setUrl = function() {
-    $location.url($rootScope.url);
-  }
-
-  $rootScope.helpToast = function(msg,time,color) {
-    Materialize.toast(msg, time, color);
-  }
-	  
   $rootScope.test = function(myresponse,id) {
       var js_time = Date.now();
       var ref = $rootScope.refCommentsStr + "/" + $rootScope.user.uid + "/response/" + id;
@@ -427,6 +503,68 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
       } else {
         $rootScope.database.ref(ref).set({comment: myresponse, time: js_time}); 
       }
+  }
+  
+  function helpToast(msg,time,color) {
+    Materialize.toast(msg, time, color);
+  }
+      
+  $rootScope.getColor = function(id) {
+      var info = document.getElementById("sliderinfo");
+      
+      if ($rootScope.user == undefined) { return; }
+      if ($rootScope.lcomments == undefined || $rootScope.lcomments[id] == undefined) { return; }
+      
+      if ($rootScope.lcomments[id][$rootScope.user.uid].clarity == 0) {
+          info.innerHTML = "Very unclear, please redo lesson.";
+      } else if ($rootScope.lcomments[id][$rootScope.user.uid].clarity == 1) {
+          info.innerHTML = "Unclear, please conduct thorough review.";
+      } else if ($rootScope.lcomments[id][$rootScope.user.uid].clarity == 2) {
+          info.innerHTML = "Unclear, please conduct review.";
+      } else if ($rootScope.lcomments[id][$rootScope.user.uid].clarity == 3) {
+          info.innerHTML = "Somewhat clear, I would benefit from quick review.";
+      } else if ($rootScope.lcomments[id][$rootScope.user.uid].clarity == 4) {
+          info.innerHTML = "Mostly clear, please move on.";
+      } else if ($rootScope.lcomments[id][$rootScope.user.uid].clarity == 5) {
+          info.innerHTML = "Perfectly clear, let's go!";
+      }
+  }
+  
+  $rootScope.test2 = function(id) {
+      
+     var ref = $rootScope.reflCommentsStr + "/" + id + "/" + $rootScope.user.uid + "/";
+      
+      var js_time = Date.now();
+      if ($rootScope.lcomments != undefined) {
+          $rootScope.database.ref(ref).set({comment: $rootScope.lcomments[id][$rootScope.user.uid].comment, time: js_time, clarity: $rootScope.lcomments[id][$rootScope.user.uid].clarity});
+      } else {
+          var myresponse = document.getElementById('respond' + id).value;
+          var myclarity = document.getElementById('rate' + id).value;
+          $rootScope.database.ref(ref).set({comment: myresponse, time: js_time, clarity: myclarity});
+      }
+      helpToast("Data submitted to the cloud",2000,"pink")
+  }
+  
+  $rootScope.testget = function() {
+      console.log("get");
+      var ref = $rootScope.refCommentsStr + "/" + $rootScope.user.uid + "/response";
+      $rootScope.database.ref(ref).once('value', function(snapshot) {
+          console.log(snapshot.val());
+      });
+  }
+   
+  $rootScope.signin = function() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider).then(function(result) {  
+      });
+  }
+    
+  $rootScope.setUrl = function() {
+    $location.url($rootScope.url);
+  }
+
+  $rootScope.helpToast = function(msg,time,color) {
+    Materialize.toast(msg, time, color);
   }
 
   // Pick which ng-include to show
@@ -547,6 +685,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
   }
 
   $rootScope.setData = function(index) {
+      //id2index = index;
     var id2index = 0;
     for (i=0;i<$rootScope.readonly.lessons.length;i++) {
         if ($rootScope.readonly.lessons[i].id == index) {
@@ -559,13 +698,10 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
   }
   
   $rootScope.setDataById = function(index) {
-    console.log(index);
     //if (!$rootScope.readonly.lessons[index].show) {return; }
     for (i=0;i<$rootScope.readonly.lessons.length; i++) {
-        console.log($rootScope.readonly.lessons[i].id);
         if ($rootScope.readonly.lessons[i].id == index) {
             $rootScope.lesson = $rootScope.readonly.lessons[i];
-            console.log($rootScope.lesson);
             break;
         }
     }
@@ -600,6 +736,11 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
      return false;
   }
   
+  // finishLoading - work around for label input overlap bug
+  $rootScope.finishLoading = function() {
+        // need to wait 2 milliseconds for this to work
+        setTimeout(function(){ Materialize.updateTextFields(); }, 2); 
+  }
   
-	  
 });  // end app.run
+
