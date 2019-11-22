@@ -45,7 +45,6 @@
         display: inline-flex;
         vertical-align: top;
       }
-	  
       .sidenav-header {
           background-color: blue;
           padding: 10px;
@@ -64,6 +63,51 @@
             padding-bottom: 20px;
       }
       
+      input[type=range]::-webkit-slider-thumb {
+        background-color: blue;
+      }
+      input[type=range]::-moz-range-thumb {
+        background-color: blue;
+      }
+      input[type=range]::-ms-thumb {
+        background-color: blue;
+      }
+
+      /***** These are to edit the thumb and the text inside the thumb *****/
+      input[type=range] + .thumb {
+        background-color: blue;
+      }
+      input[type=range] + .thumb.active .value {
+        color: white;
+      }
+      
+      .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
+        {
+
+          border: 0!important;
+          box-shadow: none!important;
+
+        }
+      
+      /* label focus color */
+     .input-field input:focus + label {
+       color: blue !important;
+     }
+      
+       /* icon prefix focus color */
+       .input-field .prefix.active {
+         color: blue;
+       }
+      
+     /* label underline focus color */
+     .input-field input:focus {
+       border-bottom: 1px solid blue !important;
+       
+       
+     }
+      
+ 
+          
   </style>
      
 </head>
@@ -77,12 +121,6 @@
   <!-- logo -->
   <div id="g5header" align="center"><img width="200px" src="images/header.svg"/></div>
   <div class="container">
-    
-    <!-- remove ng-include
-    <div ng-include="navPath" style="width:100%"></div>
-    <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%; padding-bottom: 0px;'>  
-  	<div ng-include="filePath" onload="finishLoading()"></div>
-    -->
       
     <nav class="z-depth-0 white">
         <div class="nav-wrapper black-text">
@@ -96,8 +134,8 @@
                         C617.5,410.9,605.6,422.9,590.7,422.9z"/>
               </svg>
           </a>
-          <b>Dashboard</b>
-	  <span class="right"> <b>{{user.name}}</b></span>
+          <b>Lessons/Leaders</b>
+	      <span class="right"> <b>{{user.name}}</b></span>
 
           <ul class="side-nav grey" id="mobile-demo">
             <li class="sidenav-header blue">
@@ -119,28 +157,35 @@
               <ul class="collapsible collapsible-accordion">
                   <li>
                     <a class="collapsible-header white-text waves-effect waves-blue">Lessons</a>
+                                          
                     <div class="collapsible-body z-depth-3">
-
-		      <div class="container">
-  			Keyword Search:
-  			<input type="text" class="search" id="basic-url" ng-model="searchString">
+                        
+                      <div class="container">
+  							Keyword Search:
+  							<input type="text" class="search" id="basic-url" ng-model="searchString">
                       </div>
+
                         <div class="collection black-text">
                             <div ng-repeat="item in readonly.lessons | searchFor:searchString" style="border-style: solid;border-width: .35px; border-color: grey;">
-                            <a href="#modallesson" id='data{{$index}}' class="collection-item modal-action modal-trigger" ng-click="setData(item.id)" ng-show="item.show">
+                            <a href="#modallesson" data={{item.id}} id='data{{$index}}' class="collection-item modal-action modal-trigger" ng-click="setData(item.id)" ng-show="item.show">
                                <table style="padding: 0px !important; margin: 0px !important;">
                                 <tr align="left">
                                     <td width="60px" style="padding: 0px !important; vertical-align:top;">
                                         <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" ng-style="!item.show && {opacity: .5};">
-                                            <circle id="0" stroke-width="3" stroke="#2196f3" fill="#8bc34a" r="25" cy="29.9375" cx="30"/>
+                                            <circle id="0" stroke-width="3" stroke="#2196f3" fill="{{avgComments[item.id]['color']}}" r="25" cy="29.9375" cx="30"/>
                                             
                                             <text ng-if="(readonly.lessons.length - $index) < 10" x="40%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
                                             <text ng-if="(readonly.lessons.length - $index) > 9" x="30%" y="65%" fill="white" font-size="20">{{readonly.lessons.length - $index}}</text>
+                                            
+                                            <title>{{avgComments[item.id]['tip']}}</title>
                                         </svg>
                                     </td>
-                                    <td style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
+                                    <td width="90%" style="padding-left: 10px; padding-top: 0px !important; padding-bottom: 0px !important; vertical-align:top;">
                                          <p ng-style="!item.show && {opacity: .5};"><b>{{item.unit + '-' + item.name}}</b>
                                         </p>
+                                    </td>
+                                    <td align="right">
+                                        <span class="chip blue white-text" ng-show="avgComments[item.id] != undefined">{{avgComments[item.id]['number']}}</span>
                                     </td>
                                 </tr>
                                </table>     
@@ -161,10 +206,10 @@
                                          <p ng-style="!item.show && {opacity: .5};"><b>{{item.unit + '-' + item.name}}</b>
                                         </p>
                                     </td>
+                                    
                                 </tr>
                                </table>     
                             </div>
-
                         </div> 
                     </div>
                   </li>
@@ -204,7 +249,7 @@
 
         </div>
       </nav> 
-
+    
     <div class="row">
         
         <div class="col s12 m6 l4">
@@ -269,7 +314,7 @@
       
     <div class="row">
       <div class="col s12 m6">
-             <ul class="collection with-header">
+              <ul class="collection with-header">
                 <li class="collection-item cyan white-text">
                     <p>Top comments</p>
                 </li>
@@ -353,6 +398,47 @@
       </div>
   </div>
  	
+  <!-- #Levels modal -->
+  <div id="modallevels" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Levels and Points</h4></li>
+            <li class="collection-item" ng-repeat="level in readonly.levels">
+                <span>{{level.name}}</span>
+                <span class="secondary-content chip blue white-text">{{level.high}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+
+  <!-- #Levels modal -->
+  <div id="modalbadges" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Badges and Points</h4></li>
+            <li class="collection-item avatar" ng-repeat="badge in readonly.badges">
+                <img src="images/badges/{{badge.id}}.svg" height='50px' class="circle" />
+                <span class="title">{{badge.name}}</span><br>
+                <span class="secondary-content chip blue white-text">{{badge.value}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+    
   <!-- #Message Modal -->
   <div id="modalmessage" class="modal">
       <div class="modal-content">
@@ -381,55 +467,81 @@
       </div>
   </div>
     
-  <div id="modallesson" class="modal center">
+  <div id="modallesson" class="modal modal-fixed-footer center">
       <div class="modal-content">
-        <div ng-include="filePath" onload="finishLoading()"></div>
-        <div class="modal-footer">
-          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+          <div class="col s12">
+              <div class="row">
+                <div class="col s12">
+                  <div class="card white darken-1">
+                    <div class="card-content black-text">
+                        <h2>{{lesson.name}}</h2> 
+                        <h6>{{lesson.desc}}</h6>      
+                        <div style="padding:30px;" ng-hide="lesson.keywords.length == 0 &&  lesson.expectations.length == 0">
+                            <div title="keywords" class="chip blue white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
+                            <div title="curriculum expectations" class="chip orange white-text" ng-repeat="expectation in lesson.expectations">{{expectation}}</div>
+                        </div>
+                        
+                        <ul class="collapsible">
+                            <li>
+                              <div class="collapsible-header"><i class="material-icons">expand_more</i><span style="text-decoration: underline; color: blue;">Rate this lesson</span></div>
+                              <div class="collapsible-body">
+        
+                                  <div class="card white darken-1" style="padding-top: 15px;">
+                            <div class="card-content black-text">
+                                <span class="card-title">Comment and ranking</span>
+                                <div class="input-field">
+                                  <i class="material-icons prefix">chat</i>
+                                  <input id="icon_prefix" type="text" max=140 ng-model="lcomments[lesson.id][user.uid].comment" id="respond" + {{lesson.id}}>
+                                </div>
+
+                                <div class="input-field">
+                                  <i class="material-icons prefix">rate_review</i>
+                                  <input type="range" id="rate" ng-model="lcomments[lesson.id][user.uid].clarity" min="0" max="5" ng-change="getColor(lesson.id)" value="3"/>
+                                  <p id="sliderinfo">Somewhat clear, I would benefit from quick review.</p>
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                  <button class="button light-green waves-light btn" ng-click="test2(lesson.id)">submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+              </ul>
+                        
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>  
+         
+            <div class="row">
+                <div class="col s12">
+                  <div class="card white darken-1">
+                    <div class="card-content black-text">
+                      <h3>Lesson Progession</h3>           
+                        <div class="collection">
+                            <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()">
+                                <h5 ng-show="item.seglink == ''">{{item.title}}</h5>
+                                <a href="{{item.seglink}}" target="_blank">
+                                    <h5 ng-show="item.seglink != ''">{{item.title}}</h5>
+                                </a>
+                                <p style="color:lightgrey;" ng-show="item.text!=''">
+                                    {{item.text}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
         </div>
-      </div>
+                  
+    </div>
   </div>
-	
-  <!-- #Levels modal -->
-  <div id="modallevels" class="modal">
-      <div class="modal-content">
-        
-        <ul class="collection with-header">
-            <li class="collection-header"><h4>Levels and Points</h4></li>
-            <li class="collection-item" ng-repeat="level in readonly.levels">
-                <span>{{level.name}}</span>
-                <span class="secondary-content chip blue white-text">{{level.high}}</span>
-            </li>
-        </ul>
-          
-        <div class="modal-footer">
-          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
-            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
-        </div>
-        
-      </div>
+  <div class="modal-footer">
+      <a ng-click="setUrl()" class="modal-action modal-close waves-effect waves-green btn-flat" >Dismiss</a>
   </div>
-	
-  <!-- #badges modal -->
-  <div id="modalbadges" class="modal">
-      <div class="modal-content">
-        
-        <ul class="collection with-header">
-            <li class="collection-header"><h4>Badges and Points</h4></li>
-            <li class="collection-item avatar" ng-repeat="badge in readonly.badges">
-                <img src="images/badges/{{badge.id}}.svg" height='50px' class="circle" />
-                <span class="title">{{badge.name}}</span><br>
-                <span class="secondary-content chip blue white-text">{{badge.value}}</span>
-            </li>
-        </ul>
-          
-        <div class="modal-footer">
-          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
-            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
-        </div>
-        
-      </div>
-  </div>
+</div>
 	
 </body>
 
@@ -438,11 +550,22 @@
 
 <script>
 
+  var o_url = window.location.href;
+    
   $(document).ready(function(){
     // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
   	$('.modal').modal({dismissible: false});
+                               
 	$('.tooltipped').tooltip({delay: 50});
   });
+        
+     
+  function setUrl() {
+      console.log(o_url);
+      //location.href = o_url;
+      window.location.assign(o_url);
+      //alert("previous url is: " + window.history.previous.href);
+  }
 
   // disable back button, so users do not leave one page app and get confused
   history.pushState(null, null, location.href);
@@ -459,6 +582,11 @@
           draggable: true // Choose whether you can drag to open on touch screens
     }
   );
+      
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, options);
+  });
       
   // START OPEN
   $('.button-collapse').sideNav('show');
