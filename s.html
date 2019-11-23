@@ -499,15 +499,40 @@
                                   <input type="range" id="rate" ng-model="lcomments[lesson.id][user.uid].clarity" min="0" max="5" ng-change="getColor(lesson.id)" value="3"/>
                                   <p id="sliderinfo">Somewhat clear, I would benefit from quick review.</p>
                                 </div>
+                                
+                                <div class="input-field" ng-show="readonly.settings.hlink">
+                                  <i class="material-icons prefix">insert_link</i>
+                                  <input id="hlink" type="text" max=140 ng-model="lcomments[lesson.id][user.uid].hlink" id="hlink">
+                                </div>
 
                             </div>
                             <div class="card-action">
                                   <button class="button light-green waves-light btn" ng-click="test2(lesson.id)">submit</button>
                             </div>
+                                      
+                            
                         </div>
                     </div>
                 </li>
               </ul>
+                       
+                <ul class="collapsible" ng-show="readonly.settings.lcomments && lcomments != null">
+                            <li>
+                              <div class="collapsible-header"><i class="material-icons">expand_more</i><span style="text-decoration: underline; color: blue;">View comments</span></div>
+                              <div class="collapsible-body">
+                                <div class="collection">
+                                    <div class="collection-item avatar" ng-repeat="(key, value) in lcomments[lesson.id]" style="text-align: left;">
+                                        <img src="{{users[key].photoUrl}}" class="circle">
+                                        <span><b>{{users[key].name}}</b> ({{users[key].email}})</span>
+                                          <p>{{value.comment}}<br>
+                                             <a href="{{value.hlink}}" ng-show="readonly.settings.hlink && value.hlink != undefined" target="_blank">more info...</a>
+                                          </p>
+                                          <span class="secondary-content chip blue white-text">{{value.clarity}}</span>
+                                    </div>
+                                </div>
+                              </div>
+                        </li>
+                      </ul>
                         
                     </div>
                     
