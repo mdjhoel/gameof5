@@ -536,21 +536,23 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
       
       var js_time = Date.now();
       if ($rootScope.lcomments != undefined) {
-          $rootScope.database.ref(ref).set({comment: $rootScope.lcomments[id][$rootScope.user.uid].comment, time: js_time, clarity: $rootScope.lcomments[id][$rootScope.user.uid].clarity});
+          if ($rootScope.lcomments[id][$rootScope.user.uid].hlink != undefined) {
+            $rootScope.database.ref(ref).set({comment: $rootScope.lcomments[id][$rootScope.user.uid].comment, time: js_time, clarity: $rootScope.lcomments[id][$rootScope.user.uid].clarity, hlink: $rootScope.lcomments[id][$rootScope.user.uid].hlink});
+          } else {
+            $rootScope.database.ref(ref).set({comment: $rootScope.lcomments[id][$rootScope.user.uid].comment, time: js_time, clarity: $rootScope.lcomments[id][$rootScope.user.uid].clarity});              
+          }
       } else {
           var myresponse = document.getElementById('respond' + id).value;
           var myclarity = document.getElementById('rate' + id).value;
-          $rootScope.database.ref(ref).set({comment: myresponse, time: js_time, clarity: myclarity});
+          var myhlink = document.getElementById('hlink').value;
+          if (myhlink != undefined) {
+              $rootScope.database.ref(ref).set({comment: myresponse, time: js_time, clarity: myclarity, hlink: myhlink});  
+          } else {
+              $rootScope.database.ref(ref).set({comment: myresponse, time: js_time, clarity: myclarity});
+          }
+
       }
       helpToast("Data submitted to the cloud",2000,"pink")
-  }
-  
-  $rootScope.testget = function() {
-      console.log("get");
-      var ref = $rootScope.refCommentsStr + "/" + $rootScope.user.uid + "/response";
-      $rootScope.database.ref(ref).once('value', function(snapshot) {
-          console.log(snapshot.val());
-      });
   }
    
   $rootScope.signin = function() {
