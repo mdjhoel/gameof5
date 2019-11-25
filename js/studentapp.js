@@ -209,7 +209,8 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                     // apply changes now!
                     //$rootScope.$apply(function () { 
                     setTimeout(function(){
-                         $rootScope.avgComments = $rootScope.avgComments;       
+                         $rootScope.avgComments = $rootScope.avgComments;  
+			 $rootScope.lcomments = $rootScope.lcomments;
                     }, 0); 
 
                 }); 
