@@ -507,7 +507,7 @@
 
                             </div>
                             <div class="card-action">
-                                  <button class="button light-green waves-light btn" ng-click="test2(lesson.id)">submit</button>
+                                  <button class="button light-green waves-light btn" ng-click="test2(lesson.id)" ng-disabled="lcomments[lesson.id][user.uid].comment == undefined">submit</button>
                             </div>
                                       
                             
