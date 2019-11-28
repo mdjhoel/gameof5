@@ -524,7 +524,7 @@
                                     <div class="collection-item avatar" ng-repeat="(key, value) in lcomments[lesson.id]" style="text-align: left;">
                                         <img src="{{users[key].photoUrl}}" class="circle">
                                         <span><b>{{users[key].name}}</b> ({{users[key].email}})</span>
-                                          <p>{{value.comment}}<br>
+                                          <p style="width: 85%;">{{value.comment}}<br>
                                              <a href="{{value.hlink}}" ng-show="readonly.settings.hlink && value.hlink != undefined" target="_blank">more info...</a>
                                           </p>
                                           <span class="secondary-content chip blue white-text">{{value.clarity}}</span>
