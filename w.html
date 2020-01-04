@@ -84,6 +84,23 @@
         </div>
       </div>
   </div>
+	
+  <!-- #upall Modal -->
+  <div id="modalupall" class="modal center">
+      <div class="modal-content">
+        <h4>Upload all data!</h4>
+        <p>You are about upload data to the server.</p><p>This will overwrite your existing data. If data format is incorrect there may be errors.</p>
+		
+		<textarea name="upall" id='myupall' rows="30" cols="30">
+		Upload your JSON data here.
+		</textarea>
+		
+        <div class="modal-footer">
+          <a ng-click="uploadData('all')" class="modal-action modal-close btn-flat">Upload</a>
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
   
   <!-- #uplevel Modal -->
   <div id="modaluplevel" class="modal center">
