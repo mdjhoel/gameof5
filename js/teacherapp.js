@@ -165,8 +165,62 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       var oMyBlob = new Blob(aFileParts, {type : 'text/plain'}); 
       window.open(URL.createObjectURL(oMyBlob));
     }
+	  
+  $rootScope.archiveme = function() {
+      
+    var person = prompt("You are about to archive and reset user information. This is serious! Please enter your course id and confirm.");
+    if (person == null || person == "") {
+        return;
+    } else {
+        if (person == $rootScope.cname) {
+            var d = new Date();
+            var fulldate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();
+
+            if ($rootScope.myarchive != undefined) {
+              if (confirm("An archive already exists. Do you wish to over-write it?")) {
+                Materialize.toast("Over-writing archive", 5000, 'pink');
+                $rootScope.myarchive = $rootScope.cdata;
+                //$rootScope.myarchive.fulldate = fulldate;
+                //$rootScope.myarchive = JSON.stringify($rootScope.myarchive);
+                resetUsers();
+              } else {
+                console.log("You pressed Cancel. Nothing will happen.");
+              }
+            } else {
+              Materialize.toast("Created archive", 5000, 'pink');
+              $rootScope.myarchive = $rootScope.cdata;
+              //$rootScope.myarchive.fulldate = fulldate;
+              //$rootScope.myarchive = JSON.stringify($rootScope.myarchive);
+              resetUsers();
+            }
+        } else {
+            Materialize.toast("Incorrect course id", 5000, 'pink');
+        }
+      } 
+  } // end function
   
-    $rootScope.courses = function() {
+  function resetUsers() {
+      var usernames = Object.keys($rootScope.cdata.users);
+      var uservalues = Object.values($rootScope.cdata.users)
+      var users = {};
+      for (i = 0; i < usernames.length; i++) {
+          users[usernames[i]] = {
+              uid: usernames[i],
+              photoUrl: uservalues[i].photoUrl,
+              name: uservalues[i].name,
+              email: uservalues[i].email,
+              dateconfirmed: uservalues[i].dateconfirmed,
+              confirmed: uservalues[i].confirmed
+          };
+      }
+      //var allusers = users;
+      //console.log(allusers);
+      $rootScope.cdata.readonly.daily = [];
+      $rootScope.cdata.readonly.quizzes = [];
+      $rootScope.cdata.users = users;
+  }
+  
+  $rootScope.courses = function() {
                
         // prep current
 	var c = angular.toJson(angular.copy($rootScope.cdata.readonly));
@@ -286,7 +340,12 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     // Retreive data for current course from Firebase
     $rootScope.refCourse.once("value").then(function(snapshot) {  
         if (snapshot.val() != undefined) {
-          $rootScope.cdata = snapshot.val();
+	
+	  var snapval = snapshot.val();
+          $rootScope.myarchive = snapval.myarchive;
+          snapval.myarchive = {};
+          $rootScope.cdata = snapval;
+
           if ($rootScope.cdata.users == undefined) { $rootScope.cdata.users = {}; }
           console.log("Data from Firebase, now stored in $rootScope.cdata.");  
         } else {
@@ -385,13 +444,19 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 		if (jsondata != "") {
 			$rootScope.cdata.readonly.badges = JSON.parse(jsondata);
 		}
-	} else {
+	} else if (uploadtype == 'level') {
 		var myuplevel = document.getElementById("myuplevel");
 		var jsondata = myuplevel.value;
 		if (jsondata != "") {
 	  	  $rootScope.cdata.readonly.levels = JSON.parse(jsondata);
 		}
+	} else {
+                var myupall = document.getElementById("myupall");
+		var jsondata = myupall.value;
+		if (jsondata != "") {
+	  	  $rootScope.cdata = JSON.parse(jsondata);
 	}
+    }
   }
     
   // show selected data in table
@@ -472,6 +537,16 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     var refusers = $rootScope.database.ref(dbstring + "/users");
     var refro = $rootScope.database.ref(dbstring + "/readonly");
       
+    if ($rootScope.myarchive != undefined) {
+       myarchive = JSON.parse(angular.toJson($rootScope.myarchive)); 
+       var refarchive = $rootScope.database.ref(dbstring + "/myarchive");
+       refarchive.set(myarchive).then(function(){
+         console.log("Archive data saved successfully.");
+       }).catch(function(error) {
+         console.log("Archive data could not be saved." + error);
+       });
+    }
+	  
     refusers.set(users).then(function(){
         console.log("Users data saved successfully.");
     }).catch(function(error) {
@@ -488,7 +563,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
   function setUserTotals() {
             
-    var users = $rootScope.cdata.users;
+    //var users = $rootScope.cdata.users;
+	  
+    var delhash = angular.toJson($rootScope.cdata.users); // get rid of Angular $$ data
+    var users = JSON.parse(delhash);
+	  
     var userlist = [];
        
     if (users == null || users == undefined) {
