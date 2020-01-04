@@ -158,6 +158,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         // need to wait 2 milliseconds for this to work
         setTimeout(function(){ Materialize.updateTextFields(); }, 2); 
     }
+	  
+    $rootScope.prettify = function() {
+      var pp = JSON.stringify($rootScope.cdata, null, 4);
+      var aFileParts = [pp];
+      var oMyBlob = new Blob(aFileParts, {type : 'text/plain'}); 
+      window.open(URL.createObjectURL(oMyBlob));
+    }
   
     $rootScope.courses = function() {
                
