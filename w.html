@@ -182,7 +182,7 @@
     }
   </style>
 
-    <div id="modaldownload" class="modal modal-fixed-footer">
+  <div id="modaldownload" class="modal center">
       <div class="modal-content">
 
       	<h4>Backup your data
@@ -194,13 +194,9 @@
            </a>
         </h4>
 
+        <p>View<a href="#" ng-click="prettify()"> all data</a> in <a href='https://jsoneditoronline.org/' target='_blank'>JSON</a> format.</p>
+          
         <div class="collection">
-            <a href="" class="collection-item" ng-click="showme = !showme">Admin</a>
-              <div ng-show="showme" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
-                <div class="card-content">
-                  <p>{{admin}}</p>
-                </div>
-              </div>
               <a href="" class="collection-item" ng-click="showme1 = !showme1">Lessons</a>
               <div ng-show="showme1" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
                 <div class="card-content">
@@ -226,13 +222,38 @@
                 </div>
               </div>
           </div>
-          <p>* <a href="#" ng-click="prettify()">View</a> and prettify all your data using a <a href='https://jsoneditoronline.org/' target='_blank'>JSON editor</a></p>
-        </div>
+        
+  
+          <h4>Archive your data and start over
+            <a href="" ng-click="helpToast('Restart gameof5 with the same users.',5000,'black')">
+              <svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                <ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+                <text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+              </svg>
+           </a>
+        </h4>
+          <p>Archive data and reset users. Beware!</p>
+          <div class="col s12 m6">
+				<input type="checkbox" class="filled-in checkbox-pink" id="deleteme" ng-click="$scope.showkill2 = !$scope.showkill2"/>
+				<label for="deleteme"></label>
+				<a class="waves-effect waves-light btn pink" ng-init="$scope.showkill2 = true" ng-disabled="$scope.showkill2" ng-click="archiveme()">Archive</a>
+          </div>
+        
+          <div class="collection" ng-show="myarchive != undefined">
+            <a href="#" class="collection-item" ng-click="showme = !showme">Archive</a>
+              <div ng-show="showme" class="card horizontal z-depth-0" style="margin-bottom: 0px;">
+                <div class="card-content">
+                  <p>{{myarchive}}</p>
+                </div>
+              </div>
+          </div>
 
           <div class="modal-footer">
             <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
           </div>
-        </div>
+    </div> <!-- modal content -->
+  </div> <!-- modal download -->
+
 
   <div id="modalshare" class="modal modal-fixed-footer">
       <div class="modal-content">
