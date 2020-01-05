@@ -111,6 +111,11 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                                 if ($rootScope.readonly.settings.leadnumber == undefined) {
                                     $rootScope.readonly.settings.leadnumber = 5;
                                 } 
+				    
+				if ($rootScope.readonly.settings.quizname == undefined || $rootScope.readonly.settings.quizname == "") {
+                                    $rootScope.readonly.settings.quizname = "Quiz XP";
+                                }    
+				
                                 $rootScope.listArray = $rootScope.listArray.slice(0,$rootScope.readonly.settings.leadnumber);
                                 // end leaderboard
                                 
