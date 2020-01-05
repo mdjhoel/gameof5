@@ -363,6 +363,12 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             // Show toast to user
             var msg = "To access tools. Click the red button."
             Materialize.toast(msg, 5000, 'black');
+		
+	    // check for quiz name
+            if ($rootScope.cdata.readonly.settings.quizname == undefined || $rootScope.cdata.readonly.settings.quizname == "") {
+              $rootScope.cdata.readonly.settings.quizname = "Quiz XP";
+              console.log($rootScope.cdata.readonly.settings.quizname);
+            }
       
             $rootScope.alldata = $rootScope.alldata + "}}}";
             $rootScope.share = "https://gameof5.com/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
