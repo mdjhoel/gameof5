@@ -36,7 +36,7 @@
           					</tr>
         					</thead>
 
-                        			<tbody ng-repeat="user in cdata.users">
+                        			<tbody ng-repeat="user in cdata.users" ng-init="user.quizzes[$parent.$index].name = item.name">
 				 			<tr>
 				 				<td>{{user.email}}</td>
 								<td>{{user.section}}</td>
