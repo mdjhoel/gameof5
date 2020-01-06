@@ -305,8 +305,9 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                       
                     // ---------------------------------------------------------------
                       
-                                        if ($rootScope.user.quizzes != undefined) {
-                        $rootScope.user.quizzes = $rootScope.user.quizzes.reverse();
+                    if ($rootScope.user.quizzes != undefined) {
+                        
+			$rootScope.user.quizzes = $rootScope.user.quizzes.reverse();
                         
                         // Quizzes
                         labels = [];
@@ -315,8 +316,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
 
                         
                         for (key in $rootScope.user.quizzes) {
-                            labels.push($rootScope.user.quizzes[key].name);
-                            
+                                                        
                             // this is to catch for old way of entering quizzes HOEL
                             if ($rootScope.user.quizzes[key].grade == -99 && $rootScope.user.quizzes[key].xp == 0) {
                                 $rootScope.user.quizzes[key].xp = -99;                          
@@ -334,6 +334,8 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                                 grades.push($rootScope.user.quizzes[key].xp);
                                 colors.push('#ffffff');
                             }
+                            
+                            labels.push("xp: " + $rootScope.user.quizzes[key].xp);
                             
                         }
                         
@@ -367,14 +369,18 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                                 callbacks: { // HOEL
                                   label: function(tooltipItem, data) {
                                     if ($rootScope.user.quizzes[tooltipItem.index].xp == -99) {
-                                        label = 'Excused';
+                                        var label = "name: " +$rootScope.user.quizzes[tooltipItem.index].name + " - Excused";  
                                     } else {
                                         // code to account for new way of entering quizzes
                                         if ($rootScope.user.quizzes[tooltipItem.index].desc == undefined) {
                                             $rootScope.user.quizzes[tooltipItem.index].desc = "";
                                         }
                                         
-                                        var label = 'xp: ' + $rootScope.user.quizzes[tooltipItem.index].xp + " " + $rootScope.user.quizzes[tooltipItem.index].desc;
+                                        if ($rootScope.user.quizzes[tooltipItem.index].desc != "") {
+                                            var label = "name: " +$rootScope.user.quizzes[tooltipItem.index].name + " - " +  $rootScope.user.quizzes[tooltipItem.index].desc;
+                                        } else {
+                                            var label = "name: " +$rootScope.user.quizzes[tooltipItem.index].name;
+                                        }
                                     }
                                     return label;
                                   }
