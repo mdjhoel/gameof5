@@ -570,10 +570,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   function setUserTotals() {
             
     //var users = $rootScope.cdata.users;
-	  
+      
     var delhash = angular.toJson($rootScope.cdata.users); // get rid of Angular $$ data
     var users = JSON.parse(delhash);
-	  
+      
     var userlist = [];
        
     if (users == null || users == undefined) {
@@ -596,6 +596,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       var quizzes = user.quizzes;
       var badgelist = [];
       var badgestotal = 0;
+      var excused = 0;
 
       // if there are no preferences, then add false      
       if (user.preferences == undefined) {
@@ -635,7 +636,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       }
         
       if (quizzes != undefined) {
-
+        
         if (quizzes.length == undefined) { // if user added later, process
           var newquiz = []; 
           for (quizkey in quizzes) {
@@ -646,10 +647,14 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
         for (k = 0; k<quizzes.length; k++) {
 
-          if (user.quizzes[k].grade == undefined) { user.quizzes[k].grade = -99; }
-          if (user.quizzes[k].grade != -99) {
+          if (user.quizzes[k].grade == -99) { user.quizzes[k].xp = -99; }
+            
+          if (user.quizzes[k].xp != -99) {
             quiztotal = quiztotal + user.quizzes[k].xp;
+          } else {
+            excused = excused + 1;
           }
+            
         }
       }
 
@@ -688,14 +693,18 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     }
      
     // HOEL 
-    avgpoints = Math.round(pointsforall/userslength);      
+      
+    avgpoints = Math.round((daily.length + (quizzes.length - excused)) * 3)
+    
+    //avgpoints = Math.round(pointsforall/userslength);      
     for (key in $rootScope.cdata.users) {
       $rootScope.cdata.users[key].avgpoints = avgpoints;
     }
     console.log('updated users with average point total ' + avgpoints);
       
   }
-
+	  
+	  
   $rootScope.makePDF = function(lesson) {
 
     var doc = new jsPDF({
