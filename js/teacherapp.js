@@ -1020,24 +1020,30 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
  }
 
 // Add some new data to the rootScope
-  $rootScope.addquiz = function (item) {
-
+$rootScope.addquiz = function(item) {
+      
     if ($rootScope.cdata.readonly.quizzes == undefined) { 
       $rootScope.cdata.readonly.quizzes = []; 
     }
-
-    //$rootScope.cdata.readonly.quizzes[item] = {}
     $rootScope.cdata.readonly.quizzes.unshift({name:""});
-
-    //for (var i = 0; i < $rootScope.cdata.users.length; i++) {
-    for (key in $rootScope.cdata.users) {
-      //var user = $rootScope.cdata.users[key];
+      
+    for (key in $rootScope.cdata.users) {    
       var user = $rootScope.cdata.users[key];
-      if (user.quizzes == undefined) {user.quizzes = [];}
-      user.quizzes.unshift({name: "", grade: 0, xp: 0, desc: ""});
+      if (user.quizzes == undefined) { user.quizzes = []; }
+      user.quizzes.unshift({xp: 3, desc: "", name: ""});
       $rootScope.cdata.users[key] = user;
     }
 
+  }
+	  
+  $rootScope.quizUsers = function(name,index) {
+    for (key in $rootScope.cdata.users) {
+      var user = $rootScope.cdata.users[key];
+      if (user.quizzes[index].name == '') {
+          user.quizzes[index].name = name;
+      }
+      $rootScope.cdata.users[key] = user;
+    }
   }
 
   // Remove some data from the rootScope
