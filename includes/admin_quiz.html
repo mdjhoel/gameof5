@@ -24,33 +24,33 @@
 				    	<a class="waves-effect waves-light btn pink" ng-click="removequiz($index)">Delete</a>
 				 </div>
 				 <div ng-show="$scope.showedit">
-					 
-					<!--<div style="padding-top: 10px; padding-bottom: 10px;">
-					<select class="browser-default" ng-model="dummy" ng-change="setDummy(dummy)">
-        					<option ng-repeat="section in mysections" value="{{section}}" >{{section}}</option>
-      					</select>
- 					</div>-->
-					 
-				 	<table class="table">
+					
+					<table class="table">
 				 		<thead>
           					<tr>
               					<th>Username</th>
-                                <th>Section</th>
-              					<th>Grade</th>
+                                		<th>Section</th>
+                                		<th>Badge</th>
               					<th>XP</th>
+              					<th>Comment</th>
           					</tr>
-        				</thead>
+        					</thead>
 
-        				<!--<tbody ng-repeat="user in cdata.users" ng-show="user.section==dummy">-->
-                        <tbody ng-repeat="user in cdata.users">
+                        			<tbody ng-repeat="user in cdata.users">
 				 			<tr>
 				 				<td>{{user.email}}</td>
-                                <td>{{user.section}}</td>
-				 				<td><input class="TextBox" type="number" validate="number" min=0 max=100 ng-model="user.quizzes[$parent.$index].grade" ng-change="user.quizzes[$parent.$index].name = $parent.item.name; user.quizzes[$parent.$index].xp = setQuiz(user.quizzes[$parent.$index].grade,$parent.$index)"/><td>
-				 				<td><span style='color: orange;'><b>XP </b></span><span class="chip blue white-text">{{user.quizzes[$parent.$index].xp}}</span></td>
+								<td>{{user.section}}</td>
+								<td>
+				 					<select class="browser-default" ng-model="user.quizzes[$parent.$index].badge" ng-options="badge.id as badge.name for badge in cdata.readonly.badges"><option value="">Select</option></select>
+				 				</td>
+				 				<td>
+				 					<input class="TextBox" type="number" validate="number" min=0 max=4 ng-model="user.quizzes[$parent.$index].xp"/>
+				 				</td>
+				 				<td><input class="TextBox" type="text" validate="text" maxlength="140" ng-model="user.quizzes[$parent.$index].desc"/><td>
 				 			</tr>
 				 		</tbody>
-				 	</table>
+				 	</table> 
+					
 				 </div>
 
 		</li>
