@@ -34,15 +34,15 @@
 				</div>
 			<div>
 			<div class="row"><div class="col s12">
-				 <a class="waves-effect waves-light btn light-green" ng-click="$scope.showdetails = !$scope.showdetails">Details</a>
-				 <a class="waves-effect waves-light btn light-green" ng-click="$scope.showsegments = !$scope.showsegments">Segments</a>
+				 <a class="waves-effect waves-light btn light-green" ng-click="showdetails$index = !showdetails$index">Details</a>
+				 <a class="waves-effect waves-light btn light-green" ng-click="showsegments$index = !showsegments$index">Segments</a>
 				 <a class="waves-effect waves-light btn blue" ng-disabled="$index == 0" ng-click="uplesson($index)">Up</a>
 				 <a class="waves-effect waves-light btn blue" ng-disabled="$last" ng-click="downlesson($index)">Down</a>
 				 <a class="waves-effect waves-light btn pink" ng-click="removelesson($index)">Delete</a>
 				 <a ng-click="setData($index)" class="waves-effect waves-light btn blue">View</a>
 				</div>
             </div>
-				 <div ng-show="$scope.showdetails">
+				 <div ng-show="showdetails$index">
 				 	<br>
 				 	<h5>Details
 				 		<a href="" ng-click="helpToast('Smaller images load faster for your users.<br>Images should be full direct URL',5000,'black')">
@@ -75,7 +75,7 @@
 				 		</li>
 				 	</ul>
 				 </div>
-				 <div ng-show="$scope.showsegments">
+				 <div ng-show="showsegments$index">
 					<table>
 					<tr>
 						<td><h5>Segments
