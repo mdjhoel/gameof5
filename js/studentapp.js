@@ -305,7 +305,7 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
                       
                     // ---------------------------------------------------------------
                       
-                    if ($rootScope.user.quizzes != undefined) {
+                                        if ($rootScope.user.quizzes != undefined) {
                         $rootScope.user.quizzes = $rootScope.user.quizzes.reverse();
                         
                         // Quizzes
