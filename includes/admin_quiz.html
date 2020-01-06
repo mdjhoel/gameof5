@@ -12,47 +12,44 @@
 </tr>
 </table>
 
-<div ng-repeat="item in cdata.readonly.quizzes" ng-init="showedit$index = false">
+<div ng-repeat="item in cdata.readonly.quizzes">
 	<ul class="collection with-header">
 		<li class="collection-item">
 				<div class="row">
-					<input  id="name" class="TextBox" type="text" ng-model="item.name"/>
-					<label for="name">Quiz name</label>
+					<label for="name">Name</label>
+                    <input  id="name" class="TextBox" type="text" ng-model="item.name"/>
 				 </div>
 				 <div>
-				    	<a class="waves-effect waves-light btn light-green" ng-click="showedit$index = !showedit$index">Edit users</a>
+				    	<a class="waves-effect waves-light btn light-green" ng-click="quizUsers(item.name,$index); showedit$index = !showedit$index" ng-disabled="item.name == ''">Edit users</a>
 				    	<a class="waves-effect waves-light btn pink" ng-click="removequiz($index)">Delete</a>
 				 </div>
 				 <div ng-show="showedit$index">
-					
-					<table class="table">
+                    <table class="table">
 				 		<thead>
           					<tr>
               					<th>Username</th>
-                                		<th>Section</th>
-                                		<th>Badge</th>
+                                <th>Section</th>
+                                <th>Badge</th>
               					<th>XP</th>
               					<th>Comment</th>
           					</tr>
-        					</thead>
+        				</thead>
 
-                        			<tbody ng-repeat="user in cdata.users" ng-init="user.quizzes[$parent.$index].name = item.name">
-				 			<tr>
+                        <tbody ng-repeat="user in cdata.users">
+                            <tr>
 				 				<td>{{user.email}}</td>
-								<td>{{user.section}}</td>
-								<td>
+                                <td>{{user.section}}</td>
+                                <td>
 				 					<select class="browser-default" ng-model="user.quizzes[$parent.$index].badge" ng-options="badge.id as badge.name for badge in cdata.readonly.badges"><option value="">Select</option></select>
 				 				</td>
 				 				<td>
-				 					<input class="TextBox" type="number" validate="number" min=0 max=4 ng-model="user.quizzes[$parent.$index].xp"/>
+				 					<input class="TextBox" type="number" validate="number" placeholder="3" min=-99 max=4 ng-model="user.quizzes[$parent.$index].xp" />
 				 				</td>
 				 				<td><input class="TextBox" type="text" validate="text" maxlength="140" ng-model="user.quizzes[$parent.$index].desc"/><td>
 				 			</tr>
 				 		</tbody>
 				 	</table> 
-					
 				 </div>
-
 		</li>
 	</ul>
 </div>
