@@ -16,22 +16,21 @@
 </tr>
 </table>
 
-<div ng-repeat="item in cdata.readonly.daily">
+<div ng-repeat="item in cdata.readonly.daily" ng-init="showme$index=false">
 	<ul class="collection with-header">
 		<li class="collection-item">
 				<div class="row">
 
-                    
 					<!--<label for="name">Lesson number</label>-->
-                     <input type="checkbox" id="{{item.id.id}}" ng-model="selIds[$index]"><label for="{{item.id.id}}">Add lesson to CSV</label>
+                         		<input type="checkbox" id="{{item.id.id}}" ng-model="selIds[$index]"><label for="{{item.id.id}}">Add lesson to CSV</label>
 					<select id="name" class="browser-default" ng-model="item.id" ng-options="lesson as lesson.name for lesson in cdata.readonly.lessons track by lesson.id"><option value="">Select</option></select>
 
 				 </div>
 				 <div>
-				    	<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Edit users</a>
+				    	<a class="waves-effect waves-light btn light-green" ng-click="showme$index = !showme$index">Edit users</a>
 				    	<a class="waves-effect waves-light btn pink" ng-click="removedaily($index)">Delete</a>
 				 </div>
-				 <div ng-show="$scope.showedit">
+				 <div ng-show="showme$index">
 					  
                    <!--
 				   <div style="padding-top: 10px; padding-bottom: 10px;">
@@ -46,7 +45,7 @@
 				 		<thead>
           					<tr>
               					<th>Username</th>
-                                <th>Section</th>
+                                		<th>Section</th>
               					<th>Grade</th>
               					<th>Badge</th>
               					<th>Comment</th>
