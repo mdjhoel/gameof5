@@ -1025,7 +1025,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       //var user = $rootScope.cdata.users[key];
       var user = $rootScope.cdata.users[key];
       if (user.quizzes == undefined) {user.quizzes = [];}
-      user.quizzes.unshift({name: "", grade: 0, xp: 0});
+      user.quizzes.unshift({name: "", grade: 0, xp: 0, desc: ""});
       $rootScope.cdata.users[key] = user;
     }
 
