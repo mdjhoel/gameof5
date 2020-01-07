@@ -148,6 +148,58 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       });
     }
 
+    // RECENTS
+    $rootScope.adddate = function(index) {
+      var d = new Date();
+      $rootScope.cdata.readonly.lessons[index].date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+      //user.dateconfirmed = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();
+      return $rootScope.cdata.readonly.lessons[index].date;
+    }
+
+    // RECENTS
+    $rootScope.remdate = function(index) {
+        $rootScope.cdata.readonly.lessons[index].date = "";
+    }
+
+    // RECENTS
+    function timeDifference(current, previous) {
+
+      var msPerMinute = 60 * 1000;
+      var msPerHour = msPerMinute * 60;
+      var msPerDay = msPerHour * 24;
+      var msPerMonth = msPerDay * 30;
+      var msPerYear = msPerDay * 365;
+
+      var elapsed = current - previous;
+      return Math.round(elapsed/msPerDay) 
+
+
+      if (elapsed < msPerMinute) {
+           return Math.round(elapsed/1000) + ' seconds ago';   
+      }
+
+      else if (elapsed < msPerHour) {
+           return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+      }
+
+      else if (elapsed < msPerDay ) {
+           return Math.round(elapsed/msPerHour ) + ' hours ago';   
+      }
+
+      else if (elapsed < msPerMonth) {
+          return 'approximately ' + Math.round(elapsed/msPerDay) + ' days ago';   
+
+      }
+
+      else if (elapsed < msPerYear) {
+          return 'approximately ' + Math.round(elapsed/msPerMonth) + ' months ago';   
+      }
+
+      else {
+          return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';   
+      }
+  }
+
     // setUrl - sets url of gameof5.com - remove modals from url field
     $rootScope.setUrl = function() {
         $location.url($rootScope.url);
@@ -586,6 +638,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     // HOEL - add totals for all
     var pointsforall = 0;
     var userslength = Object.keys(users).length;
+    var lessons = $rootScope.cdata.readonly.lessons; // RECENTS
       
     for (key in users) {
       var pointstotal = 0;
@@ -657,6 +710,48 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             
         }
       }
+ 
+      // RECENTS
+        var recents = [];
+        var current = Date.parse(d);
+
+        for (i = 0; i < 3; i++) {
+            var p = daily[i].mydate.split("/");
+            var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+            td = timeDifference(current, previous)
+            if (td < 7) {
+                daily[i].name = $rootScope.cdata.readonly.daily[i].id.name;
+                daily[i].type = "daily";
+                daily[i].past = td;
+                recents.push(daily[i]);
+            }
+
+            if (quizzes[i] != undefined && quizzes[i].date != undefined) {
+              var p = quizzes[i].date.split("/");
+              var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+              td = timeDifference(current, previous)
+              if (td < 7) {
+                quizzes[i].type = "quiz";
+                quizzes[i].past = td;
+                recents.push(quizzes[i]);                        
+              }
+            }
+
+            if (lessons[i].date != undefined) {
+              var p = lessons[i].date.split("/");
+              var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+              td = timeDifference(current, previous)
+              if (td < 7) {
+                lessons[i].type = "lesson";
+                lessons[i].past = td;
+                recents.push(lessons[i]);                        
+              }
+            }
+            
+        }
+
+        user.recents = recents;
+
 
       var counts = {};
       badgelist.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
@@ -970,8 +1065,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 		}
 	}
 	max = max + 1;
-	
-	var newrecord = {id:max,show:true,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]}
+
+	// RECENTS
+	var newrecord = {id:max,show:false,unit:"",name:"",desc:"",img:"",keywords:[],expectations:[],segments:[]}
 	$rootScope.cdata.readonly.lessons.unshift(newrecord)
   }
 	  	  
@@ -1026,11 +1122,15 @@ $rootScope.addquiz = function(item) {
       $rootScope.cdata.readonly.quizzes = []; 
     }
     $rootScope.cdata.readonly.quizzes.unshift({name:""});
+  
+ // RECENTS  
+    var d = new Date();
+    var quizdate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();  
       
     for (key in $rootScope.cdata.users) {    
       var user = $rootScope.cdata.users[key];
       if (user.quizzes == undefined) { user.quizzes = []; }
-      user.quizzes.unshift({xp: 3, desc: "", name: ""});
+      user.quizzes.unshift({xp: 3, desc: "", name: "", date: quizdate}); // RECENTS
       $rootScope.cdata.users[key] = user;
     }
 
@@ -1104,8 +1204,11 @@ $rootScope.addquiz = function(item) {
 
     if ($rootScope.cdata.readonly.daily == undefined) { $rootScope.cdata.readonly.daily = []; }
     $rootScope.cdata.readonly.daily.unshift({});
+    
+    // RECENTS
     var d = new Date();
-    var dailydate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();  
+    var dailydate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();
+
     for (key in $rootScope.cdata.users) {
       
       var user = $rootScope.cdata.users[key];
