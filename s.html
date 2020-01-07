@@ -252,7 +252,52 @@
     
     <div class="row">
         
-        <div class="col s12 m6 l4">
+      <div class="col s12 m6 l4">
+         <div class="card animate fadeRight">
+            <div class="mycardcontent orange lighten-1">
+               <div height="250px">
+                   <table>
+                       <tr>    
+                           <td height="15px"></td>
+                       </tr>
+                       <tr>
+                           <td height="15px">
+                              <a href="#modalprofile" class="modal-action modal-trigger"><img ng-src="{{user.photoUrl}}" width="60px" style="border-style: solid; border-color: white; border-width: 3px;"></a>
+                           </td>
+                           <td>
+                              <h4 style="margin:0px;"><a href="#modallevels" style="color: white; text-decoration: underline;" class="modal-action modal-trigger center">{{user.level.name}}</a></h4>
+                              
+                               <span style="color: white;" ng-show="user.pointstotal > user.avgpoints">
+                               <b>{{user.pointstotal}}</b> points! <b> (+ {{user.pointstotal - user.avgpoints}}</b> avg)</span>
+
+                               <span style="color: white;" ng-show="user.pointstotal < user.avgpoints">
+                               <b>{{user.pointstotal}}</b> points! <b> (- {{user.avgpoints - user.pointstotal}}</b> avg)</span>
+                           </td>
+                      </tr>
+                   </table>
+               </div>
+            </div>
+              <div class="mycardcontent orange">
+               <div height="250px">
+                   <table>
+                       <tr>
+                           <td height="15px"></td>
+                           <h6 style="color: white; padding-bottom: 10px"><a href="#modalbadges" style="color: white; text-decoration: underline;" class="modal-action modal-trigger">Badges</a> (Earn 3x mentions = badge)</h6>
+                      </tr>
+                      <tr>
+                           <span ng-repeat="(key, value) in user.badges">
+                            <span ng-repeat="badge in readonly.badges" ng-show="readonly.badges[$index].id == key">
+                            <img ng-src="images/badges/{{key}}.svg" title="{{badge.name}}" ng-show="value >= 3" class="circle white" width="40px"/>
+                            </span>
+                           </span>
+                       </tr>
+                   </table>
+               </div>
+            </div>
+         </div>
+        </div>
+
+        <!--<div class="col s12 m6 l4">
          <div class="card animate fadeRight">
             <div class="mycardcontent orange lighten-1 white-text">
                <p class="card-stats-title">Level</p>
@@ -263,7 +308,7 @@
                    <h6 style="color: white;">{{user.level.desc}}</h6>
                    <table>
                        <tr>
-                           <!-- this is a spacer -->
+                           
                            <td height="15px"></td>
                        </tr>
                        <tr>
@@ -280,7 +325,7 @@
                </div>
             </div>
          </div>
-        </div>
+        </div>-->
         
         <div class="col s12 m6 l4">
          <div class="card animate fadeRight">
@@ -354,8 +399,47 @@
               </ul>
         </div>
     
-        
+                <!-- RECENTS -->
         <div class="col s12 m6">
+            <ul class="collection with-header">
+                <li class="collection-item orange lighten-1 white-text">
+                   <p>Recent Activity Feed</p>
+                </li>
+              
+                <li class="collection-item avatar" ng-repeat="item in user.recents">
+                  <div ng-show=item.type=="lesson">
+                      <i class="large material-icons circle light-green">description</i>
+                      <a href="#modallesson" class="modal-action modal-trigger" ng-click=setDataById(item.id)>
+                      <span class="title">{{item.name}}</span></a>
+                      <p>{{item.desc}}<br>
+                         <span ng-show="item.past==1">Posted 1 day ago ({{item.date}})</span>
+                         <span ng-show="item.past!=1">Posted {{item.past}} days ago ({{item.date}})</span>
+                      </p>
+                  </div>
+                  <div ng-show=item.type=="daily">
+                      <img ng-src="images/badges/{{item.badge}}.svg" class="circle">
+                      <a href="#modallesson" class="modal-action modal-trigger" ng-click=setDataById(item.id)>
+                      <span class="title">{{item.name}}</span></a>
+                      <p>{{item.desc}}<br>
+                         <span ng-show="item.past==1">Posted 1 day ago ({{item.mydate}})</span>
+                         <span ng-show="item.past!=1">Posted {{item.past}} days ago ({{item.mydate}})</span>
+                      </p>
+                  </div>
+                  <div ng-show=item.type=="quiz">
+                      <i class="large material-icons circle blue">help</i>
+                      <span class="title">{{item.name}}</span>
+                      <p>{{item.desc}}<br>
+                         <span ng-show="item.past==1">Posted 1 day ago ({{item.date}})</span>
+                         <span ng-show="item.past!=1">Posted {{item.past}} days ago ({{item.date}})</span>
+                      </p>
+                  </div>
+                </li>
+
+
+            </ul>
+        </div>
+        
+        <!--<div class="col s12 m6">
             <ul class="collection with-header">
                 <li class="collection-item green lighten-1 white-text">
                     <p><a href="#modalbadges" style="color: white; text-decoration: underline;" class="modal-action modal-trigger">Top skills</a></p>
@@ -373,7 +457,8 @@
                       </span>
                     </li>
             </ul>
-        </div>
+        </div>-->
+
         
       </div> <!-- end row -->
         
