@@ -723,47 +723,56 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       }
  
       // RECENTS
-      if (daily != undefined && quizzes != undefined) { // fix for archive
+        
         var recents = [];
         var current = Date.parse(d);
 
+        
         for (i = 0; i < 3; i++) {
-            var p = daily[i].mydate.split("/");
-            var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
-            td = timeDifference(current, previous)
-            if (td < 7) {
-                daily[i].name = $rootScope.cdata.readonly.daily[i].id.name;
-                daily[i].type = "daily";
-                daily[i].past = td;
-                recents.push(daily[i]);
+            
+            if (daily != undefined) {
+                if (daily[i] != undefined) {
+                    var p = daily[i].mydate.split("/");
+                    var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+                    td = timeDifference(current, previous)
+                    if (td < 7) {
+                        daily[i].name = $rootScope.cdata.readonly.daily[i].id.name;
+                        daily[i].type = "daily";
+                        daily[i].past = td;
+                        recents.push(daily[i]);
+                    }
+                }
             }
 
-            if (quizzes[i] != undefined && quizzes[i].date != undefined) {
-              var p = quizzes[i].date.split("/");
-              var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
-              td = timeDifference(current, previous)
-              if (td < 7) {
-                quizzes[i].type = "quiz";
-                quizzes[i].past = td;
-                recents.push(quizzes[i]);                        
+            if (quizzes != undefined) {
+              if (quizzes[i] != undefined) {
+                  var p = quizzes[i].date.split("/");
+                  var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+                  td = timeDifference(current, previous)
+                  if (td < 7) {
+                    quizzes[i].type = "quiz";
+                    quizzes[i].past = td;
+                    recents.push(quizzes[i]);                        
+                  }
               }
             }
 
             if (lessons[i].date != undefined) {
-              var p = lessons[i].date.split("/");
-              var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
-              td = timeDifference(current, previous)
-              if (td < 7) {
-                lessons[i].type = "lesson";
-                lessons[i].past = td;
-                recents.push(lessons[i]);                        
+              if (lessons[i] != undefined) {
+                  var p = lessons[i].date.split("/");
+                  var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+                  td = timeDifference(current, previous)
+                  if (td < 7) {
+                    lessons[i].type = "lesson";
+                    lessons[i].past = td;
+                    recents.push(lessons[i]);                        
+                  }
               }
             }
             
         }
 
         user.recents = recents;
-      }
 
 
       var counts = {};
