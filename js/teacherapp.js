@@ -6,7 +6,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   app.service('service', function($http){
     this.getData = function(url) {
       return $http({
-        method: 'GET',
+        method: 'GET',x
         url: url,
         // cache will ensure calling ajax only once
         cache: true
@@ -716,6 +716,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             } else if (user.quizzes[k].xp <3) {
               badgestotal = badgestotal - 1;
             }
+	  }
           
             
         }
