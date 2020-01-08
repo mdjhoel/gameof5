@@ -707,6 +707,16 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
           } else {
             excused = excused + 1;
           }
+
+          if (user.quizzes[k].badge != "") {
+            badgelist.push(user.quizzes[k].badge);
+            // if not a normal day
+            if (user.quizzes[k].xp >3) {
+              badgestotal = badgestotal + 1;
+            } else if (user.quizzes[k].xp <3) {
+              badgestotal = badgestotal - 1;
+            }
+          
             
         }
       }
