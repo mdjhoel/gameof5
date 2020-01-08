@@ -6,8 +6,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   app.service('service', function($http){
     this.getData = function(url) {
       return $http({
-        method: 'GET',x
-        url: url,
+        method: 'GET',url: url,
         // cache will ensure calling ajax only once
         cache: true
       }).then(function (data) {
