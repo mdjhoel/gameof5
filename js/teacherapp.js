@@ -730,7 +730,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         
         for (i = 0; i < 3; i++) {
             
-            if (daily != undefined && daily[i].mydate != undefined) {
+            if (daily != undefined && daily[i] != undefined && daily[i].mydate != undefined) {
                     var p = daily[i].mydate.split("/");
                     var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
                     td = timeDifference(current, previous)
@@ -742,7 +742,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
                     }
             }
 
-            if (quizzes != undefined && quizzes[i].date != undefined) {
+            if (quizzes != undefined && quizzes[i] != undefined && quizzes[i].date != undefined) {
                   var p = quizzes[i].date.split("/");
                   var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
                   td = timeDifference(current, previous)
@@ -753,7 +753,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
                   }
             }
 
-            if (lessons[i].date != undefined && lessons[i].date != undefined) {
+            if (lessons[i].date != undefined && lessons[i] != undefined && lessons[i].date != undefined) {
                   var p = lessons[i].date.split("/");
                   var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
                   td = timeDifference(current, previous)
@@ -766,7 +766,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             
         }
 
-      user.recents = recents;
+        user.recents = recents;
 
       var counts = {};
       badgelist.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
