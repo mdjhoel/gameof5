@@ -723,6 +723,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       }
  
       // RECENTS
+      if (daily != undefined && quizzes != undefined) { // fix for archive
         var recents = [];
         var current = Date.parse(d);
 
@@ -762,6 +763,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         }
 
         user.recents = recents;
+      }
 
 
       var counts = {};
@@ -799,8 +801,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     }
      
     // HOEL 
-      
-    avgpoints = Math.round((daily.length + (quizzes.length - excused)) * 3)
+    if (daily != undefined && quizzes != undefined) { // fix for archive  
+       avgpoints = Math.round((daily.length + (quizzes.length - excused)) * 3);
+    } else {
+       avgpoints = 0;
+    }
     
     //avgpoints = Math.round(pointsforall/userslength);      
     for (key in $rootScope.cdata.users) {
