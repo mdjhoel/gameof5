@@ -261,7 +261,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
               name: uservalues[i].name,
               email: uservalues[i].email,
               dateconfirmed: uservalues[i].dateconfirmed,
-              confirmed: uservalues[i].confirmed
+              confirmed: uservalues[i].confirmed,
+	      section: uservalues[i].section
           };
       }
       //var allusers = users;
