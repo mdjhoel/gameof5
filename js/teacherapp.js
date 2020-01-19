@@ -440,7 +440,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             Materialize.toast(msg, 5000, 'black');
 		
 	    // check for quiz name
-            if ($rootScope.cdata.readonly.settings.quizname == undefined || $rootScope.cdata.readonly.settings.quizname == "") {
+            if ($rootScope.cdata.readonly.settings == undefined || $rootScope.cdata.readonly.settings.quizname == undefined || $rootScope.cdata.readonly.settings.quizname == "") {
               $rootScope.cdata.readonly.settings.quizname = "Quiz XP";
               console.log($rootScope.cdata.readonly.settings.quizname);
             }
