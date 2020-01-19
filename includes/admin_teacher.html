@@ -1,0 +1,34 @@
+<table>
+<tr>
+	<td style='color: #8bc34a; font-size: 2em;'>Teacher information
+	  <a href="" ng-click="helpToast('Enter some information about yourself.',5000,'black')">
+        	<svg class="svg-class" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          	<ellipse ry="11" rx="11" cy="12" cx="12" stroke="#2196f3" fill="#fff"/>
+          	<text font-style="normal" transform="matrix(2.25929, 0, 0, 0.870395, -7.11379, -0.393831)" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="16" id="svg_2" y="20" x="6.5" stroke-width="0" stroke="#2196f3" fill="#2196f3">i</text>
+        	</svg>
+      	  </a>
+	</td>
+</tr>
+<tr>
+	<td><h5>Welcome {{name}}. Please tell us something about you.</h5></td>
+</tr>
+</table>
+
+<div class="row">
+	<div style="margin: 20px;">
+		
+		<label for="name">School name</label>
+	    <input  id="name" class="TextBox" type="text" ng-model="admin.schoolname"/>
+	    <label for="name">Country</label>
+	    <input  id="name" class="TextBox" type="text" ng-model="admin.schoolcountry"/>
+	    <label for="name">State/Province</label>
+	    <input  id="name" class="TextBox" type="text" ng-model="admin.schoolstate"/>
+	    <label for="name">City</label>
+	    <input  id="name" class="TextBox" type="text" ng-model="admin.schoolcity"/>
+	    <label for="name">Address</label>
+	    <input  id="name" class="TextBox" type="text" ng-model="admin.schooladdress"/>
+	    <br>
+	    <button ng-disabled="admin.schoolname == null || admin.schoolname == null || admin.schoolstate == null || admin.schoolcity == null || admin.schooladdress == null" ng-click="saveSchool()" class="btn blue white-text waves">Submit</button>
+    </div>
+</div>
+
