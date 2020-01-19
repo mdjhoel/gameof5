@@ -107,9 +107,13 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
                 $rootScope.user = user.uid;
                 $rootScope.selIds = {};  // added for admin_daily selected days for reports
                 
-                $rootScope.$apply(function () { 
+		$rootScope.$apply(function () { 
+                    if ($rootScope.admin.schoolname == undefined) {
+                        $rootScope.filePath = "includes/admin_teacher.html";
+                    } else {
+                        $rootScope.filePath = "includes/admin_edit.html";
+                    }
                     $rootScope.navPath = "includes/nav_basic.html";
-                    $rootScope.filePath = "includes/admin_edit.html";
                 });
 
                 var msg = "Welcome " + user.displayName + ".";
@@ -134,6 +138,25 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     // FUNCTIONS
     // ---------------------------------------------//
       
+    // Save admin school settings
+    $rootScope.saveSchool = function() {
+
+       $rootScope.refAdmin.update($rootScope.admin).then(function(){
+            console.log("Teacher data saved successfully.");
+            var msg = "Teacher data saved successfully.";
+            Materialize.toast(msg, 1000, 'pink');
+            $rootScope.$apply(function () { 
+              $rootScope.filePath = "includes/admin_edit.html";
+            });
+        }).catch(function(error) {
+            console.log("Teacher data could not be saved." + error);
+            $rootScope.$apply(function () { 
+                $rootScope.error = "Teacher data could not be saved"; 
+                $rootScope.filePath = "includes/404.html"; 
+            });
+        });
+    }
+
     $rootScope.signin = function() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider).then(function(result) {  
