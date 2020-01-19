@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gameof5</title>
+  <link href="css/stylesheet.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <!-- load Angular 1.6.5 -->
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <script src="js/angular-sanitize.min.js"></script>
+
+  <!-- Angularjs custom code -->
+  <script src="js/adminapp.js"></script>
+    
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    
+  <!-- Chart and Angular chart -->
+  <link href="js/chartjs/Chart.css" rel="stylesheet">
+  <script src="js/chartjs/Chart.js"></script>
+  <script src="js/chartjs/Chartbundle.js"></script>
+  <script src="js/angular-chart.min.js"></script>
+  
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBVtxn_jTK6QSvvUrGLWRnuTO1Y1YAOWEA",
+      authDomain: "gameof5-4e8a1.firebaseapp.com",
+      databaseURL: "https://gameof5-4e8a1.firebaseio.com/",
+      projectId: "gameof5-4e8a1",
+      storageBucket: "",
+      messagingSenderId: ""
+    };
+    firebase.initializeApp(config);
+  </script>
+    
+  <style>
+         
+      .material-icons{
+        display: inline-flex;
+        vertical-align: top;
+      }
+      .sidenav-header {
+          background-color: blue;
+          padding: 10px;
+      }
+      table, tr, td {
+          padding: 0px;
+      }
+
+      .modal { width: 70% !important ; height: 70% !important ; }
+	  
+      .mycardcontent {
+            height: 120px; 
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+      }
+      
+      input[type=range]::-webkit-slider-thumb {
+        background-color: blue;
+      }
+      input[type=range]::-moz-range-thumb {
+        background-color: blue;
+      }
+      input[type=range]::-ms-thumb {
+        background-color: blue;
+      }
+
+      /***** These are to edit the thumb and the text inside the thumb *****/
+      input[type=range] + .thumb {
+        background-color: blue;
+      }
+      input[type=range] + .thumb.active .value {
+        color: white;
+      }
+      
+      .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
+        {
+
+          border: 0!important;
+          box-shadow: none!important;
+
+        }
+      
+      /* label focus color */
+     .input-field input:focus + label {
+       color: blue !important;
+     }
+      
+       /* icon prefix focus color */
+       .input-field .prefix.active {
+         color: blue;
+       }
+      
+     /* label underline focus color */
+     .input-field input:focus {
+       border-bottom: 1px solid blue !important;
+       
+       
+     }
+      
+ 
+          
+  </style>
+     
+</head>
+
+<!-- local testing ... -->
+<!-- cd to Documents/gameof5 -->
+<!-- python -m SimpleHTTPServer -->
+
+<body ng-app="adminpages">
+
+  <!-- logo -->
+  <div id="g5header" align="center"><img width="200px" src="images/header.svg"/></div>
+  <div class="container">
+      
+    <nav class="z-depth-0 white">
+        <div class="nav-wrapper black-text">
+          <b>Admin</b>
+	      <span class="right"> <b>{{user.name}}</b></span>
+        </div>
+    </nav> 
+
+              
+    <div class="row">
+      <div class="col s12 m12">
+              <ul class="collection with-header">
+                <li class="collection-item cyan white-text">
+                    <p>Teachers</p>
+                </li>
+		  		<li class="collection-item avatar" ng-repeat="teacher in teachers">
+		  	
+                  <img ng-show="teacher.admin.photoUrl.indexOf('/mo/') <0" ng-src='{{teacher.admin.photoUrl}}' alt="{{teacher.admin.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+                  <img ng-show="teacher.admin.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{teacher.admin.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+                  <table>
+                  <tr>
+                    <td>
+                        <b>{{teacher.admin.name}}</b><br>{{teacher.admin.uid}}
+                    </td>
+
+                    <td>
+                        <a href="#modalcourses" data={{teacher.admin.uid}} id='data{{$index}}' class="modal-action modal-trigger right" ng-click="setTeacher(teacher.admin.uid)">Courses</a>
+                    </td>
+                  </tr>
+                  </table>    
+                </li>
+              </ul>
+        </div>
+        
+      </div> <!-- end row -->
+        
+</div> <!-- end container -->
+    
+
+  <!-- # modal courss -->
+  <div id="modalcourses" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>{{curr_teacher}} - Courses</h4></li>
+            <li class="collection-item" ng-repeat="course in courses">
+                <span><b>{{course.name}}</b><br>{{course.desc}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+
+  <!-- #badges modal -->
+  <div id="modalbadges" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Badges and Points</h4></li>
+            <li class="collection-item avatar" ng-repeat="badge in readonly.badges">
+                <img src="images/badges/{{badge.id}}.svg" height='50px' class="circle" />
+                <span class="title">{{badge.name}}</span><br>
+                <span class="secondary-content chip blue white-text">{{badge.value}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+    
+  <!-- #Message Modal -->
+  <div id="modalmessage" class="modal">
+      <div class="modal-content">
+        <h4>{{message.m1}}</h4>
+        <h5>{{message.m3}}</h5>
+        <p>{{message.m2}}</p>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div> 
+       
+  <div id="modalprofile" class="modal center">
+      <div class="modal-content">
+        <h4>{{user.name}}</h4>
+        <img ng-src="{{user.photoUrl}}" width="200px" style="border-radius:50%;">
+        <p>{{user.email}}</p>
+        
+        <div class="modal-footer">
+          <!--<a ng-click="signout()" class="modal-action modal-close btn-flat">Sign out</a>-->
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+    
+  <div id="modallesson" class="modal modal-fixed-footer center">
+      <div class="modal-content">
+          <div class="col s12">
+              <div class="row">
+                <div class="col s12">
+                  <div class="card white darken-1">
+                    <div class="card-content black-text">
+                        <h2>{{lesson.name}}</h2> 
+                        <h6>{{lesson.desc}}</h6>      
+                        <div style="padding:30px;" ng-hide="lesson.keywords.length == 0 &&  lesson.expectations.length == 0">
+                            <div title="keywords" class="chip blue white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
+                            <div title="curriculum expectations" class="chip orange white-text" ng-repeat="expectation in lesson.expectations">{{expectation}}</div>
+                        </div>
+                        
+                        <ul class="collapsible">
+                            <li>
+                              <div class="collapsible-header"><i class="material-icons">expand_more</i><span style="text-decoration: underline; color: blue;">Rate this lesson</span></div>
+                              <div class="collapsible-body">
+        
+                                  <div class="card white darken-1" style="padding-top: 15px;">
+                            <div class="card-content black-text">
+                                <span class="card-title">Comment and ranking</span>
+                                <div class="input-field">
+                                  <i class="material-icons prefix">chat</i>
+                                  <input id="icon_prefix" type="text" max=140 ng-model="lcomments[lesson.id][user.uid].comment" id="respond" + {{lesson.id}}>
+                                </div>
+
+                                <div class="input-field">
+                                  <i class="material-icons prefix">rate_review</i>
+                                  <input type="range" id="rate" ng-model="lcomments[lesson.id][user.uid].clarity" min="0" max="5" ng-change="getColor(lesson.id)" value="3"/>
+                                  <p id="sliderinfo">Somewhat clear, I would benefit from quick review.</p>
+                                </div>
+                                
+                                <div class="input-field" ng-show="readonly.settings.hlink">
+                                  <i class="material-icons prefix">insert_link</i>
+                                  <input id="hlink" type="text" max=140 ng-model="lcomments[lesson.id][user.uid].hlink" id="hlink">
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                  <button class="button light-green waves-light btn" ng-click="test2(lesson.id)" ng-disabled="lcomments[lesson.id][user.uid].comment == undefined">submit</button>
+                            </div>
+                                      
+                            
+                        </div>
+                    </div>
+                </li>
+              </ul>
+                       
+                <ul class="collapsible" ng-show="readonly.settings.lcomments && lcomments != null">
+                            <li>
+                              <div class="collapsible-header"><i class="material-icons">expand_more</i><span style="text-decoration: underline; color: blue;">View comments</span></div>
+                              <div class="collapsible-body">
+                                <div class="collection">
+                                    <div class="collection-item avatar" ng-repeat="(key, value) in lcomments[lesson.id]" style="text-align: left;">
+                                        <img src="{{users[key].photoUrl}}" class="circle">
+                                        <span><b>{{users[key].name}}</b> ({{users[key].email}})</span>
+                                          <p style="width: 85%;">{{value.comment}}<br>
+                                             <a href="{{value.hlink}}" ng-show="readonly.settings.hlink && value.hlink != undefined" target="_blank">more info...</a>
+                                          </p>
+                                          <span class="secondary-content chip blue white-text">{{value.clarity}}</span>
+                                    </div>
+                                </div>
+                              </div>
+                        </li>
+                      </ul>
+                        
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>  
+         
+            <div class="row">
+                <div class="col s12">
+                  <div class="card white darken-1">
+                    <div class="card-content black-text">
+                      <h3>Lesson Progession</h3>           
+                        <div class="collection">
+                            <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()">
+                                <h5 ng-show="item.seglink == ''">{{item.title}}</h5>
+                                <a href="{{item.seglink}}" target="_blank">
+                                    <h5 ng-show="item.seglink != ''">{{item.title}}</h5>
+                                </a>
+                                <p style="color:lightgrey;" ng-show="item.text!=''">
+                                    {{item.text}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+        </div>
+                  
+    </div>
+  </div>
+  <div class="modal-footer">
+      <a ng-click="setUrl()" class="modal-action modal-close waves-effect waves-green btn-flat" >Dismiss</a>
+  </div>
+</div>
+	
+</body>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+
+<script>
+
+  var o_url = window.location.href;
+    
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  	$('.modal').modal({dismissible: false});
+                               
+	$('.tooltipped').tooltip({delay: 50});
+  });
+        
+     
+  function setUrl() {
+      console.log(o_url);
+      //location.href = o_url;
+      window.location.assign(o_url);
+      //alert("previous url is: " + window.history.previous.href);
+  }
+
+  // disable back button, so users do not leave one page app and get confused
+  history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+    
+  // side nav  
+  $(document).ready(function(){
+    $('.button-collapse').sideNav({
+          menuWidth: 400, // Default is 300
+          edge: 'right', // Choose the horizontal origin
+          closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+          draggable: true // Choose whether you can drag to open on touch screens
+    }
+  );
+      
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, options);
+  });
+      
+  // START OPEN
+  $('.button-collapse').sideNav('show');
+  });
+
+
+</script>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</html>
