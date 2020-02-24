@@ -13,9 +13,8 @@
                     <a href="{{item.seglink}}" target="_blank">
                         <h5 ng-show="item.seglink != ''">{{item.title}}</h5>
                     </a>
-                    <p style="color:lightgrey;" ng-show="item.text!=''">
-                        {{item.text}}
-                    </p>
+                    <p ng-bind-html="item.text" ng-show="item.text !=''"></p><br>
+                    <img ng-src="{{item.segimg}}" ng-show="item.segimg !=''" width="100%">
                 </div>
             </div>
         </div>
