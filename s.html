@@ -269,7 +269,8 @@
                               
                                <span style="color: white;" ng-show="user.pointstotal > user.avgpoints">
                                <b>{{user.pointstotal}}</b> points! <b> (+ {{user.pointstotal - user.avgpoints}}</b> avg)</span>
-
+				<span style="color: white;" ng-show="user.pointstotal == user.avgpoints">
+                                   <b>{{user.pointstotal}}</b> points! <b>(average)</b></span>
                                <span style="color: white;" ng-show="user.pointstotal < user.avgpoints">
                                <b>{{user.pointstotal}}</b> points! <b> (- {{user.avgpoints - user.pointstotal}}</b> avg)</span>
                            </td>
