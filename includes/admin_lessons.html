@@ -41,7 +41,7 @@
 				 <a class="waves-effect waves-light btn blue" ng-disabled="$index == 0" ng-click="uplesson($index)">Up</a>
 				 <a class="waves-effect waves-light btn blue" ng-disabled="$last" ng-click="downlesson($index)">Down</a>
 				 <a class="waves-effect waves-light btn pink" ng-click="removelesson($index)">Delete</a>
-				 <a ng-click="setData($index)" class="waves-effect waves-light btn blue">View</a>
+				 <a ng-click="setData($index)" class="waves-effect waves-light btn blue" ng-disabled="!item.show">View</a>
 				</div>
             </div>
 				 <div ng-show="showdetails$index">
