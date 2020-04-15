@@ -50,13 +50,13 @@
          <img ng-show="item.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{item.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
          <a href="{{view}}" ng-click="navUser3($index)" target='_blank'>{{item.name}}</a> - ({{item.email}})<br>
          
-         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}} | <a href="#!" id="sorter" ng-click="$scope.showedit = !$scope.showedit" ng-init="$scope.showedit = false">Edit Section</a></p>
+         <p ng-show="item.confirmed==true"><b>Points: {{item.pointstotal}}</b> | Daily: {{item.dailytotal}} | Quizzes: {{item.quiztotal}} | Badges: {{item.badgestotal}} | Level: {{item.level.name}} | <a href="#!" id="sorter" ng-click="showedit$index = !showedit$index" ng-init="showedit$index = false">Edit</a></p>
          <p ng-show="item.confirmed==false" class="red-text">Unconfirmed new user</p>
          <div class="secondary-content">
                 <p ng-show="item.section != undefined" class="chip blue white-text">{{item.section}}</p>
          </div>
           
-         <div ng-show="$scope.showedit">
+         <div ng-show="showedit$index">
              <br>
              <div class="input-field col s12 m6">
 				<label class='md-no-float' for="section" data-error="wrong" data-success="right">Section number</label>
@@ -64,9 +64,9 @@
              </div>
 					
              <div class="col s12 m6">
-				<input type="checkbox" class="filled-in checkbox-pink" id="deleteme{{$index}}" ng-click="$scope.showkill = !$scope.showkill"/>
+				<input type="checkbox" class="filled-in checkbox-pink" id="deleteme{{$index}}" ng-click="showkill$index = !showkill$index"/>
 				<label for="deleteme{{$index}}"></label>
-				<a class="waves-effect waves-light btn pink" ng-init="$scope.showkill = true" ng-disabled="$scope.showkill" ng-click="removeuser(item.uid,$index)">Delete</a>
+				<a class="waves-effect waves-light btn pink" ng-init="showkill$index=true" ng-disabled="showkill$index" ng-click="removeuser(item.uid,$index)">Delete</a>
              </div>
          </div>
 
