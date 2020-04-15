@@ -25,7 +25,7 @@
 				<!-- RECENTS -->
 				<div class="col s6">
                     
-				        <input type="checkbox" class="filled-in checkbox-pink" ng-checked="item.date" id="deleteme{{$index}}" ng-click="doDate($index)" />
+				        <input type="checkbox" class="filled-in checkbox-pink" ng-checked="item.date" id="deleteme{{$index}}" ng-click="item.show=!item.show; doDate($index)" />
 				        <label for="deleteme{{$index}}">
 					  <span>{{item.date}}</span>
 				        </label>
