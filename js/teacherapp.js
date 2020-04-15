@@ -444,7 +444,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         
         $rootScope.$apply(function () {
             // Show toast to user
-            var msg = "To access tools. Click the red button."
+            var msg = "Share your class, use navbar share button."
             Materialize.toast(msg, 5000, 'black');
 		
 	    // check for quiz name
