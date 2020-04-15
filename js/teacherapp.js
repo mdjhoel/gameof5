@@ -170,17 +170,25 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       });
     }
 
-    // RECENTS
-    $rootScope.adddate = function(index) {
-      var d = new Date();
-      $rootScope.cdata.readonly.lessons[index].date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-      //user.dateconfirmed = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + "-" + d.getHours() + ":" + d.getMinutes();
-      return $rootScope.cdata.readonly.lessons[index].date;
+    // RECENTS - replaced remDate() and adddate()
+    $rootScope.doCheck = function(index) {
+        if (!$rootScope.cdata.readonly.lessons[index].date) {
+            return false;
+        }
+        return true;
     }
-
-    // RECENTS
-    $rootScope.remdate = function(index) {
-        $rootScope.cdata.readonly.lessons[index].date = "";
+    
+    $rootScope.doDate = function(index) {
+        cbox = document.getElementById("deleteme" + index).checked;
+        if (cbox) {
+            var d = new Date();
+            $rootScope.cdata.readonly.lessons[index].date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+        } else {
+            if ($rootScope.cdata.readonly.lessons[index].date == undefined || $rootScope.cdata.readonly.lessons[index].date == null) {
+                cbox.checked = true;
+            }
+            $rootScope.cdata.readonly.lessons[index].date = "";
+        }
     }
 
     // RECENTS
@@ -451,7 +459,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             $rootScope.alldata = $rootScope.alldata + "}}}";
             $rootScope.share = "https://gameof5.com/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
             $rootScope.navPath = "includes/nav_admin.html"; // reload tools
-            $rootScope.filePath = "includes/admin_splash.html"; 
+            $rootScope.filePath = "includes/admin_lessons.html"; 
         });
 
       },
