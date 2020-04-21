@@ -1284,9 +1284,23 @@ $rootScope.addquiz = function(item) {
     }
   }
   
+  // set user to confirmed
+  $rootScope.confirmUser = function(uid,index) {
+    console.log($rootScope.cdata.users[uid]);
+    user = $rootScope.cdata.users[uid] 
+    user.confirmed = true;
+  }
+  
+  // sort based on a column, make sure to bring unconfirmed to top
   $rootScope.sortUser = function(data,col) {
     var someArray = $rootScope.listArray;
-    someArray.sort(generateSortFn(col, true));
+	  
+    if (col == "confirmed") { // added to move unconfirmed to top
+      someArray.sort(generateSortFn(col, false));  
+    } else {
+      someArray.sort(generateSortFn(col, true));
+    }  
+	  
     $rootScope.listArray = someArray;
   }
 
