@@ -31,11 +31,12 @@
 					</div>
 				</div>
 				<div class="row">
-					<div>
-						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Badge</a>
+				    <div>
+				        <a class="waves-effect waves-light btn light-green" ng-click="showedit$index = !showedit$index">Badge</a>
 				    	<a class="waves-effect waves-light btn pink" ng-click="removebadge($index)">Delete</a>
 				    </div>
-				    <div ng-show="$scope.showedit">
+				    <div ng-show="showedit$index">
+					
 				    	<br>
 						<div class="scrollmenu">
 
