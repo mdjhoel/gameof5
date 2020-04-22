@@ -26,11 +26,12 @@
 					</div>
 
 					<div>
-						<a class="waves-effect waves-light btn light-green" ng-click="$scope.showedit = !$scope.showedit">Details</a>
-				    	<a class="waves-effect waves-light btn pink" ng-click="removelevel($index)">Delete</a>
-				    </div>
+					   <a class="waves-effect waves-light btn light-green" ng-click="showedit$index = !showedit$index">Details</a>
+				    	   <a class="waves-effect waves-light btn pink" ng-click="removelevel($index)">Delete</a>
+				        </div>
 					<br>
-					<div ng-show="$scope.showedit">
+					<div ng-show="showedit$index">
+					
 						<div class="input-field col s6">
 							<input class="TextBox" id="low" type="number" validate="number" min=0 max=1000 ng-model="item.low" ng-init="finishLoading()"/>
 							<label class='md-no-float' for="low">Low</label>
