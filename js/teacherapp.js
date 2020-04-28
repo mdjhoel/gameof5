@@ -458,7 +458,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       
             $rootScope.alldata = $rootScope.alldata + "}}}";
 		
-	    if ($rootScope.cdata.readonly.settings.newui) {
+	    if ($rootScope.cdata.readonly.settings.newui == true) {
                $rootScope.share = "https://gameof5.com/d.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
             } else {
                $rootScope.share = "https://gameof5.com/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname;
