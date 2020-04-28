@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Gameof5</title>
+  <link href="css/stylesheet.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/materialize.min.css">
+ 
+  <!--<link rel="stylesheet" href="css/materialize.min.css">-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <!-- load Angular 1.6.5 -->
+  <script src="js/angular.min.js"></script>
+  <script src="js/angular-route.js"></script>
+  <script src="js/angular-sanitize.min.js"></script>
+  <script src="js/jspdf135.js"></script>
+
+  <!-- Angularjs custom code -->
+  <script src="js/dapp.js"></script>
+    
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    
+  <!-- Chart and Angular chart -->
+  <link href="js/chartjs/Chart.css" rel="stylesheet">
+  <script src="js/chartjs/Chart.js"></script>
+  <script src="js/chartjs/Chartbundle.js"></script>
+  <script src="js/angular-chart.min.js"></script>
+  
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBVtxn_jTK6QSvvUrGLWRnuTO1Y1YAOWEA",
+      authDomain: "gameof5-4e8a1.firebaseapp.com",
+      databaseURL: "https://gameof5-4e8a1.firebaseio.com/",
+      projectId: "gameof5-4e8a1",
+      storageBucket: "",
+      messagingSenderId: ""
+    };
+    firebase.initializeApp(config);
+  </script>
+     
+</head>
+
+<body ng-app="dpages">
+
+    <nav class="z-depth-0 white black-text">
+        <!-- logo -->
+        <span id="g5header" align="left"><img src="images/header.svg"/ width="100px"></span>
+        
+        <span id="g5headerphoto"><img class="circle" src={{user.photoUrl}} width="50"></span>
+        <span id="g5headername">{{user.name}}</span>
+        
+    </nav> 
+    
+      <nav class="z-depth-0 blue white-text">
+        <div class="nav-wrapper">
+          <ul id="nav-mobile" class="left hide-on-small-and-down">
+            <li class="active" ng-show="filePath == 'includes/dmain.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
+            <li ng-show="filePath == 'includes/dmain.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
+            <li ng-show="filePath == 'includes/dmain.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
+            <li ng-show="filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
+            <li class="active" ng-show="filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
+            <li ng-show="filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
+            <li  ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
+            <li ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
+            <li class="active" ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
+          </ul>
+          <!--<span ng-click="nav('includes/dmain.html'); showrecents = !showrecents" class="collection-item new badge white blue-text" style="margin-right: 10px; margin-top:20px; cursor: pointer;">{{user.recents.length}}</span>-->
+        </div>
+      </nav>
+    
+    <div ng-include="filePath" ></div>
+    
+
+        <div style="margin-left: 10px; margin-right: 10px;">
+        <hr style='color: #2196f3; background-color: #2196f3; height: 3px; width: 100%; padding-bottom: 0px;'>
+        <div id="g5footer"></div>
+        </div>
+          
+    
+  <!-- #Save Modal -->
+  <div id="modalcheck" class="modal">
+      <div class="modal-content">
+        <h4>Save edits</h4>
+        <p>You are about to save your edits back to the server.</p><p>This will overwrite your existing data. Are you sure you wish to do this?</p>
+        
+        <p ng-show="users != undefined">
+          <input type="checkbox" id="usertotals"/>
+          <label for="usertotals">Update and confirm users (this may take a minute)</label>
+        </p>
+ 
+        <div class="modal-footer">
+          <a ng-click="save(document.getElementById('usertotals').checked)" class="modal-action modal-close btn-flat">Yes</a>
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat ">No</a>
+        </div>
+        
+      </div>
+  </div>
+ 	
+  <!-- #Levels modal -->
+  <div id="modallevels" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Levels and Points</h4></li>
+            <li class="collection-item" ng-repeat="level in readonly.levels">
+                <span>{{level.name}}</span>
+                <span class="secondary-content chip blue white-text">{{level.high}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+
+  <!-- #Levels modal -->
+  <div id="modalbadges" class="modal">
+      <div class="modal-content">
+        
+        <ul class="collection with-header">
+            <li class="collection-header"><h4>Badges and Points</h4></li>
+            <li class="collection-item avatar" ng-repeat="badge in readonly.badges">
+                <img src="images/badges/{{badge.id}}.svg" height='50px' class="circle" />
+                <span class="title">{{badge.name}}</span><br>
+                <span class="secondary-content chip blue white-text">{{badge.value}}</span>
+            </li>
+        </ul>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div>
+    
+  <!-- #Message Modal -->
+  <div id="modalmessage" class="modal">
+      <div class="modal-content">
+        <h4>{{message.m1}}</h4>
+        <h5>{{message.m3}}</h5>
+        <p>{{message.m2}}</p>
+          
+        <div class="modal-footer">
+          <!--<a ng-click="clearmessage(); setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>-->
+            <a ng-click="setUrl()" class="modal-action modal-close btn-flat">Dismiss</a>
+        </div>
+        
+      </div>
+  </div> 
+       
+  <div id="modalprofile" class="modal center">
+      <div class="modal-content">
+        <h4>{{user.name}}</h4>
+        <img ng-src="{{user.photoUrl}}" width="200px" style="border-radius:50%;">
+        <p>{{user.email}}</p>
+        
+        <div class="modal-footer">
+          <!--<a ng-click="signout()" class="modal-action modal-close btn-flat">Sign out</a>-->
+          <a ng-click="setUrl()" class="modal-action modal-close btn-flat" >Dismiss</a>
+        </div>
+      </div>
+  </div>
+    
+  <div id="modallesson" class="modal modal-fixed-footer center">
+      <div class="modal-content">
+          <div class="col s12">
+              <div class="row">
+                <div class="col s12">
+                  <div class="card white darken-1">
+                    <div class="card-content black-text">
+                        <h2>{{lesson.name}}</h2> 
+                        <h6>{{lesson.desc}}</h6>      
+                        <div style="padding:30px;" ng-hide="lesson.keywords.length == 0 &&  lesson.expectations.length == 0">
+                            <div title="keywords" class="chip blue white-text" ng-repeat="key in lesson.keywords">{{key}}</div>
+                            <div title="curriculum expectations" class="chip orange white-text" ng-repeat="expectation in lesson.expectations">{{expectation}}</div>
+                        </div>
+                        
+                        <ul class="collapsible">
+                            <li>
+                              <div class="collapsible-header"><i class="material-icons">expand_more</i><span style="text-decoration: underline; color: blue;">Rate this lesson</span></div>
+                              <div class="collapsible-body">
+        
+                                  <div class="card white darken-1" style="padding-top: 15px;">
+                            <div class="card-content black-text">
+                                <span class="card-title">Comment and ranking</span>
+                                <div class="input-field">
+                                  <i class="material-icons prefix">chat</i>
+                                  <input id="icon_prefix" type="text" max=140 ng-model="lcomments[lesson.id][user.uid].comment" id="respond" + {{lesson.id}}>
+                                </div>
+
+                                <div class="input-field">
+                                  <i class="material-icons prefix">rate_review</i>
+                                  <input type="range" id="rate" ng-model="lcomments[lesson.id][user.uid].clarity" min="0" max="5" ng-change="getColor(lesson.id)" value="3"/>
+                                  <p id="sliderinfo">Somewhat clear, I would benefit from quick review.</p>
+                                </div>
+                                
+                                <div class="input-field" ng-show="readonly.settings.hlink">
+                                  <i class="material-icons prefix">insert_link</i>
+                                  <input id="hlink" type="text" max=140 ng-model="lcomments[lesson.id][user.uid].hlink" id="hlink">
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                  <button class="button light-green waves-light btn" ng-click="test2(lesson.id)" ng-disabled="lcomments[lesson.id][user.uid].comment == undefined">submit</button>
+                            </div>
+                                      
+                            
+                        </div>
+                    </div>
+                </li>
+              </ul>
+                       
+                <ul class="collapsible" ng-show="readonly.settings.lcomments && lcomments != null">
+                            <li>
+                              <div class="collapsible-header"><i class="material-icons">expand_more</i><span style="text-decoration: underline; color: blue;">View comments</span></div>
+                              <div class="collapsible-body">
+                                <div class="collection">
+                                    <div class="collection-item avatar" ng-repeat="(key, value) in lcomments[lesson.id]" style="text-align: left;">
+                                        <img src="{{users[key].photoUrl}}" class="circle">
+                                        <span><b>{{users[key].name}}</b> ({{users[key].email}})</span>
+                                          <p style="width: 85%;">{{value.comment}}<br>
+                                             <a href="{{value.hlink}}" ng-show="readonly.settings.hlink && value.hlink != undefined" target="_blank">more info...</a>
+                                          </p>
+                                          <span class="secondary-content chip blue white-text">{{value.clarity}}</span>
+                                    </div>
+                                </div>
+                              </div>
+                        </li>
+                      </ul>
+                        
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>  
+         
+            <div class="row">
+                <div class="col s12">
+                  <div class="card white darken-1">
+                    <div class="card-content black-text">
+                      <h3>Lesson Progession</h3>           
+                        <div class="collection">
+                            <div class="collection-item" ng-repeat="item in lesson.segments.slice().reverse()">
+                                <h5 ng-show="item.seglink == ''">{{item.title}}</h5>
+                                <a href="{{item.seglink}}" target="_blank">
+                                    <h5 ng-show="item.seglink != ''">{{item.title}}</h5>
+                                </a>
+                                <p ng-bind-html="item.text" ng-show="item.text !=''"></p><br>
+                                <img ng-src="{{item.segimg}}" ng-show="item.segimg !=''" width="100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+            </div>
+        </div>
+                  
+    </div>
+  </div>
+  <div class="modal-footer">
+      <a ng-click="setUrl()" class="modal-action modal-close waves-effect waves-green btn-flat" >Dismiss</a>
+  </div>
+</div>
+	
+</body>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script src="js/materialize.min.js"></script> 
+
+<script>
+
+  var o_url = window.location.href;
+    
+  $(document).ready(function(){
+    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+  	$('.modal').modal({dismissible: false});
+                               
+	$('.tooltipped').tooltip({delay: 50});
+            
+  });
+        
+     
+  function setUrl() {
+      console.log(o_url);
+      //location.href = o_url;
+      window.location.assign(o_url);
+      //alert("previous url is: " + window.history.previous.href);
+  }
+
+  // disable back button, so users do not leave one page app and get confused
+  history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+    
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+  });
+          
+  setFooter();
+    
+  // Common footer for pages
+  function setFooter() {
+    var footerDoc = document.getElementById("g5footer");
+    var temphtml = "";
+    temphtml = temphtml + "<footer class='page-footer white'>";
+      
+       temphtml = temphtml + "<div class='row'>";
+         temphtml = temphtml + "<div class='col l6 s12'>";
+           temphtml = temphtml + "<h5 class='blue-text'>gameof5</h5>";
+           temphtml = temphtml + "<p class='black-text text-lighten-4'>gameof5 allows teachers to digitally store, structure, present, and gamify their lessons to increase student engagement. gameof5 is a learning project for the programmer and is free of charge! The application was built using JSON, Javascript, Firebase, AngularJS and Material Design standards.</p>";
+         temphtml = temphtml + "</div>";
+         temphtml = temphtml + "<div class='col l4 offset-l2 s12'>";
+           temphtml = temphtml + "<h5 class='blue-text'>Links</h5>";
+          temphtml = temphtml + "<ul>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://material.io/' target='_blank'>Material Design Guidelines</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='http://www.materializecss.com' target='_blank'>MaterializeCSS</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://design.google/' target='_blank'>Google Design</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://firebase.google.com/' target='_blank'>Firebase</a></li>";
+            temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://angularjs.org/' target='_blank'>AngularJS</a></li>";
+	    temphtml = temphtml + "<li><a class='black-text text-lighten-3' href='https://github.com' target='_blank'>Github</a></li>";
+          temphtml = temphtml + "</ul>";
+        temphtml = temphtml + "</div></div>";
+
+    footerDoc.innerHTML = temphtml;
+  }
+    
+</script>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</html>
