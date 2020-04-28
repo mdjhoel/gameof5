@@ -96,9 +96,10 @@
                     <img ng-src="images/badges/{{daily.badge}}.svg" class="circle"/>
                       
                     <b>Teacher says ... </b><i>{{daily.desc}}</i><br>
-                    <a ng-show="daily.type == 'daily'" href="#modallesson" class="modal-action modal-trigger" ng-click="setData(daily.id)">
+                    <!--<a ng-show="daily.type == 'daily'" href="#modallesson" class="modal-action modal-trigger" ng-click="setData(daily.id)">
                         {{daily.name}}
-                    </a> 
+                    </a>-->
+                    <span ng-show="daily.type == 'daily'">{{daily.name}}</span>
                     <span ng-show="daily.type == 'quiz'">{{daily.name}}</span>
                     <p ng-show="daily.date != undefined">{{daily.date}}</p>
                       
