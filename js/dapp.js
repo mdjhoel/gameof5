@@ -550,7 +550,13 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
             pcomms.push(comm)
         }
       }
-      pcomms.slice().sort((a, b) => b.date - a.date)
+      pcomms.sort(function compare(a, b) {
+          var dateParts = a.date.split("/");
+          var dateA = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
+          var dateParts = b.date.split("/");
+          var dateB = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
+          return dateA - dateB;
+      });
       pcomms.reverse();
       return pcomms;
   }
