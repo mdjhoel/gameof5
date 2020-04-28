@@ -57,3 +57,87 @@ div.scrollmenu a {
 div.scrollmenu a:hover {
     background-color: #777;
 }
+
+     .material-icons{
+        display: inline-flex;
+        vertical-align: top;
+      }
+      .sidenav-header {
+          background-color: blue;
+          padding: 10px;
+      }
+      table, tr, td {
+          padding: 0px;
+      }
+
+      .modal { width: 70% !important ; height: 70% !important ; }
+	  
+      .mycardcontent {
+            height: 120px; 
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 20px;
+      }
+      
+      input[type=range]::-webkit-slider-thumb {
+        background-color: blue;
+      }
+      input[type=range]::-moz-range-thumb {
+        background-color: blue;
+      }
+      input[type=range]::-ms-thumb {
+        background-color: blue;
+      }
+
+      /***** These are to edit the thumb and the text inside the thumb *****/
+      input[type=range] + .thumb {
+        background-color: blue;
+      }
+      input[type=range] + .thumb.active .value {
+        color: white;
+      }
+      
+      .collapsible-header, .collapsible-body, .collapsible, ul.collapsible>li 
+        {
+
+          border: 0!important;
+          box-shadow: none!important;
+
+        }
+      
+      /* label focus color */
+     .input-field input:focus + label {
+       color: blue !important;
+     }
+      
+       /* icon prefix focus color */
+       .input-field .prefix.active {
+         color: blue;
+       }
+      
+     /* label underline focus color */
+     .input-field input:focus {
+       border-bottom: 1px solid blue !important;
+       
+       
+     }
+      
+      #g5header {
+          margin: 20px;
+      }
+
+      #g5headername {
+        padding-right: 10px;
+        vertical-align: middle;
+        float: right;
+      }
+
+      #g5headerphoto {
+        margin-top: 5px;
+        margin-right:20px;
+        float: right;
+      } 
+
+    
+    
