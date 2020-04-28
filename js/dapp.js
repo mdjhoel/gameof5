@@ -530,7 +530,12 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
             if (comms[i].type == "daily") {
                 date = comms[i].mydate;
                 xp = comms[i].grade;
-                id = $rootScope.readonly.daily[i].id.id;
+		    
+		if ($rootScope.readonly.daily[i]) {
+                  id = $rootScope.readonly.daily[i].id.id;  
+                } else {
+                  id = -99;
+                }   
             } else {
                 date = comms[i].date;
                 xp = comms[i].xp;
