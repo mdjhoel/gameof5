@@ -108,6 +108,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
           $rootScope.refAllComments = $rootScope.database.ref(dbstring + "/lcomments/");
           $rootScope.allComments = [];
           $rootScope.avgComments = {};
+	  $rootScope.cname = args["cname"];
           
           // GET STUDENT INFO
           $rootScope.refUser.once("value").then(function(snapuser) {
