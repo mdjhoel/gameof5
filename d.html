@@ -68,7 +68,8 @@
             <li class="active" ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
           </ul>
           <!--<span ng-click="nav('includes/dmain.html'); showrecents = !showrecents" class="collection-item new badge white blue-text" style="margin-right: 10px; margin-top:20px; cursor: pointer;">{{user.recents.length}}</span>-->
-        </div>
+          <span class="secondary-content white-text">{{cname}}</span>
+	</div>
       </nav>
     
     <div ng-include="filePath" ></div>
