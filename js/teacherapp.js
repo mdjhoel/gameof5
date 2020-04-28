@@ -1198,9 +1198,11 @@ $rootScope.addquiz = function(item) {
   $rootScope.quizUsers = function(name,index) {
     for (key in $rootScope.cdata.users) {
       var user = $rootScope.cdata.users[key];
-      if (user.confirmed) { // check to see if user is confirmed yet
-        if (user.quizzes[index].name == '') {
-          user.quizzes[index].name = name;
+      if (user.quizzes) {
+        if (user.confirmed) { // check to see if user is confirmed yet
+            if (user.quizzes[index].name == '') {
+              user.quizzes[index].name = name;
+            } 
         } 
       }
       $rootScope.cdata.users[key] = user;
