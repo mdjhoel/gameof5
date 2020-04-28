@@ -25,7 +25,7 @@
                  </g>
               </svg>    
             
-              <span class="title">{{item.unit + '-' + item.name}}</span>
+              <span class="title">{{item.unit + '-' + item.name}} - ( {{item.date }})</span>
               <p>{{item.desc}}<br>
                  <!--<span ng-repeat="k in item.keywords" class="chip blue white-text">{{k}}</span>-->
                   <span ng-show="avgComments[item.id] != undefined" style="background-color: {{avgComments[item.id]['color']}}; color: white; font-size: 10; padding: 3px;"> {{avgComments[item.id]['tip']}} : {{avgComments[item.id]['number']}}</span>
