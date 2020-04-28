@@ -1,0 +1,58 @@
+<div style="margin: 20px;">
+    <div class="input-field col s6 m6 l6">
+        <i class="material-icons prefix">search</i>
+        <input type="text" id="icon_prefix" ng-model="searchString" ng-click="hidekeys=!hidekeys" style="cursor: pointer;">
+        <ul class='collection' ng-show="hidekeys" style="margin-left: 40px; margin-right: 20px">  
+            <li class="collection-item" ng-repeat="keyword in keywords | searchKeys:searchString">{{keyword}}</li>  
+        </ul> 
+    </div>
+
+    <ul class="collection">
+        
+        <!-- added so we can check for show, not shown but with greyed out -->
+        <div ng-repeat="item in readonly.lessons | searchFor:searchString">
+        
+        <!-- if item is shown -->
+        <a class="collection-item avatar modal-action modal-trigger"  href="#modallesson" data={{item.id}} id='data{{$index}}' ng-click="setData(item.id)" ng-show="item.show">
+
+            <svg class="circle" width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                 <g>
+                  <circle cx="30" cy="30" r="25" ng-show="avgComments[item.id] != undefined" fill="{{avgComments[item.id]['color']}}" stroke-width="1" stroke="#000" id="0"/>
+                  <circle cx="30" cy="30" r="25" ng-show="avgComments[item.id] == undefined" fill="none" stroke-width="1" stroke="#000" id="0"/>
+                  <path id="svg_4" d="m38.463044,18.833122c-2.046948,-1.695193 -4.254694,-3.053149 -6.065727,-3.238279c-0.098592,-0.012008 -0.200704,-0.019013 -0.308685,-0.021015l-11.919013,0c-0.190141,0 -0.377934,0.063044 -0.511737,0.180127c-0.132629,0.11408 -0.211268,0.274193 -0.211268,0.437308l0,25.768134c0,0.162114 0.073944,0.317223 0.211268,0.435306c0.137324,0.116082 0.318075,0.179126 0.511737,0.179126l21.553988,0c0.190141,0 0.372066,-0.062044 0.50939,-0.179126c0.137324,-0.117082 0.213615,-0.272192 0.213615,-0.435306l0,-17.147067c-0.042254,-1.990401 -1.870892,-4.160928 -3.983568,-5.979208zm2.535211,22.506839l-20.107979,0l0,-24.535267l11.199529,0l0,0.002001c0.488263,-0.025018 0.909624,0.386272 1.232394,1.326934c0.293427,0.89563 0.367371,2.063452 0.366197,2.873022c0.002347,0.593418 -0.03169,0.991698 -0.03169,0.991698l-0.057512,0.652459l0.769953,0.007005c0.003521,0 1.779343,0.018013 3.521126,0.35525c1.673709,0.308217 2.982394,0.922649 3.10446,1.618139c0.004695,0.062044 0.005869,0.124087 0.004695,0.182128l0,16.526631l-0.001174,0z" fill-opacity="null" stroke-opacity="null" stroke-width="1" stroke="#000" fill="#000"/>
+                  <path d="m26.166666,27.447916c0,1 -0.382685,1.07612 0,2.000002c0.541197,1.306564 1,1 1,1c0,0 0,0 0,0c1,0 1,0 1,0c1,-1 1.999998,-1 3,-2.000002c1.000002,-1.000002 2.000002,-1 3.000002,-2l0,0l1,0l0,0" id="svg_5" fill-opacity="null" stroke-opacity="null" stroke-width="1" stroke="#000" fill="none"/>
+                  <line stroke-linecap="null" stroke-linejoin="null" id="svg_8" y2="35.114583" x2="36" y1="35.114583" x1="24" fill-opacity="null" stroke-opacity="null" stroke-width="1" stroke="#000" fill="none"/>
+                 </g>
+              </svg>    
+            
+              <span class="title">{{item.unit + '-' + item.name}}</span>
+              <p>{{item.desc}}<br>
+                 <!--<span ng-repeat="k in item.keywords" class="chip blue white-text">{{k}}</span>-->
+                  <span ng-show="avgComments[item.id] != undefined" style="background-color: {{avgComments[item.id]['color']}}; color: white; font-size: 10; padding: 3px;"> {{avgComments[item.id]['tip']}} : {{avgComments[item.id]['number']}}</span>
+              </p>
+        </a> <!-- end item shown -->
+        
+        <!-- item not shown, but greyed out OK -->
+        <li class="collection-item avatar" data={{item.id}} id='data{{$index}}' ng-show="!item.show && readonly.settings.show">
+
+            <svg class="circle" width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                 <g style="opacity: .5">
+                  <circle cx="30" cy="30" r="25" ng-show="avgComments[item.id] != undefined" fill="{{avgComments[item.id]['color']}}" stroke-width="1" stroke="#000" id="0"/>
+                  <circle cx="30" cy="30" r="25" ng-show="avgComments[item.id] == undefined" fill="none" stroke-width="1" stroke="#000" id="0"/>
+                  <path id="svg_4" d="m38.463044,18.833122c-2.046948,-1.695193 -4.254694,-3.053149 -6.065727,-3.238279c-0.098592,-0.012008 -0.200704,-0.019013 -0.308685,-0.021015l-11.919013,0c-0.190141,0 -0.377934,0.063044 -0.511737,0.180127c-0.132629,0.11408 -0.211268,0.274193 -0.211268,0.437308l0,25.768134c0,0.162114 0.073944,0.317223 0.211268,0.435306c0.137324,0.116082 0.318075,0.179126 0.511737,0.179126l21.553988,0c0.190141,0 0.372066,-0.062044 0.50939,-0.179126c0.137324,-0.117082 0.213615,-0.272192 0.213615,-0.435306l0,-17.147067c-0.042254,-1.990401 -1.870892,-4.160928 -3.983568,-5.979208zm2.535211,22.506839l-20.107979,0l0,-24.535267l11.199529,0l0,0.002001c0.488263,-0.025018 0.909624,0.386272 1.232394,1.326934c0.293427,0.89563 0.367371,2.063452 0.366197,2.873022c0.002347,0.593418 -0.03169,0.991698 -0.03169,0.991698l-0.057512,0.652459l0.769953,0.007005c0.003521,0 1.779343,0.018013 3.521126,0.35525c1.673709,0.308217 2.982394,0.922649 3.10446,1.618139c0.004695,0.062044 0.005869,0.124087 0.004695,0.182128l0,16.526631l-0.001174,0z" fill-opacity="null" stroke-opacity="null" stroke-width="1" stroke="#000" fill="#000"/>
+                  <path d="m26.166666,27.447916c0,1 -0.382685,1.07612 0,2.000002c0.541197,1.306564 1,1 1,1c0,0 0,0 0,0c1,0 1,0 1,0c1,-1 1.999998,-1 3,-2.000002c1.000002,-1.000002 2.000002,-1 3.000002,-2l0,0l1,0l0,0" id="svg_5" fill-opacity="null" stroke-opacity="null" stroke-width="1" stroke="#000" fill="none"/>
+                  <line stroke-linecap="null" stroke-linejoin="null" id="svg_8" y2="35.114583" x2="36" y1="35.114583" x1="24" fill-opacity="null" stroke-opacity="null" stroke-width="1" stroke="#000" fill="none"/>
+                 </g>
+              </svg>    
+            
+              <span class="title" style="opacity: .5">{{item.unit + '-' + item.name}}</span>
+              <p style="opacity: .5">{{item.desc}}<br>
+                  <span ng-show="avgComments[item.id] != undefined" style="background-color: {{avgComments[item.id]['color']}}; color: white; font-size: 10; padding: 3px;"> {{avgComments[item.id]['tip']}} : {{avgComments[item.id]['number']}}</span>
+              </p>
+        </li>
+        </div>
+    </ul>
+</div>
+
+
+

@@ -1,0 +1,16 @@
+<div style="margin: 20px">
+    <ul class="collection">
+        <li class="collection-item avatar" ng-repeat="cur_user in listArray">
+                <img ng-show="cur_user.photoUrl.indexOf('/mo/') <0" ng-src='{{cur_user.photoUrl}}' alt="{{cur_user.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+                <img ng-show="cur_user.photoUrl.indexOf('/mo/') >0" ng-src='images/tyler-durden.jpg' alt="{{cur_user.name}}" height='50px' class="circle" onerror="this.src='images/tyler-durden.jpg'">
+                <span class="title">{{cur_user.name}}</span><br>
+                <span class="title" style="color: #8bc34a;" ng-show="cur_user.pointstotal > user.avgpoints">{{cur_user.pointstotal}} XP (+ {{cur_user.pointstotal - user.avgpoints}})</span>
+                <span class="title" style="color: red;" ng-show="cur_user.pointstotal < user.avgpoints">{{user.pointstotal}} XP (- {{cur_user.avgpoints - cur_user.pointstotal}})</span><br>
+
+                    <span style="background-color: #8bc34a; padding: 3px; color: white;">Daily XP: {{cur_user.dailytotal}}</span>
+                    <span style="background-color: #2196f3; padding: 3px; color: white;">{{readonly.settings.quizname}}: {{cur_user.quiztotal}}</span>
+                    <span style="background-color: #ff9800; padding: 3px; color: white;">Badge XP: {{cur_user.badgestotal}}</span>
+
+                </li>
+    </ul>
+</div>
