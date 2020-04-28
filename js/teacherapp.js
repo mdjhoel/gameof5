@@ -464,7 +464,6 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
                $rootScope.share = "https://gameof5.com/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname;
             }
 
-            $rootScope.share = "https://gameof5.com/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
             $rootScope.navPath = "includes/nav_admin.html"; // reload tools
             $rootScope.filePath = "includes/admin_lessons.html"; 
         });
