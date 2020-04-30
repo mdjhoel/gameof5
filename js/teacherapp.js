@@ -667,6 +667,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     var users = JSON.parse(delhash);
       
     var userlist = [];
+    var badgeArray = []; // added for analysis
+    var quizArray = [];
+    var pointsArray = [];
        
     if (users == null || users == undefined) {
       console.log("No user updates can be made. $rootScope.cdata.users is null or undefined.");
@@ -817,6 +820,10 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       user.quiztotal = quiztotal;
       user.badgestotal = badgestotal;
       user.pointstotal = pointstotal;
+	    
+      badgeArray.push(badgestotal);
+      quizArray.push(quiztotal);
+      pointsArray.push(pointstotal);
             
       var levels = $rootScope.cdata.readonly.levels;
       if (levels != undefined) {
@@ -852,6 +859,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     //avgpoints = Math.round(pointsforall/userslength);      
     for (key in $rootScope.cdata.users) {
       $rootScope.cdata.users[key].avgpoints = avgpoints;
+      $rootScope.cdata.users[key].badgeArray = badgeArray; // added so analysis can be done
+      $rootScope.cdata.users[key].quizArray = quizArray;
+      $rootScope.cdata.users[key].pointsArray = pointsArray;
     }
     console.log('updated users with average point total ' + avgpoints);
       
