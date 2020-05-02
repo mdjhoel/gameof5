@@ -108,7 +108,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
           $rootScope.refAllComments = $rootScope.database.ref(dbstring + "/lcomments/");
           $rootScope.allComments = [];
           $rootScope.avgComments = {};
-	  $rootScope.cname = args["cname"];
+          $rootScope.cname = args["cname"];
           
           // GET STUDENT INFO
           $rootScope.refUser.once("value").then(function(snapuser) {
@@ -455,7 +455,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
                             }
                         };
                     }// end check for quizzes
-                                     
+                
                   } // if user is found
                     
                 }); // sync angular
@@ -501,6 +501,213 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
   // FUNCTIONS
   // ---------------------------------------------//
     
+    // added for analysis
+    function Quartile(data, q) {
+      data=Array_Sort_Numbers(data);
+      var pos = ((data.length) - 1) * q;
+      var base = Math.floor(pos);
+      var rest = pos - base;
+      if( (data[base+1]!==undefined) ) {
+        return data[base] + rest * (data[base+1] - data[base]);
+      } else {
+        return data[base];
+      }
+    }
+
+    function Array_Sort_Numbers(inputarray){
+      return inputarray.sort(function(a, b) {
+        return a - b;
+      });
+    }
+
+    function Array_Sum(t){
+       return t.reduce(function(a, b) { return a + b; }, 0); 
+    }
+
+    function Array_Average(data) {
+      return Array_Sum(data) / data.length;
+    }
+
+    function Array_Stdev(tab){
+       var i,j,total = 0, mean = 0, diffSqredArr = [];
+       for(i=0;i<tab.length;i+=1){
+           total+=tab[i];
+       }
+       mean = total/tab.length;
+       for(j=0;j<tab.length;j+=1){
+           diffSqredArr.push(Math.pow((tab[j]-mean),2));
+       }
+       return (Math.sqrt(diffSqredArr.reduce(function(firstEl, nextEl){
+                return firstEl + nextEl;
+              })/tab.length));  
+    }
+    
+  function assembleReport(name,avgpts,stdevpts,avgd,sdd,avgq,sdq,ratio,avg,stdev) {
+      reportArray = [];
+      event = "";
+      achiever = ""
+      
+      expect = "usually met"
+      best = "c, creating the solution"
+      
+      sd1factor = .8
+      sd2factor = 1.5
+      
+      sdpts1_high = avgpts + stdevpts
+      sdpts2_high = avgpts + (stdevpts * sd2factor)
+      sdpts1_low = avgpts - stdevpts
+      sdpts2_low = avgpts - (stdevpts * sd2factor)
+      
+      sdd = sdd * sd1factor
+      sdd1_high = avgd + sdd
+      sdd2_high = avgd + (sdd * sd2factor)
+      sdd1_low = avgd - sdd
+      sdd2_low = avgd - (sdd * sd2factor)
+      
+      sdq = sdq * sd1factor
+      sdq1_high = avgq + sdq
+      sdq2_high = avgq + (sdq * sd2factor)
+      sdq1_low = avgq - sdq
+      sdq2_low = avgq - (sdq * sd2factor)
+      
+      stdev = stdev * sd1factor
+      sd1_high = avg + stdev;
+      sd2_high = avg + (stdev * sd2factor);
+      sd1_low = avg - stdev;
+      sd2_low = avg - (stdev * sd2factor);
+      
+      mypts = $rootScope.user.pointstotal
+    
+      // average ratio
+      if (ratio > sd1_low && ratio < sd1_high) {
+        event = "average";
+        if (mypts > sdpts1_high) {
+            achiever = "over and above";
+            if ($rootScope.user.pointstotal > sdpts2_high) { achiever = "excellent"; }
+        } else if (mypts < sdpts1_low) {
+            achiever = "below expected";
+            if ($rootScope.user.pointstotal < sdpts1_low) { achiever = "lack lustre"; }
+        } else {
+            achiever = "the expected";
+        }
+      } else if (ratio < sd1_low) { // high event
+        event = "high";
+        if (ratio < sd2_low) { event = "very high" } 
+        if (mypts > sdpts1_high) {
+            achiever = "over and above";
+            if ($rootScope.user.pointstotal > sdpts2_high) { achiever = "excellent"; }
+        } else if (mypts < sdpts1_low) {
+            achiever = "below expected";
+            if ($rootScope.user.pointstotal < sdpts1_low) { achiever = "lack lustre"; }
+        } else {
+            achiever = "the expected";
+        }
+      } else if (ratio > sd1_high) { // low event
+        event = "below average";
+        if (ratio > sd2_high) { event = "low" } 
+        if (mypts > sdpts1_high) {
+            achiever = "over and above";
+            if ($rootScope.user.pointstotal > sdpts2_high) { achiever = "excellent"; }
+        } else if (mypts < sdpts1_low) {
+            achiever = "below expected";
+            if ($rootScope.user.pointstotal < sdpts1_low) { achiever = "lack lustre"; }
+        } else {
+            achiever = "the expected";
+        }
+      }
+      
+      mydaily = $rootScope.user.dailytotal
+      if (mydaily > sdd1_high) {
+            dachiever = "very good";
+            if (mydaily > sdd2_high) { dachiever = "exceptional"; }
+      } else if (mydaily < sdd1_low) {
+            dachiever = "somewhat modest";
+            if (mydaily < sdd2_low) { dachiever = "quite modest"; }
+      } else {
+            dachiever = "good";
+      }
+      
+      myquiz = $rootScope.user.quiztotal
+      if (myquiz > sdq1_high) {
+            qachiever = "strong";
+            if (myquiz > sdq2_high) { qachiever = "exceptional"; }
+      } else if (myquiz < sdq1_low) {
+            qachiever = "below average";
+            if (myquiz < sdq1_low) { qachiever = "low"; }
+      } else {
+            qachiever = "in order";
+      }
+      
+      report = "During the second term, " + name + "'s impact on the classroom environment was usually " + event + " when compared to his peers. "
+      
+      if (mypts < sdpts1_low) {
+          report = report + "Unfortunately, some of this impact was negative as "
+      } else {
+          report = report + "Overall, "
+      }
+      report = report + "he demonstrated " + achiever + " engagement in discussion and formative assessments."
+      report = report + " For example, his contribution during lessons tended to be " + dachiever + " and his quiz and check-in marks were " + qachiever + "." 
+      report = report + " Academically, " + name + " " + expect + " expectations. He was particularly strong in design criteria " + best + ". ";
+      report = report + name + " is encouraged to continue his design and coding education in the future."
+          
+      reportArray.push(report);
+      reportArray.push(event);
+      reportArray.push(achiever);
+      reportArray.push(dachiever);
+      reportArray.push(qachiever);
+      return reportArray;
+  }
+      
+  // histogram
+  $rootScope.histogram = function() {
+      
+    sortedratio = Array_Sort_Numbers($rootScope.user.ratioArray)
+    sortedratio.pop()
+    sortedratio.shift()
+    $rootScope.user.ratioArray = sortedratio;      
+    stdev = parseFloat(Array_Stdev($rootScope.user.ratioArray))
+    avg = Array_Average($rootScope.user.ratioArray)
+
+    
+    // points  
+    name = $rootScope.user.name.split(" ")[0];
+    avgpts = Array_Average($rootScope.user.pointsArray);
+    stdevpts = Array_Stdev($rootScope.user.pointsArray);
+    // daily
+    avgdaily = Array_Average($rootScope.user.dailyArray);
+    stdevdaily = Array_Stdev($rootScope.user.dailyArray);
+    // quiz
+    avgquiz = Array_Average($rootScope.user.quizArray);
+    stdevquiz = Array_Stdev($rootScope.user.quizArray);
+      
+    reportArray = assembleReport(name,avgpts,stdevpts,avgdaily,stdevdaily,avgquiz,stdevquiz,$rootScope.user.badgeratio,avg,stdev)
+    $rootScope.report = reportArray[0]
+    $rootScope.event = reportArray[1];
+    $rootScope.achiever = reportArray[2];
+    $rootScope.dachiever = reportArray[3];
+    $rootScope.qachiever = reportArray[4];
+      
+    $rootScope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
+    $rootScope.labels = ['-99', '0', '1', '2', '3', '4'];
+    $rootScope.data = [
+    $rootScope.histo,$rootScope.histo
+    ];
+    $rootScope.datasetOverride = [
+      {
+        label: "Bar chart",
+        borderWidth: 1,
+        type: 'bar'
+      },
+      {
+        label: "Line chart",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        type: 'line'
+      }
+    ];
+  }
+      
   // function sorts and makes skills look good
   function sortSkills() {
       skills = []; 
@@ -523,19 +730,21 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       
   // function combines quizzes and comments - poor original design work around
   function combineComments() {
-      comms = [].concat($rootScope.user.daily,$rootScope.user.quizzes)
+      comms = $rootScope.user.daily.concat($rootScope.user.quizzes)
       pcomms = []
+      histo = [0,0,0,0,0,0] // histo
       for (i=0;i<comms.length; i++) {
         if (comms[i].desc != "" && comms[i].desc != "Normal day, nothing to report") {
             if (comms[i].type == "daily") {
                 date = comms[i].mydate;
                 xp = comms[i].grade;
-		    
-		if ($rootScope.readonly.daily[i]) {
+                //console.log($rootScope.readonly.daily[i].id);
+                if ($rootScope.readonly.daily[i]) {
                   id = $rootScope.readonly.daily[i].id.id;  
                 } else {
                   id = -99;
-                }   
+                }
+                
             } else {
                 date = comms[i].date;
                 xp = comms[i].xp;
@@ -546,10 +755,29 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
             } else {
                 badge = comms[i].badge;
             }
+            
+            // collect data for histogram
+            if (xp == 4) {
+                histo[5] = histo[5] + 1;
+            } else if (xp == 3) {
+                histo[4] = histo[4] + 1;
+            } else if (xp == 2) {
+                histo[3] = histo[3] + 1;
+            } else if (xp == 1) {
+                histo[2] = histo[2] + 1;
+            } else if (xp == 0) {
+                histo[1] = histo[1] + 1;
+            } else {
+                histo[0] = histo[0] + 1;
+            }
+                
             comm = {date: date, desc: comms[i].desc, badge: badge, name: comms[i].name, xp: xp, id: id, type: comms[i].type}
             pcomms.push(comm)
-        }
-      }
+        } 
+      }      
+      $rootScope.comm_meta = [comms.length,comms.length - pcomms.length,pcomms.length]; // histo
+      histo[4] = histo[4] + comms.length - pcomms.length; // histo
+      $rootScope.histo = histo; // histo
       pcomms.sort(function compare(a, b) {
           var dateParts = a.date.split("/");
           var dateA = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
@@ -560,9 +788,28 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       pcomms.reverse();
       return pcomms;
   }
-      
+   
   $rootScope.setSearchString = function(keyword) {
       $rootScope.searchString = keyword;
+  }      
+        
+  $rootScope.studentType = function() {
+      
+      console.log($rootScope.allcomms);
+      console.log($rootScope.allskills);
+      console.log("average total",$rootScope.user.avgpoints)
+      console.log("points total",$rootScope.user.pointstotal)
+      console.log("badges total",$rootScope.user.badgestotal)
+      console.log("quiz total", $rootScope.user.quiztotal);
+      console.log("top comments", $rootScope.comm_meta[2]);
+      console.log("non descript", $rootScope.comm_meta[1]);
+      console.log("total comments", $rootScope.comm_meta[0]);
+      console.log("histo", $rootScope.histo);
+      
+      
+      
+      
+      
   }
       
   $rootScope.test = function(myresponse,id) {
@@ -712,8 +959,6 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
     $rootScope.listArray = someArray;
   }
   
-  
-
   function generateSortFn(prop, reverse) {
     return function (a, b) {
         if (a[prop] < b[prop]) return reverse ? 1 : -1;
