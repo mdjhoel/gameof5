@@ -779,11 +779,13 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       histo[4] = histo[4] + comms.length - pcomms.length; // histo
       $rootScope.histo = histo; // histo
       pcomms.sort(function compare(a, b) {
-          var dateParts = a.date.split("/");
-          var dateA = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
-          var dateParts = b.date.split("/");
-          var dateB = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
-          return dateA - dateB;
+	  if (a.date != undefined && b.date != undefined) {
+		  var dateParts = a.date.split("/");
+		  var dateA = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
+		  var dateParts = b.date.split("/");
+		  var dateB = new Date(dateParts[1] + "/" + dateParts[0] + "/" + dateParts[2]); 
+		  return dateA - dateB;
+	  }
       });
       pcomms.reverse();
       return pcomms;
