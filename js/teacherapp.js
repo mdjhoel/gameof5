@@ -449,7 +449,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 		
 	    // check for quiz name
             if ($rootScope.cdata.readonly.settings == undefined) { 
-              $rootScope.cdata.readonly.settings = {show: true, hlink: false, lcomments: false, leadnumber: 5, quizname: "Quiz XP", newui: false, report: false;
+              $rootScope.cdata.readonly.settings = {show: true, hlink: false, lcomments: false, leadnumber: 5, quizname: "Quiz XP", newui: false, report: false};
             }
             if ($rootScope.cdata.readonly.settings == undefined || $rootScope.cdata.readonly.settings.quizname == undefined || $rootScope.cdata.readonly.settings.quizname == "") {
               $rootScope.cdata.readonly.settings.quizname = "Quiz XP";
