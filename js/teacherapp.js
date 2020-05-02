@@ -449,7 +449,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 		
 	    // check for quiz name
             if ($rootScope.cdata.readonly.settings == undefined) { 
-              $rootScope.cdata.readonly.settings = {show: true, hlink: false, lcomments: false, leadnumber: 5, quizname: "Quiz XP"};
+              $rootScope.cdata.readonly.settings = {show: true, hlink: false, lcomments: false, leadnumber: 5, quizname: "Quiz XP", newui: false, report: false;
             }
             if ($rootScope.cdata.readonly.settings == undefined || $rootScope.cdata.readonly.settings.quizname == undefined || $rootScope.cdata.readonly.settings.quizname == "") {
               $rootScope.cdata.readonly.settings.quizname = "Quiz XP";
@@ -667,9 +667,14 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     var users = JSON.parse(delhash);
       
     var userlist = [];
-    var badgeArray = []; // added for analysis
+      
+    // d.html
+    var badgeArray = [];
     var quizArray = [];
     var pointsArray = [];
+    var dailyArray = [];
+    var badgeRatio = []; // d.html
+
        
     if (users == null || users == undefined) {
       console.log("No user updates can be made. $rootScope.cdata.users is null or undefined.");
@@ -678,6 +683,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       
     $rootScope.newusers = undefined;
       
+    // d.html - added for reporting
+      
+    
     // HOEL - add totals for all
     var pointsforall = 0;
     var userslength = Object.keys(users).length;
@@ -693,6 +701,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       var badgelist = [];
       var badgestotal = 0;
       var excused = 0;
+      var count3 = 0; // d.html
+      var countMore = 0;
 
       // if there are no preferences, then add false      
       if (user.preferences == undefined) {
@@ -720,14 +730,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
           if (daily[j].grade != -99) {
             dailytotal = dailytotal + daily[j].grade;
           }
-          
-          if (daily[j].badge != 0) {
+            
+        if (daily[j].desc != "Normal day, nothing to report") { // d.html
+            countMore = countMore + 1; 
+        } else {
+            count3 = count3 + 1; 
+        }
+            
+          if (daily[j].badge != 0 || daily[j].badge != "") {
             badgelist.push(daily[j].badge);
             // if not a normal day
             if (daily[j].grade !=3) {
               badgestotal = badgestotal + daily[j].value;
             }
           }
+            
         }
       }
         
@@ -743,7 +760,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
         for (k = 0; k<quizzes.length; k++) {
 
-          if (user.quizzes[k].grade == -99) { user.quizzes[k].xp = -99; }
+          if (user.quizzes[k].grade == -99) { 
+              user.quizzes[k].xp = -99; 
+          }
             
           if (user.quizzes[k].xp != -99) {
             quiztotal = quiztotal + user.quizzes[k].xp;
@@ -751,20 +770,28 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             excused = excused + 1;
           }
 
-          if (user.quizzes[k].badge != "") {
+        if (user.quizzes[k].desc != "") { // d.html
+            countMore = countMore + 1; 
+        } else {
+            count3 = count3 + 1; 
+        }
+        
+        if (user.quizzes[k].badge != "" || user.quizzes[k].badge != 0) {
             badgelist.push(user.quizzes[k].badge);
+             
+            
             // if not a normal day
             if (user.quizzes[k].xp >3) {
               badgestotal = badgestotal + 1;
             } else if (user.quizzes[k].xp <3) {
               badgestotal = badgestotal - 1;
             }
-	  }
+	      } 
           
             
         }
       }
- 
+     
       // RECENTS
         
         var recents = [];
@@ -813,17 +840,22 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
       var counts = {};
       badgelist.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
-
       pointstotal = dailytotal + quiztotal + badgestotal;
       user.badges = counts;
       user.dailytotal = dailytotal;
       user.quiztotal = quiztotal;
       user.badgestotal = badgestotal;
       user.pointstotal = pointstotal;
-	    
+      //console.log(count3 + " " + countMore + " ratio:" + count3/countMore + " name:" + user.name);
+      user.badgeratio = count3/countMore;
+      badgeRatio.push(count3/countMore); // d.html
+        
+      
       badgeArray.push(badgestotal);
+      dailyArray.push(dailytotal);
       quizArray.push(quiztotal);
-      pointsArray.push(pointstotal);
+      pointsArray.push(pointstotal); 
+      
             
       var levels = $rootScope.cdata.readonly.levels;
       if (levels != undefined) {
@@ -859,9 +891,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     //avgpoints = Math.round(pointsforall/userslength);      
     for (key in $rootScope.cdata.users) {
       $rootScope.cdata.users[key].avgpoints = avgpoints;
-      $rootScope.cdata.users[key].badgeArray = badgeArray; // added so analysis can be done
+      $rootScope.cdata.users[key].badgeArray = badgeArray;
       $rootScope.cdata.users[key].quizArray = quizArray;
+      $rootScope.cdata.users[key].dailyArray = dailyArray;
       $rootScope.cdata.users[key].pointsArray = pointsArray;
+      $rootScope.cdata.users[key].ratioArray = badgeRatio;
     }
     console.log('updated users with average point total ' + avgpoints);
       
