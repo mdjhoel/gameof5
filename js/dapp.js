@@ -630,7 +630,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       myquiz = $rootScope.user.quiztotal
       if (myquiz > sdq1_high) {
             qachiever = "strong";
-            if (myquiz > sdq2_high) { qachiever = "exceptional"; }
+            if (myquiz > sdq2_high) { qachiever = "superior"; }
       } else if (myquiz < sdq1_low) {
             qachiever = "below average";
             if (myquiz < sdq1_low) { qachiever = "low"; }
