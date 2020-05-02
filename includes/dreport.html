@@ -1,0 +1,34 @@
+<div class="row" style="margin: 20px;">
+    <div class="col s12 m6 l6">
+        <h5>Frequency of Teacher Comments</h5>
+        <canvas id="base" class="chart-bar"
+          chart-data="data" chart-labels="labels" chart-colors="colors"
+          chart-dataset-override="datasetOverride">
+        </canvas> 
+        <p>Normally a score of 3 indicates a "normal class, nothing to report", where the student meets basic expectations. A score of 4 indicates an especially good class, while a scores lower than 3 are poor classes.</p>
+    </div>
+    <div class="col s12 m6 l6"> 
+        <div class="col s12">
+            <div class="card">
+                <div class="mycardcontent" style="height: 100%">
+                    <h5>Comment</h5>
+                    <p>{{report}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col s12">
+            <div class="card">
+                <div class="mycardcontent" style="height: 100%">
+                    <h5>Analysis</h5>
+                    <p>Your numbers were compared against two standard deviations of student data to come up with this analysis and comment.</p>
+                    <ul>
+                        <li><i class="Small material-icons blue-text">equalizer</i>Your event ratio (normal days vs comment days) {{user.badgeratio.toFixed(1)}} is {{event}}</li>
+                        <li><i class="Small material-icons light-green-text">insert_chart</i>Your total XP {{user.pointstotal}} is in {{achiever}} range</li>
+                        <li><i class="Small material-icons orange-text">chat_bubble</i>Your daily XP {{user.dailytotal}} is {{dachiever}}</li>
+                        <li><i class="Small material-icons pink-text">create</i>Your {{readonly.settings.quizname}} {{user.dailytotal}} is {{qachiever}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
