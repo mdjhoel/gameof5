@@ -60,12 +60,19 @@
             <li class="active" ng-show="filePath == 'includes/dmain.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
             <li ng-show="filePath == 'includes/dmain.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
             <li ng-show="filePath == 'includes/dmain.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
+            <li ng-show="readonly.settings.report && filePath == 'includes/dmain.html'"><a ng-click="histogram();nav('includes/dreport.html')">Report</a></li>
             <li ng-show="filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
             <li class="active" ng-show="filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
             <li ng-show="filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
-            <li  ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
+            <li ng-show="readonly.settings.report && filePath == 'includes/dlessons.html'"><a ng-click="nav('includes/dreport.html')">Report</a></li>
+            <li ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
             <li ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
             <li class="active" ng-show="filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
+            <li ng-show="readonly.settings.report && filePath == 'includes/dleaders.html'"><a ng-click="nav('includes/dreport.html')">Report</a></li>
+            <li ng-show="filePath == 'includes/dreport.html'"><a ng-click="nav('includes/dmain.html')">Dashboard</a></li>
+            <li ng-show="filePath == 'includes/dreport.html'"><a ng-click="nav('includes/dlessons.html')">Lessons</a></li>
+            <li ng-show="filePath == 'includes/dreport.html'"><a ng-click="nav('includes/dleaders.html')">Leaders</a></li>
+            <li class="active" ng-show="readonly.settings.report && filePath == 'includes/dreport.html'"><a ng-click="nav('includes/dreport.html')">Report</a></li>  
           </ul>
           <!--<span ng-click="nav('includes/dmain.html'); showrecents = !showrecents" class="collection-item new badge white blue-text" style="margin-right: 10px; margin-top:20px; cursor: pointer;">{{user.recents.length}}</span>-->
           <span class="secondary-content white-text">{{cname}}</span>
