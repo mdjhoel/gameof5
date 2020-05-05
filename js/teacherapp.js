@@ -449,7 +449,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 		
 	    // check for quiz name
             if ($rootScope.cdata.readonly.settings == undefined) { 
-              $rootScope.cdata.readonly.settings = {show: true, hlink: false, lcomments: false, leadnumber: 5, quizname: "Quiz XP", newui: false, report: false};
+              $rootScope.cdata.readonly.settings = {show: true, hlink: false, lcomments: false, leadnumber: 5, quizname: "Quiz XP", newui: false, report: false, impactadj: "high, above average, average, below average, low", totaladj: "poor, mediocre, on par, very good, superb", dailyadj: "quite modest, modest, as expected, high, very high", quizadj: "disapointing,below expectations,in order,very good, superior"};
             }
             if ($rootScope.cdata.readonly.settings == undefined || $rootScope.cdata.readonly.settings.quizname == undefined || $rootScope.cdata.readonly.settings.quizname == "") {
               $rootScope.cdata.readonly.settings.quizname = "Quiz XP";
