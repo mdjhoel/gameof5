@@ -385,6 +385,22 @@
                         </div>
                     </td>
                 </tr>
+		      
+		<tr ng-show="cdata.readonly.settings.report">
+                    <td>
+                        <div>
+                            <b>Report Adjectives</b><br>
+                            <label for="impactadj">Impact (very high, high, average, low, very low)</label>
+                            <input type="text" id="impactadj" ng-model="cdata.readonly.settings.impactadj">
+                            <label for="totaladj">Total (very low, low, average, high, very high)</label>
+                            <input type="text" id="totaladj" ng-model="cdata.readonly.settings.totaladj">
+                            <label for="dailyadj">Daily (very low, low, average, high, very high)</label>
+                            <input type="text" id="dailyadj" ng-model="cdata.readonly.settings.dailyadj">
+                            <label for="quizadj">Quiz (very low, low, average, high, very high)</label>
+                            <input type="text" id="quizadj" ng-model="cdata.readonly.settings.quizadj">
+                        </div>
+                    </td>
+                </tr>
 		    
 		<tr>
                     <td>Number on leaderboard</td>
