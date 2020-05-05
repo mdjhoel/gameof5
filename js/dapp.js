@@ -558,24 +558,33 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
   }
       
       
-  function getReport(name,myadjlist,bpArray) {
+ function getReport(name,myadjlist,bpArray) {
       myratio = $rootScope.user.badgeratio; mypts = $rootScope.user.pointstotal; mydaily = $rootScope.user.dailytotal; myquiz = $rootScope.user.quiztotal;
       
       // myadjlist - [imp,pts,daily,quiz]["low, below average, average, above average, excellent"]
       // bpArray - [imp,pts,daily,quiz][avg,high,high2,low,low2]
-      report = "During the second term, " + name + "'s impact on the classroom environment was usually " + myadjlist[0] + " when compared to his peers. "
       
-      if ((myratio > bpArray[0][1]) && (mypts < bpArray[1][3])) { // if ratio below avg && low pts
+      report = "During the second term, " + name + "'s impact on the classroom environment was usually " + myadjlist[0] + " when compared to his peers. "
+      badges = Object.keys($rootScope.user.badges);
+      for (i=0;i<badges.length;i++) {
+          if (badges[i] == "calendar") { 
+              if ($rootScope.user.badges['calendar'] >=3) {
+                  report = "During the second term, " + name + " missed a number of classes, reducing his impact on the classroom environment. "
+              } 
+          }
+      }
+      
+      if ((myratio < bpArray[0][3]) && (mypts < bpArray[1][2])) { // ratio high && low pts
           report = report + "Unfortunately, not all of his impact was positive as "
-      } else if ((myratio < bpArray[0][1]) && (mypts < bpArray[1][0])) { 
-          report = report + "In general, he seemed content to take in the proceedings quietly and "
+      } else if ((myratio < bpArray[0][1]) && (mypts < bpArray[1][1])) { // ratio low, low pts
+          report = report + "In general, he seemed content to quietly observe proceedings and  "
       } else {
-          report = report + "Overall, "
+          report = report + "Overall, " // not high ratio/low pts, not low ratio low pts
       }
       report = report + "he demonstrated " + myadjlist[1] + " engagement in day to day course work."
       
       
-      if ((mydaily >= bpArray[2][0] && myquiz >= bpArray[3][0]) || (mydaily <= bpArray[2][0] && myquiz <= bpArray[3][0])) {
+      if ((mydaily >= bpArray[2][0] && myquiz >= bpArray[3][0]) || (mydaily < bpArray[2][0] && myquiz < bpArray[3][0])) {
           report = report + " His contributions during lessons tended to be " + myadjlist[2] + " and his quiz and check-in marks were " + myadjlist[3] + "."
       } else {
           report = report + " More specifically, his contributions during lessons tended to be " + myadjlist[2] + " but his quiz and check-in marks were " + myadjlist[3] + "."
