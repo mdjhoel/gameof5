@@ -20,12 +20,12 @@
             <div class="card">
                 <div class="mycardcontent" style="height: 100%">
                     <h5>Analysis</h5>
-                    <p>Your numbers were compared against two standard deviations of student data to come up with this analysis and comment.</p>
+                    <p>Your numbers were compared against student data to come up with this analysis and comment.</p>
                     <ul>
-                        <li><i class="Small material-icons blue-text">equalizer</i>Your event ratio (normal days vs comment days) {{user.badgeratio.toFixed(1)}} is {{event}}</li>
-                        <li><i class="Small material-icons light-green-text">insert_chart</i>Your total XP {{user.pointstotal}} is in {{achiever}} range</li>
-                        <li><i class="Small material-icons orange-text">chat_bubble</i>Your daily XP {{user.dailytotal}} is {{dachiever}}</li>
-                        <li><i class="Small material-icons pink-text">create</i>Your {{readonly.settings.quizname}} {{user.dailytotal}} is {{qachiever}}</li>
+                        <li><i class="Small material-icons blue-text">equalizer</i>Impact ratio is {{user.badgeratio.toFixed(2)}} is {{myadjlist[0]}} (avg:{{bpArray[0][0].toFixed(2)}}, avghigh:{{bpArray[0][3].toFixed(2)}}, avglow:{{bpArray[0][1].toFixed(2)}})</li>
+                        <li><i class="Small material-icons light-green-text">insert_chart</i>Total XP {{user.pointstotal}} is {{myadjlist[1]}} (avg:{{bpArray[1][0].toFixed(1)}}, avglow:{{bpArray[1][3].toFixed(1)}}, avghigh:{{bpArray[1][1].toFixed(1)}})</li>
+                        <li><i class="Small material-icons orange-text">chat_bubble</i>Daily XP {{user.dailytotal}} is {{myadjlist[2]}} (avg:{{bpArray[2][0].toFixed(1)}}, avglow:{{bpArray[2][3].toFixed(1)}}, avghigh:{{bpArray[2][1].toFixed(1)}})</li>
+                        <li><i class="Small material-icons pink-text">create</i> {{readonly.settings.quizname}} {{user.dailytotal}} is {{myadjlist[3]}} (avg:{{bpArray[3][0].toFixed(1)}}, avglow:{{bpArray[3][3].toFixed(1)}}, avghigh:{{bpArray[3][1].toFixed(1)}})</li>
                     </ul>
                 </div>
             </div>
