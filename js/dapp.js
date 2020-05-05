@@ -501,6 +501,147 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
   // FUNCTIONS
   // ---------------------------------------------//
     
+  function getBP(avg,stdev) {
+      //var factor1 = .7
+      //var factor2 = 1.5
+      var factor1 = .7
+      var factor2 = 1.25
+      
+      var high = avg + stdev * factor1;
+      var high2 = avg + stdev * factor2;
+      var low = avg - stdev * factor1;
+      var low2 = avg - stdev * factor2;
+      
+      return [avg,high,high2,low,low2];
+  }
+      
+  function getAdj() {
+      s = $rootScope.readonly.settings;
+      inputlist = [s.impactadj,s.totaladj,s.dailyadj,s.quizadj];
+      for (i=0; i<inputlist.length;i++) {
+        if (inputlist[i]==undefined) {
+          inputlist[i] = ["low, below average, average, above average, excellent"];
+        } else {
+          inputlist[i] = inputlist[i].split(",");
+          if (inputlist[i].length != 5) {
+              inputlist[i] = ["low, below average, average, above average, excellent"];
+          }
+        }
+      }
+      return inputlist;
+  }  
+      
+  function getMyadj(adjArray,bpArray) {
+      myratio = $rootScope.user.badgeratio; mypts = $rootScope.user.pointstotal; mydaily = $rootScope.user.dailytotal; myquiz = $rootScope.user.quiztotal;
+      
+      // myadjlist - [imp,pts,daily,quiz]["low, below average, average, above average, excellent"]
+      // bpArray - [imp,pts,daily,quiz][avg,high,high2,low,low2]
+      
+      mydata = [myratio,mypts,mydaily,myquiz];
+      myadjlist = [];
+      
+      for (i=0;i<4;i++) {
+        if (mydata[i] > bpArray[i][1]) { // test for better than averge
+            temp = adjArray[i][3]; 
+            if (mydata[i] > bpArray[i][2]) { temp = adjArray[i][4]; } // way better
+        } else if (mydata[i] < bpArray[i][3]) {
+            temp = adjArray[i][1]; // test for worse
+            if (mydata[i] < bpArray[i][4]) { temp = adjArray[i][0]; } // way worse
+        } else {
+            temp = adjArray[i][2]; // average
+        }
+        myadjlist.push(temp);
+      }
+          
+      return myadjlist;
+      
+  }
+      
+      
+  function getReport(name,myadjlist,bpArray) {
+      myratio = $rootScope.user.badgeratio; mypts = $rootScope.user.pointstotal; mydaily = $rootScope.user.dailytotal; myquiz = $rootScope.user.quiztotal;
+      
+      // myadjlist - [imp,pts,daily,quiz]["low, below average, average, above average, excellent"]
+      // bpArray - [imp,pts,daily,quiz][avg,high,high2,low,low2]
+      report = "During the second term, " + name + "'s impact on the classroom environment was usually " + myadjlist[0] + " when compared to his peers. "
+      
+      if ((myratio > bpArray[0][1]) && (mypts < bpArray[1][3])) { // if ratio below avg && low pts
+          report = report + "Unfortunately, not all of his impact was positive as "
+      } else if ((myratio < bpArray[0][1]) && (mypts < bpArray[1][0])) { 
+          report = report + "In general, he seemed content to take in the proceedings quietly and "
+      } else {
+          report = report + "Overall, "
+      }
+      report = report + "he demonstrated " + myadjlist[1] + " engagement in day to day course work."
+      
+      
+      if ((mydaily >= bpArray[2][0] && myquiz >= bpArray[3][0]) || (mydaily <= bpArray[2][0] && myquiz <= bpArray[3][0])) {
+          report = report + " His contributions during lessons tended to be " + myadjlist[2] + " and his quiz and check-in marks were " + myadjlist[3] + "."
+      } else {
+          report = report + " More specifically, his contributions during lessons tended to be " + myadjlist[2] + " but his quiz and check-in marks were " + myadjlist[3] + "."
+      }
+       
+      report = report + " Academically, " + name + " sometimes/usually/always met expectations (TBD). He was particularly strong in design criteria a/b/c/d. " + name + "'s quality of work declined/remained the same/improved in the final term. ";
+      report = report + "He is encouraged to continue his design and coding education in the future."
+      
+      return report;
+      
+  }
+      
+  $rootScope.genReport = function() {
+     
+    // sort and remove extreme data (top and bottom)
+    var sortedratio = Array_Sort_Numbers($rootScope.user.ratioArray)
+    sortedratio.pop(); sortedratio.shift()
+      
+    // get breakpoints
+    var bpArray = [];
+    var data = [sortedratio,$rootScope.user.pointsArray,$rootScope.user.dailyArray,$rootScope.user.quizArray];
+    for (i=0;i<4;i++) {
+        bpArray.push(getBP(Array_Average(data[i]),Array_Stdev(data[i])));
+    }
+      
+    // get adjectives, make sure there are 5
+    var adjlist = getAdj();
+      
+    // generate my adjectives
+    var myadjlist = getMyadj(adjlist,bpArray)
+    
+    // generate report comment
+    var name = $rootScope.user.name.split(" ")[0];
+    $rootScope.report = getReport(name,myadjlist,bpArray);
+    console.log($rootScope.report)
+      
+    $rootScope.myadjlist = myadjlist;
+    $rootScope.bpArray = bpArray;
+      
+    // create histogram
+    histogram();
+      
+  }
+  
+  function histogram() {
+    $rootScope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
+    $rootScope.labels = ['-99', '0', '1', '2', '3', '4'];
+    $rootScope.data = [
+    $rootScope.histo,$rootScope.histo
+    ];
+    $rootScope.datasetOverride = [
+      {
+        label: "Bar chart",
+        borderWidth: 1,
+        type: 'bar'
+      },
+      {
+        label: "Line chart",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        type: 'line'
+      }
+    ];
+  }
+	  
     // added for analysis
     function Quartile(data, q) {
       data=Array_Sort_Numbers(data);
@@ -541,172 +682,6 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
                 return firstEl + nextEl;
               })/tab.length));  
     }
-    
-  function assembleReport(name,avgpts,stdevpts,avgd,sdd,avgq,sdq,ratio,avg,stdev) {
-      reportArray = [];
-      event = "";
-      achiever = ""
-      
-      expect = "usually met"
-      best = "c, creating the solution"
-      
-      sd1factor = .8
-      sd2factor = 1.5
-      
-      sdpts1_high = avgpts + stdevpts
-      sdpts2_high = avgpts + (stdevpts * sd2factor)
-      sdpts1_low = avgpts - stdevpts
-      sdpts2_low = avgpts - (stdevpts * sd2factor)
-      
-      sdd = sdd * sd1factor
-      sdd1_high = avgd + sdd
-      sdd2_high = avgd + (sdd * sd2factor)
-      sdd1_low = avgd - sdd
-      sdd2_low = avgd - (sdd * sd2factor)
-      
-      sdq = sdq * sd1factor
-      sdq1_high = avgq + sdq
-      sdq2_high = avgq + (sdq * sd2factor)
-      sdq1_low = avgq - sdq
-      sdq2_low = avgq - (sdq * sd2factor)
-      
-      stdev = stdev * sd1factor
-      sd1_high = avg + stdev;
-      sd2_high = avg + (stdev * sd2factor);
-      sd1_low = avg - stdev;
-      sd2_low = avg - (stdev * sd2factor);
-      
-      mypts = $rootScope.user.pointstotal
-    
-      // average ratio
-      if (ratio > sd1_low && ratio < sd1_high) {
-        event = "average";
-        if (mypts > sdpts1_high) {
-            achiever = "over and above";
-            if ($rootScope.user.pointstotal > sdpts2_high) { achiever = "excellent"; }
-        } else if (mypts < sdpts1_low) {
-            achiever = "below expected";
-            if ($rootScope.user.pointstotal < sdpts1_low) { achiever = "lack lustre"; }
-        } else {
-            achiever = "the expected";
-        }
-      } else if (ratio < sd1_low) { // high event
-        event = "high";
-        if (ratio < sd2_low) { event = "very high" } 
-        if (mypts > sdpts1_high) {
-            achiever = "over and above";
-            if ($rootScope.user.pointstotal > sdpts2_high) { achiever = "excellent"; }
-        } else if (mypts < sdpts1_low) {
-            achiever = "below expected";
-            if ($rootScope.user.pointstotal < sdpts1_low) { achiever = "lack lustre"; }
-        } else {
-            achiever = "the expected";
-        }
-      } else if (ratio > sd1_high) { // low event
-        event = "below average";
-        if (ratio > sd2_high) { event = "low" } 
-        if (mypts > sdpts1_high) {
-            achiever = "over and above";
-            if ($rootScope.user.pointstotal > sdpts2_high) { achiever = "excellent"; }
-        } else if (mypts < sdpts1_low) {
-            achiever = "below expected";
-            if ($rootScope.user.pointstotal < sdpts1_low) { achiever = "lack lustre"; }
-        } else {
-            achiever = "the expected";
-        }
-      }
-      
-      mydaily = $rootScope.user.dailytotal
-      if (mydaily > sdd1_high) {
-            dachiever = "very good";
-            if (mydaily > sdd2_high) { dachiever = "exceptional"; }
-      } else if (mydaily < sdd1_low) {
-            dachiever = "somewhat modest";
-            if (mydaily < sdd2_low) { dachiever = "quite modest"; }
-      } else {
-            dachiever = "good";
-      }
-      
-      myquiz = $rootScope.user.quiztotal
-      if (myquiz > sdq1_high) {
-            qachiever = "strong";
-            if (myquiz > sdq2_high) { qachiever = "superior"; }
-      } else if (myquiz < sdq1_low) {
-            qachiever = "below average";
-            if (myquiz < sdq1_low) { qachiever = "low"; }
-      } else {
-            qachiever = "in order";
-      }
-      
-      report = "During the second term, " + name + "'s impact on the classroom environment was usually " + event + " when compared to his peers. "
-      
-      if (mypts < sdpts1_low) {
-          report = report + "Unfortunately, some of this impact was negative as "
-      } else {
-          report = report + "Overall, "
-      }
-      report = report + "he demonstrated " + achiever + " engagement in discussion and formative assessments."
-      report = report + " For example, his contribution during lessons tended to be " + dachiever + " and his quiz and check-in marks were " + qachiever + "." 
-      report = report + " Academically, " + name + " " + expect + " expectations. He was particularly strong in design criteria " + best + ". ";
-      report = report + name + " is encouraged to continue his design and coding education in the future."
-          
-      reportArray.push(report);
-      reportArray.push(event);
-      reportArray.push(achiever);
-      reportArray.push(dachiever);
-      reportArray.push(qachiever);
-      return reportArray;
-  }
-      
-  // histogram
-  $rootScope.histogram = function() {
-      
-    sortedratio = Array_Sort_Numbers($rootScope.user.ratioArray)
-    sortedratio.pop()
-    sortedratio.shift()
-    $rootScope.user.ratioArray = sortedratio;      
-    stdev = parseFloat(Array_Stdev($rootScope.user.ratioArray))
-    avg = Array_Average($rootScope.user.ratioArray)
-
-    
-    // points  
-    name = $rootScope.user.name.split(" ")[0];
-    avgpts = Array_Average($rootScope.user.pointsArray);
-    stdevpts = Array_Stdev($rootScope.user.pointsArray);
-    // daily
-    avgdaily = Array_Average($rootScope.user.dailyArray);
-    stdevdaily = Array_Stdev($rootScope.user.dailyArray);
-    // quiz
-    avgquiz = Array_Average($rootScope.user.quizArray);
-    stdevquiz = Array_Stdev($rootScope.user.quizArray);
-      
-    reportArray = assembleReport(name,avgpts,stdevpts,avgdaily,stdevdaily,avgquiz,stdevquiz,$rootScope.user.badgeratio,avg,stdev)
-    $rootScope.report = reportArray[0]
-    $rootScope.event = reportArray[1];
-    $rootScope.achiever = reportArray[2];
-    $rootScope.dachiever = reportArray[3];
-    $rootScope.qachiever = reportArray[4];
-      
-    $rootScope.colors = ['#45b7cd', '#ff6384', '#ff8e72'];
-    $rootScope.labels = ['-99', '0', '1', '2', '3', '4'];
-    $rootScope.data = [
-    $rootScope.histo,$rootScope.histo
-    ];
-    $rootScope.datasetOverride = [
-      {
-        label: "Bar chart",
-        borderWidth: 1,
-        type: 'bar'
-      },
-      {
-        label: "Line chart",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        type: 'line'
-      }
-    ];
-  }
       
   // function sorts and makes skills look good
   function sortSkills() {
