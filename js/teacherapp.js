@@ -138,6 +138,159 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
     // FUNCTIONS
     // ---------------------------------------------//
       
+    $rootScope.makeCSV = function() {
+        // remove worst ratio - could be teacher
+        var users = Object.values($rootScope.cdata.users)
+        var sortedratio = Array_Sort_Numbers(users[0].ratioArray);
+        sortedratio.pop();
+        ptsArray = users[0].pointsArray;
+        dailyArray = users[0].dailyArray;
+        quizArray = users[0].quizArray;
+        
+        /*
+        data = [sortedratio,ptsArray,dailyArray,quizArray];
+        ranks = [];
+        for (i = 0; i<4; i++) {
+            avg = Array_Average(data[i]);
+            std = Array_Stdev(data[i]);
+            std = std * .3
+            //console.log(avg,std);
+            ranks.push([avg,std]);
+        }
+        //console.log(ranks);
+        */
+        
+        csv = "<b>email,impact,points,daily,quiz</b><br>";
+        for (i = 0; i<users.length; i++) {
+            u = users[i];
+            imp = percentRank2(sortedratio,u.badgeratio) * 100;
+            if ((imp*100) > 50) {
+                flip = 100 - imp;
+                imp = 0 + flip
+            } else {
+                imp = 100 - imp
+            }
+            pts = percentRank2(ptsArray,u.pointstotal)*100;
+            daily = percentRank2(dailyArray,u.dailytotal)*100;
+            quiz = percentRank2(quizArray,u.quiztotal)*100;
+            mydata = [u.badgeratio,u.pointstotal,u.dailytotal,u.quiztotal];
+            //std = stdrank(ranks,mydata);
+            //console.log(std);
+            sigdig = 0
+            //csv = csv + u.email + "," + imp.toFixed(sigdig) + "," + pts.toFixed(sigdig) + "," + daily.toFixed(sigdig) + "," + quiz.toFixed(sigdig) + "," + std[0] + "," + std[1] + "," + std[2] + "," + std[3] + "<br>";
+            
+            csv = csv + u.email + "," + imp.toFixed(sigdig) + "," + pts.toFixed(sigdig) + "," + daily.toFixed(sigdig) + "," + quiz.toFixed(sigdig) + "<br>";
+            
+        }
+        $rootScope.csv = csv;
+    }
+     
+    function stdrank(ranks,mydata) {
+        arr = [];
+        
+        // take care of badgeratio 
+        avglow = (ranks[0][0] - ranks[0][1]);
+        avghigh = (ranks[0][0] + ranks[0][1]);
+        
+        if (mydata[0] >= avglow && mydata[0] <= avghigh) {
+            num = 0; // average band
+        } else if (mydata[0] > avghigh) { // less than 1 stdev
+            num = -1;
+        } else if (mydata[0] > (2*avghigh)) { // less than 2 stdev
+            num = -2;
+        } else if (mydata[0] < avglow) {
+            num = 1;
+        } else {
+            num = 2;
+        }
+        console.log(avglow,ranks[0][0],avghigh);
+        arr.push(num)
+        
+        
+        //return arr;
+        
+        for (r=1;r<4;r++) {
+            avglow = (ranks[r][0] - ranks[r][1]);
+            avghigh = (ranks[r][0] + ranks[r][1]);   
+            if (mydata[r] >= avglow && mydata[0] <= avghigh) {
+                num = 0; // average band
+            } else if (mydata[r] > avghigh) { // less than 1 stdev
+                num = 1;
+            } else if (mydata[r] > (2*avghigh)) { // less than 2 stdev
+                num = 2;
+            } else if (mydata[r] < avglow) {
+                num = -1;
+            } else {
+                num = -2;
+            }
+            arr.push(num)
+        }
+        return arr;
+    }
+        
+    // https://gist.github.com/IceCreamYou/6ffa1b18c4c8f6aeaad2        
+    function percentRank2(array, n) {
+        var L = 0;
+        var S = 0;
+        var N = array.length
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] < n) {
+                L += 1
+            } else if (array[i] === n) {
+                S += 1
+            } else {
+
+            }
+        }
+
+        var pct = (L + (0.5 * S)) / N
+
+        return pct
+    }
+    
+    // added for analysis
+    function Quartile(data, q) {
+      data=Array_Sort_Numbers(data);
+      var pos = ((data.length) - 1) * q;
+      var base = Math.floor(pos);
+      var rest = pos - base;
+      if( (data[base+1]!==undefined) ) {
+        return data[base] + rest * (data[base+1] - data[base]);
+      } else {
+        return data[base];
+      }
+    }
+
+    function Array_Sort_Numbers(inputarray){
+      return inputarray.sort(function(a, b) {
+        return a - b;
+      });
+    }
+
+    function Array_Sum(t){
+       return t.reduce(function(a, b) { return a + b; }, 0); 
+    }
+
+    function Array_Average(data) {
+      return Array_Sum(data) / data.length;
+    }
+
+    function Array_Stdev(tab){
+       var i,j,total = 0, mean = 0, diffSqredArr = [];
+       for(i=0;i<tab.length;i+=1){
+           total+=tab[i];
+       }
+       mean = total/tab.length;
+       for(j=0;j<tab.length;j+=1){
+           diffSqredArr.push(Math.pow((tab[j]-mean),2));
+       }
+       return (Math.sqrt(diffSqredArr.reduce(function(firstEl, nextEl){
+                return firstEl + nextEl;
+              })/tab.length));  
+    }
+	  
+	 
     // Save admin school settings
     $rootScope.saveSchool = function() {
 
