@@ -178,20 +178,21 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             badgelist = u.badges;
             delete badgelist.undefined;
             keys = Object.keys(badgelist);
-            blist = {};
+            mylist = {};
             for (b=0;b<keys.length;b++) {
                 key = keys[b];
                 val = badgelist[key];
                 if (val >= 3) {
                     for (n=0;n<badgenames.length;n++) {
                         if (badgenames[n]['id'] == key) {
-                            blist[badgenames[n]['name']] = badgelist[key];
+                            mylist[badgenames[n]['name']] = badgelist[key] * [badgenames[n]['value']];
                             break;
                         }
                     }
                 }
             }
-            blist = JSON.stringify(blist);
+            str = JSON.stringify(mylist);
+            blist = str.replace(/,/g, "/");
 
             mydata = [u.badgeratio,u.pointstotal,u.dailytotal,u.quiztotal];
             //std = stdrank(ranks,mydata);
