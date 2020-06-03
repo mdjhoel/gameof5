@@ -145,7 +145,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         sortedratio.pop();
         ptsArray = users[0].pointsArray;
         dailyArray = users[0].dailyArray;
-        quizArray = users[0].quizArray;
+        quizArray = users[0].quizArray;       
+        badgenames = $rootScope.cdata.readonly.badges;
         
         /*
         data = [sortedratio,ptsArray,dailyArray,quizArray];
@@ -160,7 +161,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
         //console.log(ranks);
         */
         
-        csv = "<b>email,impact,points,daily,quiz</b><br>";
+        csv = "<b>email,impact,points,daily,quiz,badge,badgelist</b><br>";
         for (i = 0; i<users.length; i++) {
             u = users[i];
             imp = percentRank2(sortedratio,u.badgeratio) * 100;
@@ -173,13 +174,31 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             pts = percentRank2(ptsArray,u.pointstotal)*100;
             daily = percentRank2(dailyArray,u.dailytotal)*100;
             quiz = percentRank2(quizArray,u.quiztotal)*100;
+            badges = u.badgestotal;
+            badgelist = u.badges;
+            delete badgelist.undefined;
+            keys = Object.keys(badgelist);
+            blist = {};
+            for (b=0;b<keys.length;b++) {
+                key = keys[b];
+                val = badgelist[key];
+                if (val >= 3) {
+                    for (n=0;n<badgenames.length;n++) {
+                        if (badgenames[n]['id'] == key) {
+                            blist[badgenames[n]['name']] = badgelist[key];
+                            break;
+                        }
+                    }
+                }
+            }
+            blist = JSON.stringify(blist);
+
             mydata = [u.badgeratio,u.pointstotal,u.dailytotal,u.quiztotal];
             //std = stdrank(ranks,mydata);
-            //console.log(std);
             sigdig = 0
             //csv = csv + u.email + "," + imp.toFixed(sigdig) + "," + pts.toFixed(sigdig) + "," + daily.toFixed(sigdig) + "," + quiz.toFixed(sigdig) + "," + std[0] + "," + std[1] + "," + std[2] + "," + std[3] + "<br>";
             
-            csv = csv + u.email + "," + imp.toFixed(sigdig) + "," + pts.toFixed(sigdig) + "," + daily.toFixed(sigdig) + "," + quiz.toFixed(sigdig) + "<br>";
+            csv = csv + u.email + "," + imp.toFixed(sigdig) + "," + pts.toFixed(sigdig) + "," + daily.toFixed(sigdig) + "," + quiz.toFixed(sigdig) + "," + badges + "," + blist + "<br>";
             
         }
         $rootScope.csv = csv;
