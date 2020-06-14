@@ -1366,9 +1366,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   $rootScope.addsegment = function (parent) {
 
     if ($rootScope.cdata.readonly.lessons[parent].segments == undefined) { $rootScope.cdata.readonly.lessons[parent].segments = []; }
-    if ($rootScope.cdata.readonly.lessons[parent].segments.length <5) { // only allowed 5! gameof5!
+    //if ($rootScope.cdata.readonly.lessons[parent].segments.length <5) { // only allowed 5! gameof5!
       $rootScope.cdata.readonly.lessons[parent].segments.unshift({title:"",text:"",segimg:"",seglink:""});
-    }
+    //}
   }
 
   // Remove some data from the rootScope
