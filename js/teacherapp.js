@@ -996,16 +996,18 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
                   }
             }
 
-            if (lessons[i].date != undefined && lessons[i] != undefined && lessons[i].date != undefined) {
-                  var p = lessons[i].date.split("/");
-                  var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
-                  td = timeDifference(current, previous)
-                  if (td < 7) {
-                    lessons[i].type = "lesson";
-                    lessons[i].past = td;
-                    recents.push(lessons[i]);                        
-                  }
-            }
+	    if (lessons != undefined && lessons[i] != undefined) {
+		    if (lessons[i].date != undefined && lessons[i] != undefined && lessons[i].date != undefined) {
+			  var p = lessons[i].date.split("/");
+			  var previous = Date.parse(p[1] + "/" + p[0] + "/" + p[2]);
+			  td = timeDifference(current, previous)
+			  if (td < 7) {
+			    lessons[i].type = "lesson";
+			    lessons[i].past = td;
+			    recents.push(lessons[i]);                        
+			  }
+		    }
+	    }
             
         }
 
