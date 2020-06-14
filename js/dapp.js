@@ -694,6 +694,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       
   // function sorts and makes skills look good
   function sortSkills() {
+      if ($rootScope.readonly.badges != undefined) {
       skills = []; 
       explans = Object.values($rootScope.readonly.badges);
       keys = Object.keys($rootScope.user.badges);
@@ -710,10 +711,12 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       
       skills.sort(generateSortFn('number', true));
       return skills;
+      }
   }
       
   // function combines quizzes and comments - poor original design work around
   function combineComments() {
+      if ($rootScope.user.daily != undefined) {
       comms = $rootScope.user.daily.concat($rootScope.user.quizzes)
       pcomms = []
       histo = [0,0,0,0,0,0] // histo
@@ -773,6 +776,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       });
       pcomms.reverse();
       return pcomms;
+      }
   }
    
   $rootScope.setSearchString = function(keyword) {
