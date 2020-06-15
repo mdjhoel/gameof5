@@ -716,7 +716,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       
   // function combines quizzes and comments - poor original design work around
   function combineComments() {
-      if ($rootScope.user.daily != undefined) {
+      if ($rootScope.user.daily != undefined && $rootScope.user.quizzes != undefined) {
       comms = $rootScope.user.daily.concat($rootScope.user.quizzes)
       pcomms = []
       histo = [0,0,0,0,0,0] // histo
