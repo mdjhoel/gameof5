@@ -694,7 +694,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       
   // function sorts and makes skills look good
   function sortSkills() {
-      if ($rootScope.readonly.badges != undefined) {
+      if ($rootScope.readonly.badges != undefined || $rootScope.readonly.badges != null) {
       skills = []; 
       explans = Object.values($rootScope.readonly.badges);
       keys = Object.keys($rootScope.user.badges);
