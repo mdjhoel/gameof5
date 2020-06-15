@@ -717,7 +717,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       
   // function combines quizzes and comments - poor original design work around
   function combineComments() {
-      if ($rootScope.user.daily != undefined && $rootScope.user.quizzes != undefined) {
+      if ($rootScope.user.daily == undefined && $rootScope.user.quizzes == undefined) {
           return;
       }
       if ($rootScope.user.quizzes == undefined) {
