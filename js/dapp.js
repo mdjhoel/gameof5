@@ -725,8 +725,7 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       } else {
          comms = $rootScope.user.daily.concat($rootScope.user.quizzes) 
       }
-	  
-      comms = $rootScope.user.daily.concat($rootScope.user.quizzes)
+	 
       pcomms = []
       histo = [0,0,0,0,0,0] // histo
       for (i=0;i<comms.length; i++) {
