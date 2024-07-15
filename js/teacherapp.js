@@ -332,8 +332,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 
     $rootScope.signin = function() {
       var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider).then(function(result) {  
-      });
+      //firebase.auth().signInWithRedirect(provider).then(function(result){});
+      firebase.auth().signInWithPopup(provider).then(function(result){});
     }
 
     $rootScope.signout = function(){
