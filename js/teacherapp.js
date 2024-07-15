@@ -630,9 +630,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
             }
       
             $rootScope.alldata = $rootScope.alldata + "}}}";
-		
+
+	    var domain = window.location.host;
 	    if ($rootScope.cdata.readonly.settings.newui == true) {
-	       let domain = window.location.host;
                $rootScope.share = domain + "/gameof5/d.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
             } else {
                $rootScope.share = domain + "/gameof5/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname;
