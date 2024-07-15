@@ -47,8 +47,8 @@ var app = angular.module('studentpages', ['ngRoute','ngSanitize','chart.js']);
       if (user == null) {
           
           var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithRedirect(provider).then(function(result) {  
-          });
+            //firebase.auth().signInWithRedirect(provider).then(function(result) {  });
+	    firebase.auth().signInWithPopup(provider).then(function(result) { });
           
           // Apply function is required to sync Angular after leaving Angular environment
           //$rootScope.$apply(function () {
