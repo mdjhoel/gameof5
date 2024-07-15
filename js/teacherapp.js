@@ -633,9 +633,9 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
 		
 	    if ($rootScope.cdata.readonly.settings.newui == true) {
 	       let domain = window.location.host;
-               $rootScope.share = domain + "/d.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
+               $rootScope.share = domain + "/gameof5/d.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
             } else {
-               $rootScope.share = domain + "/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname;
+               $rootScope.share = domain + "/gameof5/s.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname;
             }
 
             $rootScope.navPath = "includes/nav_admin.html"; // reload tools
