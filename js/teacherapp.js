@@ -631,7 +631,7 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
       
             $rootScope.alldata = $rootScope.alldata + "}}}";
 
-	    var domain = window.location.host;
+	    var domain = window.location.origin;
 	    if ($rootScope.cdata.readonly.settings.newui == true) {
                $rootScope.share = domain + "/gameof5/d.html#!/?teacher=" + $rootScope.admin.uid + "&cname=" + cname; 
             } else {
@@ -1198,11 +1198,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   
   $rootScope.navUser3 = function(index) {
     var username = Object.keys($rootScope.listArray)[index];
-    console.log($rootScope.listArray);
-    console.log($rootScope.share);
     $rootScope.user = $rootScope.listArray[username];
     $rootScope.view = $rootScope.share + "&user=" + $rootScope.user.uid;
-    console.log($rootScope.view);
   }
   
   $rootScope.navUser2 = function(index) {
