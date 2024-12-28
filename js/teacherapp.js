@@ -1198,11 +1198,11 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
   
   $rootScope.navUser3 = function(index) {
     var username = Object.keys($rootScope.listArray)[index];
-    console.log($routeScope.listArray);
-    console.log($routeScope.share);
+    console.log($rootScope.listArray);
+    console.log($rootScope.share);
     $rootScope.user = $rootScope.listArray[username];
     $rootScope.view = $rootScope.share + "&user=" + $rootScope.user.uid;
-    console.log($routeScope.view);
+    console.log($rootScope.view);
   }
   
   $rootScope.navUser2 = function(index) {
