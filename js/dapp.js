@@ -68,10 +68,9 @@ var app = angular.module('dpages', ['ngRoute','ngSanitize','chart.js']);
       // 2. Detect authenication 
       if (user == null) {
           
-          var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithRedirect(provider).then(function(result) {  
-          });
-          
+	var provider = new firebase.auth.GoogleAuthProvider();
+            //firebase.auth().signInWithRedirect(provider).then(function(result) { });
+            firebase.auth().signInWithPopup(provider).then(function(result) { });
           // Apply function is required to sync Angular after leaving Angular environment
           //$rootScope.$apply(function () {
             
