@@ -665,6 +665,8 @@ var app = angular.module('teacherpages', ['ngRoute','ngSanitize','chart.js']);
                 if ($rootScope.newusers == undefined) {
                     $rootScope.newusers = 0;
                 } else {
+	            console.log($rootScope.listAray);
+		    console.log($rootScope.view);
                     $rootScope.newusers = $rootScope.newusers + 1;
                     console.log("Users database has been modified.");
                     var msg = "Users database has been modified. Check users to verify.";
